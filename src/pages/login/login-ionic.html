@@ -14,17 +14,18 @@
 
     <ion-item>
       <ion-label floating>שם משתמש</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" #username></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>סיסמה</ion-label>
-      <ion-input type="password"></ion-input>
+      <ion-input type="password" #password></ion-input>
     </ion-item>
 
   </ion-list>
   <p>
-    <button ion-button color="primary" menuToggle>התחבר</button>
+    <!--<button ion-button color="primary" menuToggle>התחבר</button>-->
+    <button ion-button color="primary" (click) = "signIn()">התחבר</button>
   </p>
 
 </ion-content>
