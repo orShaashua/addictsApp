@@ -1,24 +1,36 @@
 import {Component, ViewChild} from '@angular/core';
-
+import { ReactiveFormsModule, FormGroup, FormControl} from "@angular/forms";
+import {NavController} from "ionic-angular";
+import {RegisterPage} from '../register/register';
 @Component({
   selector: 'page-hello-ionic',
   templateUrl: 'login-ionic.html'
 })
 export class LoginIonicPage {
 
-  @ViewChild('username') uname;
-  @ViewChild('password') password;
+  // @ViewChild('username') uname;
+  // @ViewChild('password') password;
+
+  username:string;
+  password: string;
+
+  // myform: FormGroup;
 
 
-
-  constructor() {
-
+  constructor(public navCtrl: NavController) {
+    this.username = "";
+    this.password = "";
   }
 
+  register(){
+    this.navCtrl.push(RegisterPage);
+  }
   signIn(){
-    // alert("hi! your name is: " + this.uname.value + "\nand your password is: " +  this.password.value);
-    if((!this.uname.value) || (!this.uname.password)){
+    //
+    if((this.username.length == 0) || (this.password.length == 0)){
       alert("לא הזנת את כל הנתונים")
+    } else {
+      alert("hi! your name is: " + this.username.toString() + "\nand your password is: " +  this.password.toString());
     }
   }
 }
