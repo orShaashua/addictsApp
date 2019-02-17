@@ -18,10 +18,10 @@
   <ion-list>
     <ion-label color="black" class="my-label" >:סוג התמכרות</ion-label>
     <ion-item>
-      <ion-select  cancelText="ביטול" okText="אישור" [(ngModel)]="addictsType" >
-        <ion-option value="nes">סמים</ion-option>
-        <ion-option value="n64">אלכהול</ion-option>
-        <ion-option value="ps">הימורים</ion-option>
+      <ion-select  cancelText="ביטול" okText="אישור" #addictsType >
+        <ion-option value="drugs">סמים</ion-option>
+        <ion-option value="alcohol">אלכהול</ion-option>
+        <ion-option value="gambling">הימורים</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
@@ -36,14 +36,14 @@
     <ion-label class="my-label">:הראה לי </ion-label>
       <ion-item>
     <ion-label >גברים</ion-label>
-    <ion-toggle color="danger" [(ngModel)]="men" checked="false" ></ion-toggle>
+    <ion-toggle color="danger" #men checked="false" ></ion-toggle>
       </ion-item>
     <ion-item>
       <ion-label>נשים</ion-label>
-      <ion-toggle color="danger" [(ngModel)]="female" checked="true"></ion-toggle>
+      <ion-toggle color="danger" #female checked="false"></ion-toggle>
     </ion-item>
   <ion-label class="my-label">:טווח גילאים </ion-label>
   <ion-item>
-    <ion-range dualKnobs="true" [(ngModel)]="ageRange" min="18" max="72" step="3"></ion-range>
+    <ion-range pin="" dualKnobs="true" color="danger" [(ngModel)]="ageRange" min="18" max="72" step="1"></ion-range>
   </ion-item>
 </ion-content>
