@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
+import { IonicPageModule} from 'ionic-angular';
 import { FilterPage } from './filter';
+
+
 
 @NgModule({
   declarations: [
@@ -10,4 +12,7 @@ import { FilterPage } from './filter';
     IonicPageModule.forChild(FilterPage),
   ],
 })
-export class FilterPageModule {}
+
+export class FilterPageModule {
+
+}
