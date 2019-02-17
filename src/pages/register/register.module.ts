@@ -11,3 +11,4 @@ import { RegisterPage } from './register';
   ],
 })
 export class RegisterPageModule {}
+//just a comment for push
