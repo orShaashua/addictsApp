@@ -15,7 +15,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FilterPage {
   @ViewChild('maxDistance') maxDis;
-
   @ViewChild('addictsType') addictsType;
   @ViewChild('female') female;
   @ViewChild('men') men;
@@ -24,8 +23,6 @@ export class FilterPage {
     lower:25
   }
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-
-
   }
 
   ionViewDidLoad() {
@@ -35,7 +32,8 @@ export class FilterPage {
   doneFilter(){
     alert("the max distanse is: " + this.maxDis.value+"\n"
     + "the addicts type is: " + this.addictsType.value + "\n"
-      + "want to see: female- " +this.female.value + " men- "+this.men.value + "\n" );
+      + "want to see: female- " +this.female.value + " men- "+this.men.value + "\n"
+      + "the age Range: "  + this.ageRange.lower + " - " +this.ageRange.upper+ "\n");
   }
 
 }
