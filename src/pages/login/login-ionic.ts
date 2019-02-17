@@ -9,7 +9,7 @@ import {RegisterPage} from '../register/register';
 export class LoginIonicPage {
 
   // @ViewChild('username') uname;
-  // @ViewChild('password') password;
+  // @ViewChild('password') password;comment
 
   username:string;
   password: string;
