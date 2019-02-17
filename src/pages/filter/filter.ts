@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
@@ -14,12 +14,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'filter.html',
 })
 export class FilterPage {
-
+  @ViewChild('maxDistance') maxDis;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FilterPage');
+  }
+
+  doneFilter(){
+    alert("the max distanse is:" + this.maxDis.value);
   }
 
 }

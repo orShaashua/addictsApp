@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { IonicPageModule} from 'ionic-angular';
 import { FilterPage } from './filter';
 
@@ -14,5 +14,6 @@ import { FilterPage } from './filter';
 })
 
 export class FilterPageModule {
+
 
 }

@@ -14,16 +14,26 @@
 </ion-header>
 
 <ion-content padding>
-  <button ion-button color="dark" outline>Done</button>
+  <button ion-button (click)="doneFilter()" color="dark" outline  >Done</button>
+  <ion-list>
+    <ion-label color="black" class="my-label" >:סוג התמכרות</ion-label>
+    <ion-item>
+      <ion-select  cancelText="ביטול" okText="אישור" [(ngModel)]="addictsType" >
+        <ion-option value="nes">סמים</ion-option>
+        <ion-option value="n64">אלכהול</ion-option>
+        <ion-option value="ps">הימורים</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-label class="my-label">:מרחק מרבי בק"מ </ion-label>
   <ion-item>
-    <ion-label class="my-label">מרחק מרבי בק"מ </ion-label>
-    <ion-range [(ngModel)]="maxDistance" pin="" color="danger" class="ion-color ion-color-dark in-item range-has-pin hydrated">
+    <ion-range #maxDistance pin="" color="danger" class="ion-color ion-color-dark in-item range-has-pin hydrated">
       <ion-icon slot="start" size="small" name="brush" role="img" class="icon-small hydrated" aria-label="brush"></ion-icon>
       <ion-icon slot="end" name="brush" role="img" class="hydrated" aria-label="brush" range-right name="car"></ion-icon>
     </ion-range>
   </ion-item>
 
-    <ion-label class="my-label">הראה לי </ion-label>
+    <ion-label class="my-label">:הראה לי </ion-label>
       <ion-item>
     <ion-label >גברים</ion-label>
     <ion-toggle color="danger" [(ngModel)]="men" checked="false" ></ion-toggle>
@@ -32,8 +42,8 @@
       <ion-label>נשים</ion-label>
       <ion-toggle color="danger" [(ngModel)]="female" checked="true"></ion-toggle>
     </ion-item>
-
+  <ion-label class="my-label">:טווח גילאים </ion-label>
   <ion-item>
-    <ion-range dualKnobs="true"  color="danger" min="18" max="70" step="3"></ion-range>
+    <ion-range dualKnobs="true" [(ngModel)]="ageRange" min="18" max="72" step="3"></ion-range>
   </ion-item>
 </ion-content>
