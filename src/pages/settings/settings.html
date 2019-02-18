@@ -6,10 +6,42 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>settings</ion-title>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    <ion-title >settings</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding class ="masters">
+  <button ion-button (click)="doneSettings()" color="dark" outline  >Done</button>
+  <ion-label class="my-label" >:סוג התמכרות</ion-label>
+    <ion-item class ="masters">
+      <ion-label ></ion-label>
+      <ion-select  cancelText="ביטול" okText="אישור" #addictsType >
+        <ion-option value="drugs">סמים</ion-option>
+        <ion-option value="alcohol">אלכהול</ion-option>
+        <ion-option value="gambling">הימורים</ion-option>
+      </ion-select>
+    </ion-item>
 
+    <ion-item class ="masters">
+      <ion-label >מנטור</ion-label>
+      <ion-toggle #mentor color="danger" checked="false" ></ion-toggle>
+    </ion-item>
+
+  <ion-label class="my-label" >:מגדר</ion-label>
+  <ion-item class ="masters">
+    <ion-label></ion-label>
+    <ion-select  cancelText="ביטול" okText="אישור" #addictsType >
+      <ion-option value="men">גבר</ion-option>
+      <ion-option value="female">אישה</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-label class="my-label">תאריך לידה</ion-label>
+  <ion-item class ="masters">
+    <ion-label floating>בחר תאריך</ion-label>
+    <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="BirthDate"></ion-datetime>
+  </ion-item>
 </ion-content>
