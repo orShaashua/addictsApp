@@ -19,15 +19,13 @@ export class LoginIonicPage {
   }
 
   input1func() {
-    if (this.showUserName == true) {
       this.showUserName = false;
-    }
+      this.showPassword = false;
   }
 
   input2func() {
-    if (this.showPassword == true) {
       this.showPassword = false;
-    }
+      this.showUserName = false;
   }
 
   register() {

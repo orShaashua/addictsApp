@@ -25,15 +25,13 @@ export class RegisterPage {
   }
 
   input1func() {
-    if (this.showUserName == true) {
       this.showUserName = false;
-    }
+      this.showPassword = false;
   }
 
   input2func() {
-    if (this.showPassword == true) {
       this.showPassword = false;
-    }
+      this.showUserName = false;
   }
 
   signUp(){
@@ -49,7 +47,7 @@ export class RegisterPage {
     }
     if (this.password.length > 0 && this.username.length > 0) {
       alert("ההרשמה התבצעה בהצלחה!");
-      this.navCtrl.push(LoginIonicPage);
+      this.navCtrl.popTo(RegisterPage);
     }
   }
   ionViewDidLoad() {
