@@ -13,8 +13,9 @@ export class LoginIonicPage {
 
   username:string;
   password: string;
-
-  // myform: FormGroup;
+  public show:boolean = false;
+  public isBorderRed:boolean = false;
+  borderColor = 'blue';
 
 
   constructor(public navCtrl: NavController) {
@@ -22,13 +23,20 @@ export class LoginIonicPage {
     this.password = "";
   }
 
+  inputfunc() {
+    if(this.show == true) {
+      this.show = false;
+    }
+  }
   register(){
     this.navCtrl.push(RegisterPage);
   }
   signIn(){
     //
     if((this.username.length == 0) || (this.password.length == 0)){
-      alert("לא הזנת את כל הנתונים")
+      if(this.show == false) {
+        this.show = true;
+      }
     } else {
       alert("hi! your name is: " + this.username.toString() + "\nand your password is: " +  this.password.toString());
     }

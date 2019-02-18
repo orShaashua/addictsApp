@@ -7,19 +7,19 @@
   </ion-navbar>
 </ion-header>
 
-
+<!--[(ngModel)] = "username" [ngStyle]="{'border-color': borderColor}"-->
 <ion-content padding text-center>
 
   <ion-list>
 
-    <ion-item>
+    <ion-item [ngClass]="{'red-border':show}">
       <ion-label floating>שם משתמש</ion-label>
-      <ion-input type="text" [(ngModel)] = "username"></ion-input>
+      <ion-input type="text" (click) = "inputfunc()" [(ngModel)] = "username" ></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>סיסמה</ion-label>
-      <ion-input type="password" [(ngModel)] = "password"></ion-input>
+      <ion-input type="password" (click) = "inputfunc()" [(ngModel)] = "password"></ion-input>
     </ion-item>
 
   </ion-list>
@@ -28,5 +28,13 @@
     <button ion-button full color="primary" (click) = "signIn()">התחבר</button>
     <button ion-button full color="light" (click) = "register()">הרשם</button>
   </p>
+
+  <div *ngIf="show">
+
+    <div>
+      <b style="color:red; font-size:20px;">לא הזנת את כל הפרטים</b>
+    </div>
+
+  </div>
 
 </ion-content>
