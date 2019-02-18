@@ -9,6 +9,8 @@
 
 <ion-content padding text-center class="bg-style">
 
+  <h1>התחברות</h1>
+
   <ion-list >
     <ion-item [ngClass]="{'red-border':showUserName, 'black-border':!showUserName}">
       <!--<ion-label >שם משתמש</ion-label>-->
@@ -17,7 +19,7 @@
     <br>
     <ion-item [ngClass]="{'red-border':showPassword, 'black-border':!showPassword}">
       <!--<ion-label >סיסמה</ion-label>-->
-      <ion-input type="password" (click) = "input2func()" [(ngModel)] = "password" placeholder="סיסמא"></ion-input>
+      <ion-input  type="password" (click) = "input2func()" [(ngModel)] = "password" placeholder="סיסמא"></ion-input>
     </ion-item>
 
   </ion-list>
@@ -25,7 +27,7 @@
   <p>
     <!--<button ion-button color="primary" menuToggle>התחבר</button>-->
     <button ion-button full color="primary" (click) = "signIn()">התחבר</button>
-    <button ion-button full color="light" (click) = "register()">הרשם</button>
+    <button ion-button full color="light" (click) = "register()">הירשם</button>
   </p>
 
   <div *ngIf="showUserName == true || showPassword == true">
