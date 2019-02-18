@@ -14,18 +14,31 @@
 </ion-header>
 
 <ion-content padding class ="masters">
-  <button ion-button  (click)="doneSettings()" type="submit" color="dark" outline>Done</button>
+  <form [formGroup]="credentialsForm">
+  <button ion-button  [disabled]="!credentialsForm.valid"  (click)="doneSettings()" type="submit" color="dark" outline>Done</button>
 
 
   <ion-label class="my-label" >:סוג התמכרות</ion-label>
-    <ion-item class ="masters">
+    <ion-item  class ="masters">
       <ion-label ></ion-label>
-      <ion-select type="text" cancelText="ביטול" okText="אישור" #addictsType >
+      <ion-select [formControl]="credentialsForm.controls['addictsType']" type="text" cancelText="ביטול" okText="אישור" #addictsType >
         <ion-option value="drugs">סמים</ion-option>
         <ion-option value="alcohol">אלכהול</ion-option>
         <ion-option value="gambling">הימורים</ion-option>
       </ion-select>
+
     </ion-item>
+    <div *ngIf="!credentialsForm.controls.addictsType.valid"
+         class="error">
+      שדה חובה*
+    </div>
+
+
+
+
+
+
+
 
     <ion-item class ="masters">
       <ion-label >מנטור</ion-label>
@@ -35,15 +48,29 @@
   <ion-label class="my-label" >:מגדר</ion-label>
   <ion-item class ="masters">
     <ion-label></ion-label>
-    <ion-select  cancelText="ביטול" okText="אישור" #gender >
+    <ion-select  cancelText="ביטול" okText="אישור"[formControl]="credentialsForm.controls['gender']"  #gender >
       <ion-option value="men">גבר</ion-option>
       <ion-option value="female">אישה</ion-option>
     </ion-select>
   </ion-item>
+    <div *ngIf="!credentialsForm.controls.gender.valid"
+         class="error">
+      שדה חובה*
+    </div>
 
   <ion-label class="my-label">תאריך לידה</ion-label>
   <ion-item class ="masters">
     <ion-label floating>בחר תאריך</ion-label>
-    <ion-datetime displayFormat="MMM D, YYYY" #BirthDate></ion-datetime>
+    <ion-datetime [formControl]="credentialsForm.controls['BirthDate']" displayFormat="MMM D, YYYY" #BirthDate></ion-datetime>
   </ion-item>
+    <div *ngIf="!credentialsForm.controls.BirthDate.valid"
+         class="error">
+      שדה חובה*
+    </div>
+
+  <ion-label  class="my-label">:ספר מה שאתה רוצה שידעו עליך</ion-label>
+  <ion-item>
+    <ion-textarea #about ></ion-textarea>
+  </ion-item>
+  </form>
 </ion-content>

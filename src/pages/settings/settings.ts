@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /**
  * Generated class for the SettingsPage page.
@@ -16,12 +16,32 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class SettingsPage {
 
+
   @ViewChild('addictsType') addictsType;
   @ViewChild('gender') gender;
   @ViewChild('BirthDate') BirthDate;
   @ViewChild('mentor') mentor;
-  constructor(public navCtrl: NavController, public navParams: NavParams){
-    
+  @ViewChild('about') about;
+  credentialsForm: FormGroup;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder){
+    this.credentialsForm = this.formBuilder.group({
+
+      addictsType: [
+        '', Validators.compose([
+          Validators.required
+        ])
+      ],
+      gender: [
+        '', Validators.compose([
+          Validators.required
+        ])
+      ],
+      BirthDate: [
+        '', Validators.compose([
+          Validators.required
+        ])
+      ]
+    });
   }
 
   ionViewDidLoad() {
@@ -32,6 +52,7 @@ export class SettingsPage {
     alert("the addicts type is: " + this.addictsType.value + "\n"
       + "the gender: " +this.gender.value+ "\n"
       + "the Birth Date: year: "  + this.BirthDate.value.year+ " mounth: "+this.BirthDate.value.month + " day: "+this.BirthDate.value.day +"\n"
-      +"mentor? " +this.mentor.value);
+      +"mentor? " +this.mentor.value +"\n"
+      + "about me: " +this.about.value +"\n");
   }
 }

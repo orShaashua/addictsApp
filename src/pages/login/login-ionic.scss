@@ -12,11 +12,6 @@ page-hello-ionic {
     border-color: red;
   }
 
-  .black-border{
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-  }
 
   .bg-style {
     background:lavender;
@@ -26,7 +21,10 @@ page-hello-ionic {
     font-size:15px;
   }
 
-
+  .error {
+    color: rgb(223, 62, 62);
+    font-size: 11px;
+  }
 
 
 
