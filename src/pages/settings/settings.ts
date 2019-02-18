@@ -1,6 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {RegisterPage} from "../register/register";
+import {AngularProfiler} from "@angular/platform-browser/src/browser/tools/common_tools";
+import {ProfilePage} from "../profile/profile";
 
 /**
  * Generated class for the SettingsPage page.
@@ -54,5 +57,7 @@ export class SettingsPage {
       + "the Birth Date: year: "  + this.BirthDate.value.year+ " mounth: "+this.BirthDate.value.month + " day: "+this.BirthDate.value.day +"\n"
       +"mentor? " +this.mentor.value +"\n"
       + "about me: " +this.about.value +"\n");
+
+    this.navCtrl.push(ProfilePage);
   }
 }
