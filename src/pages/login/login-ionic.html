@@ -1,5 +1,5 @@
-<ion-header>
-  <ion-navbar>
+<ion-header >
+  <ion-navbar >
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -7,15 +7,15 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding text-center>
+<ion-content padding text-center class="bg-style">
 
   <ion-list >
-    <ion-item [ngClass]="{redborder:showUserName, blackborder:!showUserName}">
+    <ion-item [ngClass]="{'red-border':showUserName, 'black-border':!showUserName}">
       <!--<ion-label >שם משתמש</ion-label>-->
       <ion-input type="text" (click) = "input1func()" [(ngModel)] = "username" placeholder="שם משתמש" ></ion-input>
     </ion-item>
     <br>
-    <ion-item [ngClass]="{redborder:showPassword, blackborder:!showPassword}">
+    <ion-item [ngClass]="{'red-border':showPassword, 'black-border':!showPassword}">
       <!--<ion-label >סיסמה</ion-label>-->
       <ion-input type="password" (click) = "input2func()" [(ngModel)] = "password" placeholder="סיסמא"></ion-input>
     </ion-item>

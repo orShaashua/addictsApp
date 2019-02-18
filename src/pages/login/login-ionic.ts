@@ -10,12 +10,8 @@ export class LoginIonicPage {
 
   username: string;
   password: string;
-  // public show:boolean = false;
   showUserName = false; //show red alerts and text for username box
   showPassword = false; //show red alerts and text for password box
-  // public isBorderRed: boolean = false;
-  // borderColor = 'blue';
-
 
   constructor(public navCtrl: NavController) {
     this.username = "";
