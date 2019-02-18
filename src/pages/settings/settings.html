@@ -33,7 +33,7 @@
   <ion-label class="my-label" >:מגדר</ion-label>
   <ion-item class ="masters">
     <ion-label></ion-label>
-    <ion-select  cancelText="ביטול" okText="אישור" #addictsType >
+    <ion-select  cancelText="ביטול" okText="אישור" #gender >
       <ion-option value="men">גבר</ion-option>
       <ion-option value="female">אישה</ion-option>
     </ion-select>
@@ -42,6 +42,6 @@
   <ion-label class="my-label">תאריך לידה</ion-label>
   <ion-item class ="masters">
     <ion-label floating>בחר תאריך</ion-label>
-    <ion-datetime displayFormat="MMM D, YYYY" [(ngModel)]="BirthDate"></ion-datetime>
+    <ion-datetime displayFormat="MMM D, YYYY" #BirthDate></ion-datetime>
   </ion-item>
 </ion-content>
