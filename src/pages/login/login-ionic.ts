@@ -8,14 +8,13 @@ import {RegisterPage} from '../register/register';
 })
 export class LoginIonicPage {
 
-  // @ViewChild('username') uname;
-  // @ViewChild('password') password;comment
-
-  username:string;
+  username: string;
   password: string;
-  public show:boolean = false;
-  public isBorderRed:boolean = false;
-  borderColor = 'blue';
+  // public show:boolean = false;
+  showUserName = false; //show red alerts and text for username box
+  showPassword = false; //show red alerts and text for password box
+  // public isBorderRed: boolean = false;
+  // borderColor = 'blue';
 
 
   constructor(public navCtrl: NavController) {
@@ -23,22 +22,37 @@ export class LoginIonicPage {
     this.password = "";
   }
 
-  inputfunc() {
-    if(this.show == true) {
-      this.show = false;
+  input1func() {
+    if (this.showUserName == true) {
+      this.showUserName = false;
     }
   }
-  register(){
+
+  input2func() {
+    if (this.showPassword == true) {
+      this.showPassword = false;
+    }
+  }
+
+  register() {
     this.navCtrl.push(RegisterPage);
   }
-  signIn(){
-    //
-    if((this.username.length == 0) || (this.password.length == 0)){
-      if(this.show == false) {
-        this.show = true;
+
+  signIn() {
+      if ((this.username.length == 0)) {
+      if (this.showUserName == false) {
+        this.showUserName = true;
       }
-    } else {
-      alert("hi! your name is: " + this.username.toString() + "\nand your password is: " +  this.password.toString());
-    }
+      }
+      if ((this.password.length == 0)) {
+        if (this.showPassword == false) {
+          this.showPassword = true;
+        }
+      }
+
+      if (this.password.length > 0 && this.username.length > 0) {
+        alert("hi! your name is: " + this.username.toString() + "\nand your password is: " + this.password.toString());
+      }
+
   }
 }
