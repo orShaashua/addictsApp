@@ -7,7 +7,7 @@ page-register {
   }
 
   .red-border{
-    border-width: 3px;
+    border-width: 1.5px;
     border-style: solid;
     border-color: red;
   }
@@ -20,6 +20,10 @@ page-register {
     border-style: solid;
     border-color: black;
     //border-bottom-color: black;
+  }
+  b{
+    color:red;
+    font-size:15px;
   }
 
 }
