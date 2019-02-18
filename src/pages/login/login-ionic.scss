@@ -4,13 +4,41 @@ page-hello-ionic {
     margin-bottom: 5vh;
   }
 
-  .red-border{
-    border-color: red;
-    border-width: 5px;
+  .item-inner, ion-item  {
+    border-bottom-color: transparent !important;
+    box-shadow: none !important;
   }
 
-  .blue-border{
-    border-color: blue;
-    border-width: 5px;
+  //.item-inner{
+  //  border-style: unset !important;
+  //}
+
+  //ion-item { --highlight-color-focused: none; }
+
+  .redborder{
+    border-width: 3px;
+    border-style: solid;
+    border-color: red;
+
+    //border-bottom-color: red;
+
+    //border-bottom: 1px solid #494949;
   }
+
+  //.item-input::after {
+  //  border-bottom-color: transparent !important;
+  //}
+
+  //.item-input.ng-valid.input-has-value::after{ border-bottom-color: transparent; }
+
+
+
+  .blackborder{
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    //border-bottom-color: black;
+
+  }
+
 }
