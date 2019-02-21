@@ -15,7 +15,6 @@
 
 <ion-content padding class ="masters">
   <button ion-button (click)="doneFilter()" color="dark" outline  >Done</button>
-  <ion-list>
     <ion-label class="my-label" >:סוג התמכרות</ion-label>
     <ion-item class ="masters">
       <ion-label></ion-label>
@@ -25,7 +24,6 @@
         <ion-option value="gambling">הימורים</ion-option>
       </ion-select>
     </ion-item>
-  </ion-list>
   <ion-label class="my-label">:מרחק מרבי בק"מ </ion-label>
   <ion-item class ="masters">
     <ion-range #maxDistance pin="" color="secondary" class="ion-color ion-color-dark in-item range-has-pin hydrated">
@@ -33,18 +31,31 @@
       <ion-icon slot="end" role="img" class="hydrated" aria-label="brush" range-right name="car"></ion-icon>
     </ion-range>
   </ion-item>
-
+<ion-list>
     <ion-label class="my-label">:הראה לי </ion-label>
       <ion-item class ="masters">
     <ion-label >גברים</ion-label>
     <ion-toggle #men checked="false"></ion-toggle>
       </ion-item>
+</ion-list>
     <ion-item class ="masters">
       <ion-label>נשים</ion-label>
       <ion-toggle color="danger" #female checked="false"></ion-toggle>
     </ion-item>
+
   <ion-label class="my-label">:טווח גילאים </ion-label>
   <ion-item class ="masters">
     <ion-range pin="" dualKnobs="true" color="danger" [(ngModel)]="ageRange" min="18" max="72" step="1"></ion-range>
   </ion-item>
+    <ion-label class="my-label" >...מוכן ל</ion-label>
+    <ion-item>
+      <ion-label></ion-label>
+      <ion-select multiple="true" cancelText="ביטול" okText="אישור" #addictsType >
+        <ion-option  #conversation value="conversation" selected>שיחה</ion-option>
+        <ion-option #appointment value="appointment">פגישה</ion-option>
+        <ion-option #recreation value="recreation">בילוי</ion-option>
+        <ion-option #host value="host">לארח</ion-option>
+        <ion-option #visit value="visit">להתארח</ion-option>
+      </ion-select>
+    </ion-item>
 </ion-content>
