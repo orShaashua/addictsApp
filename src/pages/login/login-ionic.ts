@@ -1,5 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl} from "@angular/forms";
+import {Component} from '@angular/core';
 import {NavController} from "ionic-angular";
 import {RegisterPage} from '../register/register';
 @Component({

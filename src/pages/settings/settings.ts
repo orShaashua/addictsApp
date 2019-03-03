@@ -1,9 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {RegisterPage} from "../register/register";
-import {AngularProfiler} from "@angular/platform-browser/src/browser/tools/common_tools";
 import {ProfilePage} from "../profile/profile";
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 /**
  * Generated class for the SettingsPage page.
@@ -26,7 +25,8 @@ export class SettingsPage {
   @ViewChild('mentor') mentor;
   @ViewChild('about') about;
   credentialsForm: FormGroup;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder){
+  myPhoto: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private camera: Camera){
     this.credentialsForm = this.formBuilder.group({
 
       addictsType: [
@@ -59,5 +59,22 @@ export class SettingsPage {
       + "about me: " +this.about.value +"\n");
 
     this.navCtrl.push(ProfilePage);
+  }
+
+  takePhoto() {
+    const options: CameraOptions = {
+      quality: 70,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      this.myPhoto = 'data:image/jpeg;base64,' + imageData;
+
+    }, (err) => {
+      alert(err);
+    });
   }
 }

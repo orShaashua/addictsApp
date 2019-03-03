@@ -13,6 +13,7 @@ import {RegisterPage} from '../pages/register/register';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {ProfilePage} from "../pages/profile/profile";
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {ProfilePage} from "../pages/profile/profile";
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -41,7 +41,7 @@
   <ion-label class="my-label" >:מגדר</ion-label>
   <ion-item class ="masters">
     <ion-label></ion-label>
-    <ion-select  cancelText="ביטול" okText="אישור"[formControl]="credentialsForm.controls['gender']"  #gender >
+    <ion-select  cancelText="ביטול" okText="אישור" [formControl]="credentialsForm.controls['gender']"  #gender >
       <ion-option value="men">גבר</ion-option>
       <ion-option value="female">אישה</ion-option>
     </ion-select>
@@ -60,10 +60,15 @@
          class="error">
       שדה חובה*
     </div>
-
+    <div>
+    <button  type="submit" ion-button (click)="takePhoto()" full color="primary" >בחר תמונה</button>
+    <p algin="center"><img src="{{myPhoto}}"></p>
+    </div>
   <ion-label  class="my-label">:ספר מה שאתה רוצה שידעו עליך</ion-label>
   <ion-item>
     <ion-textarea #about ></ion-textarea>
   </ion-item>
+
+
   </form>
 </ion-content>
