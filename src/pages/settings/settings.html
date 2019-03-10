@@ -1,24 +1,23 @@
 <!--
   Generated template for the SettingsPage page.
-
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
   <ion-navbar>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title >settings</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding class ="masters">
   <form [formGroup]="credentialsForm">
-  <button ion-button  [disabled]="!credentialsForm.valid"  (click)="doneSettings()" type="submit" color="dark" outline>Done</button>
+    <button ion-button  [disabled]="!credentialsForm.valid"  (click)="doneSettings()" type="submit" color="dark" outline>Done</button>
 
 
-  <ion-label class="my-label" >:סוג התמכרות</ion-label>
+    <ion-label class="my-label" >:סוג התמכרות</ion-label>
     <ion-item  class ="masters">
       <ion-label ></ion-label>
       <ion-select [formControl]="credentialsForm.controls['addictsType']" type="text" cancelText="ביטול" okText="אישור" #addictsType >
@@ -38,36 +37,36 @@
       <ion-toggle #mentor color="danger" checked="false" ></ion-toggle>
     </ion-item>
 
-  <ion-label class="my-label" >:מגדר</ion-label>
-  <ion-item class ="masters">
-    <ion-label></ion-label>
-    <ion-select  cancelText="ביטול" okText="אישור" [formControl]="credentialsForm.controls['gender']"  #gender >
-      <ion-option value="men">גבר</ion-option>
-      <ion-option value="female">אישה</ion-option>
-    </ion-select>
-  </ion-item>
+    <ion-label class="my-label" >:מגדר</ion-label>
+    <ion-item class ="masters">
+      <ion-label></ion-label>
+      <ion-select  cancelText="ביטול" okText="אישור" [formControl]="credentialsForm.controls['gender']"  #gender >
+        <ion-option value="men">גבר</ion-option>
+        <ion-option value="female">אישה</ion-option>
+      </ion-select>
+    </ion-item>
     <div *ngIf="!credentialsForm.controls.gender.valid"
          class="error">
       שדה חובה*
     </div>
 
-  <ion-label class="my-label">תאריך לידה</ion-label>
-  <ion-item class ="masters">
-    <ion-label floating>בחר תאריך</ion-label>
-    <ion-datetime [formControl]="credentialsForm.controls['BirthDate']" displayFormat="MMM D, YYYY" #BirthDate></ion-datetime>
-  </ion-item>
+    <ion-label class="my-label">תאריך לידה</ion-label>
+    <ion-item class ="masters">
+      <ion-label floating>בחר תאריך</ion-label>
+      <ion-datetime [formControl]="credentialsForm.controls['BirthDate']" displayFormat="MMM D, YYYY" #BirthDate></ion-datetime>
+    </ion-item>
     <div *ngIf="!credentialsForm.controls.BirthDate.valid"
          class="error">
       שדה חובה*
     </div>
     <div>
-    <button  type="submit" ion-button (click)="takePhoto()" full color="primary" >בחר תמונה</button>
-    <p algin="center"><img src="{{myPhoto}}"></p>
+      <button  type="submit" ion-button (click)="takePhoto()" full color="primary" >בחר תמונה</button>
+      <p algin="center"><img src="{{myPhoto}}">{{myPhoto}}</p>
     </div>
-  <ion-label  class="my-label">:ספר מה שאתה רוצה שידעו עליך</ion-label>
-  <ion-item>
-    <ion-textarea #about ></ion-textarea>
-  </ion-item>
+    <ion-label  class="my-label">:ספר מה שאתה רוצה שידעו עליך</ion-label>
+    <ion-item>
+      <ion-textarea #about ></ion-textarea>
+    </ion-item>
 
 
   </form>

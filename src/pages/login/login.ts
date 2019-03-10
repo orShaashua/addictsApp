@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {RegisterPage} from "../register/register";
-
+import {ChatPage} from "../chat/chat";
 /**
  * Generated class for the LoginPage page.
  *
@@ -54,6 +54,7 @@ export class LoginPage {
 
     if (this.password.length > 0 && this.username.length > 0) {
       alert("hi! your name is: " + this.username.toString() + "\nand your password is: " + this.password.toString());
+      this.navCtrl.push(ChatPage,{username:this.username})
     }
 
   }
