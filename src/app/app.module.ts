@@ -12,7 +12,6 @@ import {RegisterPage} from '../pages/register/register';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import {ProfilePage} from "../pages/profile/profile";
 import {LoginPage} from "../pages/login/login";
 import {Camera} from "@ionic-native/camera";
 import { AngularFireModule } from 'angularfire2';
@@ -22,6 +21,9 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFireAuth} from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
+import {ChatsPage} from "../pages/chats/chats";
+import {MatchesPage} from "../pages/matches/matches";
+import {TabsPage} from "../pages/tabs/tabs";
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
   authDomain: "addictsapp.firebaseapp.com",
@@ -41,12 +43,13 @@ var config = {
     SettingsPage,
     FilterPage,
     RegisterPage,
-    ProfilePage,
-    ChatPage
+    ChatPage,
+    TabsPage,
+    MatchesPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {tabsPlacement: 'top'}),
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule
   ],
@@ -59,8 +62,9 @@ var config = {
     SettingsPage,
     FilterPage,
     RegisterPage,
-    ProfilePage,
-    ChatPage
+    ChatPage,
+    TabsPage,
+    MatchesPage
   ],
   providers: [
     StatusBar,

@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import {RegisterPage} from "../register/register";
-import {ChatPage} from "../chat/chat";
-import {ProfilePage} from "../profile/profile";
-import {AngularFireAuth} from 'angularfire2/auth';
 import {usercreds} from '../../models/interfaces/usercreds'
 import {AuthProvider} from "../../providers/auth/auth";
+import {TabsPage} from "../tabs/tabs";
+
 
 /**
  * Generated class for the LoginPage page.
@@ -78,6 +77,7 @@ export class LoginPage {
       this.authservice.login(this.credentials).then((res: any) => {
         if(!res.code){
           alert(res);
+          this.navCtrl.push(TabsPage);
         } else {
           alert(res);
         }
