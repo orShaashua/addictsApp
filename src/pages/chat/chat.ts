@@ -25,7 +25,6 @@ export class ChatPage {
     this.username = this.navParams.get('username');
     this._chatSubscription = this.db.list('/chat').valueChanges().subscribe( data => {
       this.messages = data;
-      alert (data );
     });
   }
 
@@ -35,7 +34,6 @@ export class ChatPage {
       username: this.username,
       message: this.message
     }).then( () => {
-      alert ("message sent")
       // message is sent
     }).catch(() => {
       // some error. maybe firebase is unreachable
