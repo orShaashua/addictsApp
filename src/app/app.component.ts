@@ -7,8 +7,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {FilterPage} from "../pages/filter/filter";
 import {SettingsPage} from "../pages/settings/settings";
 import {LoginPage} from '../pages/login/login';
-
-
+import {ProfilePage} from "../pages/profile/profile";
+import {AngularFireAuth} from 'angularfire2/auth';
 @Component({
   templateUrl: 'app.html'
 })
@@ -23,7 +23,8 @@ export class MyApp {
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen
+    public splashScreen: SplashScreen,
+    public angularFireAuth: AngularFireAuth
   ) {
     this.initializeApp();
 
@@ -32,7 +33,8 @@ export class MyApp {
       { title: 'Login', component: LoginPage },
      // { title: 'My First List', component: ListPage }
       { title: 'Filter', component: FilterPage },
-      { title: 'Settings', component: SettingsPage }
+      { title: 'Settings', component: SettingsPage },
+      { title: 'Profile Page', component: ProfilePage }
     ];
   }
 
@@ -42,6 +44,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      // this.angularFireAuth.auth.onAuthStateChanged()
     });
   }
 

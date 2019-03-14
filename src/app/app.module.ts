@@ -18,8 +18,10 @@ import {Camera} from "@ionic-native/camera";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {ChatPage} from "../pages/chat/chat";
-
-
+import {AngularFireAuthModule} from 'angularfire2/auth';
+import {AngularFireAuth} from 'angularfire2/auth';
+import { AuthProvider } from '../providers/auth/auth';
+import { UserProvider } from '../providers/user/user';
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
   authDomain: "addictsapp.firebaseapp.com",
@@ -64,7 +66,10 @@ var config = {
     StatusBar,
     SplashScreen,
     Camera,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    AngularFireAuth,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthProvider,
+    UserProvider
   ]
 })
 export class AppModule {}

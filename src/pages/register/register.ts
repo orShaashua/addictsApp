@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 // import {LoginIonicPage} from "../login/login-ionic";
 import LoginPage from "../login/login";
+import {AngularFireAuth} from 'angularfire2/auth';
+import {ToastController} from "ionic-angular";
+import {UserProvider} from "../../providers/user/user";
+
 /**
  * Generated class for the RegisterPage page.
  *
@@ -19,35 +23,39 @@ export class RegisterPage {
   password: string;
   showUserName = false; //show red alerts and text for username box
   showPassword = false; //show red alerts and text for password box
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  showDisplayName = false;
+  newuser = {
+    email:'',
+    password:'',
+    displayName:''
+  }
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public userservice: UserProvider) {
     this.username = "";
     this.password = "";
   }
 
   input1func() {
-      this.showUserName = false;
-      this.showPassword = false;
+      this.showDisplayName = false;
   }
 
-  input2func() {
-      this.showPassword = false;
-      this.showUserName = false;
-  }
+  signUp() {
 
-  signUp(){
-    if ((this.username.length == 0)) {
-      if (this.showUserName == false) {
-        this.showUserName = true;
+    if(this.newuser.displayName == '' || this.newuser.password == '' || this.newuser.email == ''){
+      this.showDisplayName = true;
+    } else {
+
+    this.userservice.adduser(this.newuser).then((res: any) => {
+      if(res.success){
+        this.navCtrl.popTo(RegisterPage);
+      } else {
+        alert('error: ' + res);
       }
-    }
-    if ((this.password.length == 0)) {
-      if (this.showPassword == false) {
-        this.showPassword = true;
-      }
-    }
-    if (this.password.length > 0 && this.username.length > 0) {
-      alert("ההרשמה התבצעה בהצלחה!");
-      this.navCtrl.popTo(RegisterPage);
+    })
+
+      // alert("ההרשמה התבצעה בהצלחה!");
+      // this.navCtrl.popTo(RegisterPage);
+      // }
     }
   }
   ionViewDidLoad() {
