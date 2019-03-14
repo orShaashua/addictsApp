@@ -21,9 +21,8 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFireAuth} from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
-import {ChatsPage} from "../pages/chats/chats";
-import {MatchesPage} from "../pages/matches/matches";
 import {TabsPage} from "../pages/tabs/tabs";
+import {BuddiesPage} from "../pages/buddies/buddies";
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
   authDomain: "addictsapp.firebaseapp.com",
@@ -45,7 +44,7 @@ var config = {
     RegisterPage,
     ChatPage,
     TabsPage,
-    MatchesPage
+    BuddiesPage
   ],
   imports: [
     BrowserModule,
@@ -64,7 +63,7 @@ var config = {
     RegisterPage,
     ChatPage,
     TabsPage,
-    MatchesPage
+    BuddiesPage
   ],
   providers: [
     StatusBar,

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {MatchesPage} from "../matches/matches";
+import {BuddiesPage} from "../buddies/buddies";
 
 /**
  * Generated class for the ChatsPage page.
@@ -23,7 +24,7 @@ export class ChatsPage {
     console.log('ionViewDidLoad ChatsPage');
   }
   addbuddy(){
-    this.navCtrl.push(MatchesPage);
+    this.navCtrl.push(BuddiesPage);
   }
 
 }
