@@ -18,7 +18,9 @@ import {Camera} from "@ionic-native/camera";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {ChatPage} from "../pages/chat/chat";
+import {PasswordresetPage} from "../pages/passwordreset/passwordreset";
 import {AngularFireAuthModule} from 'angularfire2/auth';
+import {ProfilepicPage} from "../pages/profilepic/profilepic";
 import {AngularFireAuth} from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
@@ -42,7 +44,9 @@ var config = {
     FilterPage,
     RegisterPage,
     ProfilePage,
-    ChatPage
+    ChatPage,
+    PasswordresetPage,
+    ProfilepicPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +64,9 @@ var config = {
     FilterPage,
     RegisterPage,
     ProfilePage,
-    ChatPage
+    ChatPage,
+    PasswordresetPage,
+    ProfilepicPage
   ],
   providers: [
     StatusBar,

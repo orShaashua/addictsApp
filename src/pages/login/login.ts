@@ -6,6 +6,7 @@ import {ProfilePage} from "../profile/profile";
 import {AngularFireAuth} from 'angularfire2/auth';
 import {usercreds} from '../../models/interfaces/usercreds'
 import {AuthProvider} from "../../providers/auth/auth";
+import {PasswordresetPage} from "../passwordreset/passwordreset";
 
 /**
  * Generated class for the LoginPage page.
@@ -87,11 +88,10 @@ export class LoginPage {
       // this.navCtrl.push(ProfilePage,{username:this.username})
     }
 
-    // }
 
+  }
 
-    //
-
-
+  passwordreset(){
+    this.navCtrl.push(PasswordresetPage);
   }
 }

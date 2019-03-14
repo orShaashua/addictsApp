@@ -11,7 +11,7 @@ import firebase from 'firebase';
 @Injectable()
 export class UserProvider {
 
-  firedata = firebase.database().ref('/chatusers');
+  firedata = firebase.database().ref('/users');
   constructor(public afirauth: AngularFireAuth) {
     console.log('Hello UserProvider Provider');
   }
@@ -43,5 +43,16 @@ export class UserProvider {
       })
     });
     // return promise;
+  }
+
+  passwordreset(email) {
+    return new Promise((resolve, reject) => {
+      firebase.auth().sendPasswordResetEmail(email).then(() => {
+        resolve({success: true});
+      }).catch((err) => {
+        alert(err);
+        // reject(err);
+      })
+    })
   }
 }

@@ -8,7 +8,10 @@ import {FilterPage} from "../pages/filter/filter";
 import {SettingsPage} from "../pages/settings/settings";
 import {LoginPage} from '../pages/login/login';
 import {ProfilePage} from "../pages/profile/profile";
+import {PasswordresetPage} from "../pages/passwordreset/passwordreset";
 import {AngularFireAuth} from 'angularfire2/auth';
+import {ProfilepicPage} from "../pages/profilepic/profilepic";
+
 @Component({
   templateUrl: 'app.html'
 })

@@ -29,6 +29,8 @@
       <!--<ion-label >סיסמה</ion-label>-->
       <ion-input type="password" (click) = "input2func()" [(ngModel)] = "credentials.password" placeholder="סיסמא"></ion-input>
     </ion-item>
+    <div class = "spacer" style="height: 10px;"></div>
+    <a (click)="passwordreset()">?שכחת סיסמא</a>
     <br>
 
     <button ion-button full color="primary" (click) = "signIn()">התחבר</button>

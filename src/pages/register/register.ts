@@ -28,7 +28,7 @@ export class RegisterPage {
     email:'',
     password:'',
     displayName:''
-  }
+  };
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public userservice: UserProvider) {
     this.username = "";
