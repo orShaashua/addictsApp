@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {MatchesPage} from "../matches/matches";
 import {BuddiesPage} from "../buddies/buddies";
 
+
 /**
  * Generated class for the ChatsPage page.
  *

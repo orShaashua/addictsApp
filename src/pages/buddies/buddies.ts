@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams , AlertController} from 'ionic-angular';
 import {UserProvider} from "../../providers/user/user";
-
+import {RequestsProvider} from "../../providers/requests/requests";
+import {connreq} from '../../models/interfaces/request';
+import firebase from 'firebase';
 /**
  * Generated class for the BuddiesPage page.
  *
@@ -17,9 +19,10 @@ import {UserProvider} from "../../providers/user/user";
 ///this page is not good - copy of matches - try to fix this later.
 export class BuddiesPage {
   temparr = [];
+  newrrequest ={} as connreq;
   filteredusers = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public userservice: UserProvider) {
+              public userservice: UserProvider,public alertCtrl: AlertController, public requestservice: RequestsProvider) {
     //for now all users matches!! need to handle this!!!
     this.userservice.getallusers().then((res: any)=>{
       this.filteredusers = res;
@@ -42,9 +45,27 @@ export class BuddiesPage {
       }
       return false;
     })
-
-
   }
-
-
+  sendreq(recipient){
+    this.newrrequest.sender = firebase.auth().currentUser.uid;
+    this.newrrequest.recipient = recipient.uid;
+    if(this.newrrequest.sender = this.newrrequest.recipient){
+      alert("You are friends always");
+    }else{
+      let successalert = this.alertCtrl.create({
+        title: 'Request send',
+        subTitle: 'Your request was sent to '+ recipient.displayName,
+        buttons: ['ok']
+      });
+      this.requestservice.sendrequest(this.newrrequest).then((res:any)=>{
+        if (res.success) {
+          successalert.present();
+          let sentuser = this.filteredusers.indexOf(recipient);
+          this.filteredusers.splice(sentuser, 1);
+        }
+      }).catch((err)=>{
+        alert(err);
+      });
+    }
+  }
 }

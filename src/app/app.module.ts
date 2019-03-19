@@ -19,13 +19,12 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {ChatPage} from "../pages/chat/chat";
 import {PasswordresetPage} from "../pages/passwordreset/passwordreset";
 import {AngularFireAuthModule} from 'angularfire2/auth';
-import {ProfilepicPage} from "../pages/profilepic/profilepic";
 import {AngularFireAuth} from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
 import {TabsPage} from "../pages/tabs/tabs";
 import {BuddiesPage} from "../pages/buddies/buddies";
-import {ProfilePage} from "../pages/profile/profile";
+import { RequestsProvider } from '../providers/requests/requests';
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
   authDomain: "addictsapp.firebaseapp.com",
@@ -45,10 +44,8 @@ var config = {
     SettingsPage,
     FilterPage,
     RegisterPage,
-    ProfilePage,
     ChatPage,
     PasswordresetPage,
-    ProfilepicPage,
     ChatPage,
     TabsPage,
     BuddiesPage
@@ -71,10 +68,8 @@ var config = {
     ChatPage,
     TabsPage,
     BuddiesPage,
-    ProfilePage,
     ChatPage,
     PasswordresetPage,
-    ProfilepicPage
   ],
   providers: [
     StatusBar,
@@ -83,7 +78,8 @@ var config = {
     AngularFireAuth,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    UserProvider
+    UserProvider,
+    RequestsProvider
   ]
 })
 export class AppModule {}
