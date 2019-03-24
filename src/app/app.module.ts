@@ -25,7 +25,11 @@ import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
 import {TabsPage} from "../pages/tabs/tabs";
 import {BuddiesPage} from "../pages/buddies/buddies";
-import {ProfilePage} from "../pages/profile/profile";
+import { ImghandlerProvider } from '../providers/imghandler/imghandler';
+import {File} from '@ionic-native/file';
+import {FilePath} from "@ionic-native/file-path";
+import {FileChooser} from "@ionic-native/file-chooser";
+// import {ProfilePage} from "../pages/profile/profile";
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
   authDomain: "addictsapp.firebaseapp.com",
@@ -45,7 +49,7 @@ var config = {
     SettingsPage,
     FilterPage,
     RegisterPage,
-    ProfilePage,
+    // ProfilePage,
     ChatPage,
     PasswordresetPage,
     ProfilepicPage,
@@ -71,19 +75,24 @@ var config = {
     ChatPage,
     TabsPage,
     BuddiesPage,
-    ProfilePage,
+    // ProfilePage,
     ChatPage,
     PasswordresetPage,
-    ProfilepicPage
+    ProfilepicPage,
+
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    // File,
+    // FilePath,
+    // FileChooser,
     Camera,
     AngularFireAuth,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    UserProvider
+    UserProvider,
+    ImghandlerProvider
   ]
 })
 export class AppModule {}

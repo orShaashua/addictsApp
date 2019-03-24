@@ -13,21 +13,31 @@
     <ion-title>Profile</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
+
+<ion-content>
 <h1>hey {{username}}</h1>
   <!--<p><img src="../../assets/imgs/micky.jpg” alt="hi"></p>-->
-  <div text-center>
-    <ion-avatar>
-  <ion-img src="../../assets/imgs/micky.jpg"></ion-img>
-    </ion-avatar>
+  <div class="profile-image" (click) ="editimage()" text-center>
+    <img src="{{avatar}}">
   </div>
-  <ion-label  class="button-settings">
-  <button ion-button color="secondary"(click)="goToSettings()">הגדרות</button>
-  </ion-label>
-  <ion-label  class="button-settings">
+
+    <!--<div text-center>-->
+    <!--<ion-avatar>-->
+    <!--</ion-avatar>-->
+  <!--</div>-->
+  <div>
+    <h2 (click)="editname()">{{displayName}}</h2>
+  </div>
+  <div>
+    לחץ על שם המשתמש או תמונה כדי לשנותה
+  </div>
+  <!--<div class="spacer" style="height: 10px;"></div>-->
+  <div class = "button-nav">
+    <button ion-button color="secondary"(click)="goToSettings()">הגדרות</button>
     <button ion-button color="danger" (click)="goToFilterPage()">סנן חברים לפי</button>
-  </ion-label>
-  <ion-label class="button-settings">
     <button ion-button color="secondary" (click)="goToSearchFriends()">חפש חברים</button>
-  </ion-label>
+  </div>
+  <div>
+    <button ion-button round outline color="danger" (click)="logout()">התנתק</button>
+  </div>
 </ion-content>
