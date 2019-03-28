@@ -16,6 +16,37 @@ export class UserProvider {
     console.log('Hello UserProvider Provider');
   }
 
+  addsettingstouser(addictsType, gender, bdayY, bdayM, bdayD, mentor, about){
+    return new Promise((resolve, reject) => {
+      this.afirauth.auth.currentUser.updateProfile({
+        displayName: this.afirauth.auth.currentUser.displayName,
+        photoURL: this.afirauth.auth.currentUser.photoURL
+
+      }).then(()=> {
+        this.firedata.child(this.afirauth.auth.currentUser.uid).set({
+          displayName: this.afirauth.auth.currentUser.displayName,
+          photoURL: this.afirauth.auth.currentUser.photoURL,
+          uid: this.afirauth.auth.currentUser.uid,
+          addictstype: addictsType,
+          gender: gender,
+          bdayYear: bdayY,
+          bdayMonth: bdayM,
+          bdayDay: bdayD,
+          mentor: mentor,
+          description: about
+        }).then(() => {
+          resolve({success: true});
+        }).catch((err)=>{
+          alert(err);
+          // reject(err);
+        })
+        }).catch((err)=>{
+        alert(err);
+        // reject(err);
+      })
+    });
+  }
+
   adduser(newuser,loader){
    return new Promise((resolve, reject) => {
       this.afirauth.auth.createUserWithEmailAndPassword(newuser.email, newuser.password).then(() => {
@@ -26,8 +57,7 @@ export class UserProvider {
           this.firedata.child(this.afirauth.auth.currentUser.uid).set({
             uid: this.afirauth.auth.currentUser.uid,
             displayName: newuser.displayName,
-            photoURL:'https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e'
-
+            photoURL:'https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e',
           }).then(()=>{
             resolve({success: true});
           }).catch((err)=>{
@@ -86,6 +116,8 @@ export class UserProvider {
         })
       })
     }
+
+
 
   updatedisplayname(newname){
     return new Promise((resolve, reject) => {

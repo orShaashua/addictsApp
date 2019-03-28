@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import {UserProvider} from "../../providers/user/user";
 import {ProfilepicPage} from "../profilepic/profilepic";
+import {SettingsPage} from "../settings/settings";
 
 /**
  * Generated class for the RegisterPage page.
@@ -49,7 +50,7 @@ export class RegisterPage {
       this.userservice.adduser(this.newuser,loader).then((res: any) => {
         loader.dismiss();
       if(res.success){
-        this.navCtrl.push(ProfilepicPage);
+        this.navCtrl.push(SettingsPage);
       } else {
         loader.dismiss();
 
