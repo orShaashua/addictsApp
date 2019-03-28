@@ -19,11 +19,16 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {ChatPage} from "../pages/chat/chat";
 import {PasswordresetPage} from "../pages/passwordreset/passwordreset";
 import {AngularFireAuthModule} from 'angularfire2/auth';
+import {ProfilepicPage} from "../pages/profilepic/profilepic";
 import {AngularFireAuth} from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
 import {TabsPage} from "../pages/tabs/tabs";
 import {BuddiesPage} from "../pages/buddies/buddies";
+import { ImghandlerProvider } from '../providers/imghandler/imghandler';
+import {File} from '@ionic-native/file';
+import {FilePath} from "@ionic-native/file-path";
+import {FileChooser} from "@ionic-native/file-chooser";
 import { RequestsProvider } from '../providers/requests/requests';
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
@@ -46,6 +51,7 @@ var config = {
     RegisterPage,
     ChatPage,
     PasswordresetPage,
+    ProfilepicPage,
     ChatPage,
     TabsPage,
     BuddiesPage
@@ -70,16 +76,21 @@ var config = {
     BuddiesPage,
     ChatPage,
     PasswordresetPage,
+    ProfilepicPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    // File,
+    // FilePath,
+    // FileChooser,
     Camera,
     AngularFireAuth,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     UserProvider,
-    RequestsProvider
+    RequestsProvider,
+    ImghandlerProvider
   ]
 })
 export class AppModule {}

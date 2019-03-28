@@ -1,8 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {ProfilePage} from "../profile/profile";
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import {UserProvider} from "../../providers/user/user";
+import {TabsPage} from "../tabs/tabs";
 
 /**
  * Generated class for the SettingsPage page.
@@ -26,7 +28,10 @@ export class SettingsPage {
   @ViewChild('about') about;
   credentialsForm: FormGroup;
   myPhoto: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, private camera: Camera){
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private formBuilder: FormBuilder, private camera: Camera,
+              public userservice: UserProvider,
+              public loadingCtrl: LoadingController){
     this.credentialsForm = this.formBuilder.group({
 
       addictsType: [
@@ -57,8 +62,26 @@ export class SettingsPage {
       + "the Birth Date: year: "  + this.BirthDate.value.year+ " mounth: "+this.BirthDate.value.month + " day: "+this.BirthDate.value.day +"\n"
       +"mentor? " +this.mentor.value +"\n"
       + "about me: " +this.about.value +"\n");
-
-    this.navCtrl.push(ProfilePage);
+    let loader = this.loadingCtrl.create({
+      content: 'אנא המתן'
+    });
+    loader.present();
+    this.userservice. addsettingstouser(this.addictsType.value,
+      this.gender.value,
+      this.BirthDate.value.year,
+      this.BirthDate.value.month,
+      this.BirthDate.value.day,
+      this.mentor.value,
+      this.about.value).then((res: any) => {
+      loader.dismiss();
+      if(res.success){
+        this.navCtrl.push(TabsPage);
+      } else {
+        loader.dismissAll();
+        alert('error: ' + res);
+      }
+    });
+    // this.navCtrl.push(ProfilePage);
   }
 
   takePhoto() {
@@ -67,7 +90,7 @@ export class SettingsPage {
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
-    }
+    };
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):

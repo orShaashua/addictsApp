@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import {UserProvider} from "../../providers/user/user";
+import {ProfilepicPage} from "../profilepic/profilepic";
+import {SettingsPage} from "../settings/settings";
 
 /**
  * Generated class for the RegisterPage page.
@@ -26,7 +28,7 @@ export class RegisterPage {
     displayName:''
   };
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public userservice: UserProvider) {
+              public userservice: UserProvider, public loadingCtrl: LoadingController) {
     this.username = "";
     this.password = "";
   }
@@ -37,14 +39,21 @@ export class RegisterPage {
 
   signUp() {
 
+
     if(this.newuser.displayName == '' || this.newuser.password == '' || this.newuser.email == ''){
       this.showDisplayName = true;
     } else {
-
-    this.userservice.adduser(this.newuser).then((res: any) => {
+      let loader = this.loadingCtrl.create({
+        content: 'אנא המתן'
+      });
+      loader.present();
+      this.userservice.adduser(this.newuser,loader).then((res: any) => {
+        loader.dismiss();
       if(res.success){
-        this.navCtrl.popTo(RegisterPage);
+        this.navCtrl.push(SettingsPage);
       } else {
+        loader.dismiss();
+
         alert('error: ' + res);
       }
     })
