@@ -100,4 +100,12 @@ export class SettingsPage {
       alert(err);
     });
   }
+  loadusersettings(){
+    this.userservice.getusersdetails().then((res: any)=>{
+      this.gender = res.gender;
+    })
+  }
+  ionViewWillEnter(){
+    this.loadusersettings();
+  }
 }

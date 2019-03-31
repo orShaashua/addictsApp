@@ -30,6 +30,7 @@ import {File} from '@ionic-native/file';
 import {FilePath} from "@ionic-native/file-path";
 import {FileChooser} from "@ionic-native/file-chooser";
 import { RequestsProvider } from '../providers/requests/requests';
+import { ChatProvider } from '../providers/chat/chat';
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
   authDomain: "addictsapp.firebaseapp.com",
@@ -81,7 +82,7 @@ var config = {
   providers: [
     StatusBar,
     SplashScreen,
-    // File,
+//    File,
     // FilePath,
     // FileChooser,
     Camera,
@@ -90,7 +91,8 @@ var config = {
     AuthProvider,
     UserProvider,
     RequestsProvider,
-    ImghandlerProvider
+    ImghandlerProvider,
+    ChatProvider
   ]
 })
 export class AppModule {}

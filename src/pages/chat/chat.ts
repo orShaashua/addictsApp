@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database'
-import {RequestsProvider} from "../../providers/requests/requests";
+import {ChatProvider} from "../../providers/chat/chat";
+import firebase from 'firebase';
+
 
 /**
  * Generated class for the ChatPage page.
@@ -16,64 +18,40 @@ import {RequestsProvider} from "../../providers/requests/requests";
   templateUrl: 'chat.html',
 })
 export class ChatPage {
-  myrequests;
-  username: string = '';
-  message: string = '';
-  _chatSubscription;
-  messages: object[] = [];
 
+  @ViewChild('content') content: Content;
+  newmessage: string = '';
+  allmessages = [];
+
+  buddy: any;
+  photoURL;
   constructor(public db: AngularFireDatabase,
-              public navCtrl: NavController, public navParams: NavParams,public events:Events,
-              public requestservice:RequestsProvider) {
-    // this.username = this.navParams.get('username');
-    // this._chatSubscription = this.db.list('/chat').valueChanges().subscribe( data => {
-    //   this.messages = data;
-    // });
+              public navCtrl: NavController, public navParams: NavParams,public events: Events,
+            public chatservice: ChatProvider) {
+
+    this.buddy = this.chatservice.buddy;
+    this.photoURL = firebase.auth().currentUser.photoURL;
+    this.scrollto();
+    this.events.subscribe('newmessage', ()=>{
+      this.allmessages = [];
+      this.allmessages = this.chatservice.buddymessages;
+      this.scrollto();
+    });
   }
 
-  sendMessage() {
-
-    // this.db.list('/chat').push({
-    //   username: this.username,
-    //   message: this.message
-    // }).then( () => {
-    //   // message is sent
-    // }).catch(() => {
-    //   // some error. maybe firebase is unreachable
-    //   alert("firebase is unreachable");
-    // });
-    // this.message = '';
+  addmessage(){
+    this.chatservice.addnewmessage(this.newmessage).then(()=>{
+      this.content.scrollToBottom();
+      this.newmessage = '';
+    });
   }
-  ionViewWillEnter(){
-    this.requestservice.getmyrequests();
-    this.events.subscribe('gotrequests', ()=>{
-      this.myrequests =[];
-      this.myrequests = this.requestservice.userdetails;
-    })
+  ionViewDidEnter(){
+    this.chatservice.getbuddymessages();
   }
 
-  ionViewDidLoad() {
-    // this.db.list('/chat').push({
-    //   specialMessage: true,
-    //   message: `${this.username} has joined the room`
-    // });
+  scrollto(){
+    setTimeout(()=>{
+      this.content.scrollToBottom();
+    },1000);
   }
-
-  ionViewWillLeave(){
-    // this._chatSubscription.unsubscribe();
-    // this.db.list('/chat').push({
-    //   specialMessage: true,
-    //   message: `${this.username} has left the room`
-    // });
-    this.events.unsubscribe('gotrequests');
-  }
-
-
-  addbuddy(){
-    this.navCtrl.push('BuddiesPage');
-  }
-
-
-
-
 }

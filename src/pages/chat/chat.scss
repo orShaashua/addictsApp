@@ -1,93 +1,213 @@
 page-chat {
-  .innerMessage {
-    display: inline-block;
-    padding: 5px 10px;
-    background: color($colors, 'primary');
-    margin: 5px;
-    color: white;
+  //.innerMessage {
+  //  display: inline-block;
+  //  padding: 5px 10px;
+  //  background: color($colors, 'primary');
+  //  margin: 5px;
+  //  color: white;
+  //  border-radius: 3px;
+  //}
+  //.innerMessage.messageRight {
+  //  background: color($colors, 'secondary');
+  //}
+  //.username {
+  //  font-weight: bold;
+  //  font-size: 80%;
+  //  text-align: right;
+  //}
+  //.message {
+  //  font-size: 120%;
+  //}
+  //.elem button {
+  //  border-radius: 0;
+  //  margin: 0;
+  //  position: absolute;
+  //  top: 0;
+  //  left: 0;
+  //  width: 100%;
+  //  height: 100%;
+  //}
+  //.elem {
+  //  position: relative;
+  //  min-width: 50px;
+  //}
+  //div#footer div.elem:first-child {
+  //  flex-grow: 1;
+  //}
+  //div#footer {
+  //  display: flex;
+  //  flex-direction: row;
+  //  align-items: stretch;
+  //}
+
+  //ion-input{
+  //  padding-left: 15px;
+  //  font-size: 125%;
+  //}
+  //ion-toolbar {
+  //  margin: 0;
+  //  padding: 0!important;
+  //}
+  //.message:after {
+  //  content: '';
+  //  display: block;
+  //  clear: both;
+  //}
+
+  //
+  // .innerMessage .messageContent{
+  //  background: white;
+  //  display: inline-block;
+  //  padding: 0 10px;
+  //}
+  //
+  // .innerMessage:before{
+  //  content: '';
+  //  height: 2px;
+  //  background: #eee;
+  //  display: block;
+  //  top: 50%;
+  //  position: absolute;
+  //  left: 0;
+  //  width: 100%;
+  //  z-index: -1;
+  //}
+  //
+  //.innerMessage{
+  //  background: transparent;
+  //  color: black;
+  //  font-size: 80%;
+  //  width: 100%;
+  //  float: none;
+  //  text-align: center;
+  //  position: relative;
+  //}
+  //.ion-navbar {
+  //  background-color: #03b6b3;
+  //}
+  .container {
     border-radius: 3px;
+    padding: 5px;
+    margin: 5px 0;
   }
-  .innerMessage.messageRight {
+
+  /* Clear floats */
+  .container::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  /* Style images */
+  .container img {
+    float: left;
+    max-width: 40px;
+    width: 100%;
+    margin-right: 10px;
+    border-radius: 50%;
+  }
+
+  /* Style the right image */
+  .container img.right {
+    float: right;
+    margin-left: 10px;
+    margin-right:0;
+  }
+  /* Style time text */
+  .time-right {
+    float: right;
+    color: #aaa;
+    font-size: x-small;
+    margin: 0px;
+  }
+
+  /* Style time text */
+  .time-left {
+    float: left;
+    color: #999;
+    font-size: x-small;
+    padding: 0px;
+  }
+  //.messageLeft {
+  //  float: left;
+  //  background: color($colors, 'secondary');
+  //  display: inline-block;
+  //  padding: 5px 10px;
+  //  margin: 5px;
+  //  color: white;
+  //  border-radius: 3px;
+  //}
+  //.messageRight {
+  //  background: color($colors, 'primary');
+  //  float: right;
+  //  display: inline-block;
+  //  padding: 5px 10px;
+  //  margin: 5px;
+  //  color: white;
+  //  border-radius: 3px;
+  //}
+  .box3_right {
+    display: inline-block;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px;
+    color: white;
+    text-align: center;
+    font-weight: 700;
+    font-family: arial;
+    position: relative;
+    float: right;
     background: color($colors, 'secondary');
   }
-  .username {
-    font-weight: bold;
-    font-size: 80%;
-    text-align: right;
-  }
-  .message {
-    font-size: 120%;
-  }
-  .elem button {
-    border-radius: 0;
-    margin: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .elem {
-    position: relative;
-    min-width: 50px;
-  }
-  div#footer div.elem:first-child {
-    flex-grow: 1;
-  }
-  div#footer {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-  }
 
-  ion-input{
-    padding-left: 15px;
-    font-size: 125%;
-  }
-  ion-toolbar {
-    margin: 0;
-    padding: 0!important;
-  }
-  .message:after {
-    content: '';
-    display: block;
-    clear: both;
-  }
-  .messageLeft {
-    float: left;
-  }
-  .messageRight {
-    float: right;
-  }
-
-  .message.special .innerMessage .messageContent{
-    background: white;
+  .box3_left {
     display: inline-block;
-    padding: 0 10px;
-  }
-
-  .message.special .innerMessage:before{
-    content: '';
-    height: 2px;
-    background: #eee;
-    display: block;
-    top: 50%;
-    position: absolute;
-    left: 0;
-    width: 100%;
-    z-index: -1;
-  }
-
-  .message.special .innerMessage{
-    background: transparent;
-    color: black;
-    font-size: 80%;
-    width: 100%;
-    float: none;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 10px;
+    color: white;
     text-align: center;
+    font-weight: 700;
+    font-family: arial;
     position: relative;
+    float: left;
+    background: color($colors, 'primary');
   }
-  .ion-navbar {
-    background-color: #03b6b3;
-  }
+
+
+/* speech bubble 13 */
+
+.right:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 15px solid color($colors, 'secondary');
+  border-right: 15px solid transparent;
+  border-top: 15px solid color($colors, 'secondary');
+  border-bottom: 15px solid transparent;
+  right: -16px;
+  top: 0px;
+
+}
+
+
+/* speech bubble 14 */
+
+.left:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 15px solid transparent;
+  border-right: 15px solid color($colors, 'primary');
+  border-top: 15px solid color($colors, 'primary');
+  border-bottom: 15px solid transparent;
+  left: -16px;
+  top: 0px;
+
+
+}
+
+
 }

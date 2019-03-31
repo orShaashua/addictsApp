@@ -10,7 +10,6 @@ import firebase from 'firebase';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
 @IonicPage()
 @Component({
   selector: 'page-buddies',
@@ -25,13 +24,11 @@ export class BuddiesPage {
               public userservice: UserProvider,public alertCtrl: AlertController, public requestservice: RequestsProvider) {
     //for now all users matches!! need to handle this!!!
     this.userservice.getallusers().then((res: any)=>{
-      this.filteredusers = res;
-      this.temparr = res;
+      this.filteredusers = res;//need to be all matches and not all users!
+      this.temparr = res;//need to be all matches and not all users!
     })
   }
-
-  ionViewDidLoad() {
-  }
+  ionViewDidLoad() {}
 
   searchuser(searchbar){
     this.filteredusers = this.temparr;
@@ -40,30 +37,27 @@ export class BuddiesPage {
       return;
     }
     this.filteredusers = this.filteredusers.filter((v)=>{
-      if((v.displayName.toLowerCase().indexOf(q.toLowerCase()))> -1){
-        return true;
-      }
-      return false;
+      return v.displayName.toLowerCase().indexOf(q.toLowerCase()) > -1;
     })
   }
   sendreq(recipient){
     this.newrrequest.sender = firebase.auth().currentUser.uid;
     this.newrrequest.recipient = recipient.uid;
-    if(this.newrrequest.sender = this.newrrequest.recipient){
+    if(this.newrrequest.sender == this.newrrequest.recipient){
       alert("You are friends always");
-    }else{
+    }else {
       let successalert = this.alertCtrl.create({
         title: 'Request send',
-        subTitle: 'Your request was sent to '+ recipient.displayName,
+        subTitle: 'Your request was sent to ' + recipient.displayName,
         buttons: ['ok']
       });
-      this.requestservice.sendrequest(this.newrrequest).then((res:any)=>{
+      this.requestservice.sendrequest(this.newrrequest).then((res: any) => {
         if (res.success) {
           successalert.present();
           let sentuser = this.filteredusers.indexOf(recipient);
           this.filteredusers.splice(sentuser, 1);
         }
-      }).catch((err)=>{
+      }).catch((err) => {
         alert(err);
       });
     }
