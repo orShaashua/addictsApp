@@ -22,7 +22,6 @@ export class ChatPage {
   @ViewChild('content') content: Content;
   newmessage: string = '';
   allmessages = [];
-
   buddy: any;
   photoURL;
   constructor(public db: AngularFireDatabase,
@@ -30,6 +29,7 @@ export class ChatPage {
             public chatservice: ChatProvider) {
 
     this.buddy = this.chatservice.buddy;
+
     this.photoURL = firebase.auth().currentUser.photoURL;
     this.scrollto();
     this.events.subscribe('newmessage', ()=>{
@@ -48,7 +48,9 @@ export class ChatPage {
   ionViewDidEnter(){
     this.chatservice.getbuddymessages();
   }
-
+  ionViewDidLeave(){
+    this.events.unsubscribe('newmessage');
+  }
   scrollto(){
     setTimeout(()=>{
       this.content.scrollToBottom();
