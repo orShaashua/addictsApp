@@ -56,7 +56,6 @@ export class SettingsPage {
   }
 
   doneSettings(){
-    alert(this.BirthDate);
     // alert("the addicts type is: " + this.addictsType.value + "\n"
     //   + "the gender: " +this.gender.value+ "\n"
     //   + "the Birth Date: year: "  + this.BirthDate.value.year+ " mounth: "+this.BirthDate.value.month + " day: "+this.BirthDate.value.day +"\n"
@@ -68,7 +67,9 @@ export class SettingsPage {
     loader.present();
     this.userservice. addsettingstouser(this.addictsType.value,
       this.gender.value,
-      this.BirthDate.value,
+      this.BirthDate.value.year,
+      this.BirthDate.value.month,
+      this.BirthDate.value.day,
       this.mentor.value,
       this.about.value).then((res: any) => {
         loader.dismiss();
@@ -101,13 +102,19 @@ export class SettingsPage {
 
   loadusersettings(){
     this.userservice.getusersdetails().then((res: any)=>{
+      if (res.gender) {
+        this.gender.value = res.gender;
+        this.addictsType.value = res.addictstype;
+        this.mentor.value = res.mentor;
 
-     this.gender.value  = res.gender;
-     this.addictsType.value = res.addictstype;
-     this.mentor.value = res.mentor;
-     this.BirthDate.value = res.BirthDate.value;
-     this.about.value = res.description;
-    })
+        this.BirthDate.setValue(new Date(res.bdayYear + "-" + res.bdayMonth + "-" + res.bdayDay).toISOString());
+        // this.BirthDate.value.year = res.bdayYear;
+        //  this.BirthDate.value.month = res.bdayMonth;
+        //  this.BirthDate.value.day = res.bdayDay;
+        this.about.value = res.description;
+      }
+    });
+
   }
   ionViewWillEnter(){
     this.loadusersettings();
