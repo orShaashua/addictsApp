@@ -27,7 +27,6 @@ export class SettingsPage {
   @ViewChild('mentor') mentor;
   @ViewChild('about') about;
   credentialsForm: FormGroup;
-  myPhoto: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private formBuilder: FormBuilder, private camera: Camera,
               public userservice: UserProvider,
@@ -57,29 +56,28 @@ export class SettingsPage {
   }
 
   doneSettings(){
-    alert("the addicts type is: " + this.addictsType.value + "\n"
-      + "the gender: " +this.gender.value+ "\n"
-      + "the Birth Date: year: "  + this.BirthDate.value.year+ " mounth: "+this.BirthDate.value.month + " day: "+this.BirthDate.value.day +"\n"
-      +"mentor? " +this.mentor.value +"\n"
-      + "about me: " +this.about.value +"\n");
+    alert(this.BirthDate);
+    // alert("the addicts type is: " + this.addictsType.value + "\n"
+    //   + "the gender: " +this.gender.value+ "\n"
+    //   + "the Birth Date: year: "  + this.BirthDate.value.year+ " mounth: "+this.BirthDate.value.month + " day: "+this.BirthDate.value.day +"\n"
+    //   +"mentor? " +this.mentor.value +"\n"
+    //   + "about me: " +this.about.value +"\n");
     let loader = this.loadingCtrl.create({
       content: 'אנא המתן'
     });
     loader.present();
     this.userservice. addsettingstouser(this.addictsType.value,
       this.gender.value,
-      this.BirthDate.value.year,
-      this.BirthDate.value.month,
-      this.BirthDate.value.day,
+      this.BirthDate.value,
       this.mentor.value,
       this.about.value).then((res: any) => {
-      loader.dismiss();
-      if(res.success){
-        this.navCtrl.push(TabsPage);
-      } else {
-        loader.dismissAll();
-        alert('error: ' + res);
-      }
+        loader.dismiss();
+        if(res.success){
+          this.navCtrl.push(TabsPage);
+        } else {
+          loader.dismissAll();
+          alert('error: ' + res);
+        }
     });
     // this.navCtrl.push(ProfilePage);
   }
@@ -100,9 +98,15 @@ export class SettingsPage {
   //     alert(err);
   //   });
   // }
+
   loadusersettings(){
     this.userservice.getusersdetails().then((res: any)=>{
-      this.gender = res.gender;
+
+     this.gender.value  = res.gender;
+     this.addictsType.value = res.addictstype;
+     this.mentor.value = res.mentor;
+     this.BirthDate.value = res.BirthDate.value;
+     this.about.value = res.description;
     })
   }
   ionViewWillEnter(){

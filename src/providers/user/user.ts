@@ -16,7 +16,7 @@ export class UserProvider {
     console.log('Hello UserProvider Provider');
   }
 
-  addsettingstouser(addictsType, gender, bdayY, bdayM, bdayD, mentor, about){
+  addsettingstouser(addictsType, gender, BirthDate, mentor, about){
     return new Promise((resolve, reject) => {
       this.afirauth.auth.currentUser.updateProfile({
         displayName: this.afirauth.auth.currentUser.displayName,
@@ -29,9 +29,10 @@ export class UserProvider {
           uid: this.afirauth.auth.currentUser.uid,
           addictstype: addictsType,
           gender: gender,
-          bdayYear: bdayY,
-          bdayMonth: bdayM,
-          bdayDay: bdayD,
+          BirthDate:BirthDate,
+          // bdayYear: bdayY,
+          // bdayMonth: bdayM,
+          // bdayDay: bdayD,
           mentor: mentor,
           description: about
         }).then(() => {

@@ -20,7 +20,7 @@
     <ion-label class="my-label" >:סוג התמכרות</ion-label>
     <ion-item  class ="masters">
       <ion-label ></ion-label>
-      <ion-select [formControl]="credentialsForm.controls['addictsType']" type="text" cancelText="ביטול" okText="אישור" #addictsType >
+      <ion-select [formControl]="credentialsForm.controls['addictsType']" cancelText="ביטול" okText="אישור" #addictsType >
         <ion-option value="drugs">סמים</ion-option>
         <ion-option value="alcohol">אלכהול</ion-option>
         <ion-option value="gambling">הימורים</ion-option>
@@ -40,7 +40,7 @@
     <ion-label class="my-label" >:מגדר</ion-label>
     <ion-item class ="masters">
       <ion-label></ion-label>
-      <ion-select  cancelText="ביטול" okText="אישור" [formControl]="credentialsForm.controls['gender']"  #gender >
+      <ion-select [formControl]="credentialsForm.controls['gender']"  cancelText="ביטול" okText="אישור"  #gender >
         <ion-option value="men">גבר</ion-option>
         <ion-option value="female">אישה</ion-option>
       </ion-select>
