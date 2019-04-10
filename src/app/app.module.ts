@@ -11,6 +11,9 @@ import { ListPage } from '../pages/list/list';
 import {RegisterPage} from '../pages/register/register';
 
 import { StatusBar } from '@ionic-native/status-bar';
+import {File} from '@ionic-native/file/ngx';
+import {FilePath} from "@ionic-native/file-path/ngx";
+import {FileChooser} from "@ionic-native/file-chooser/ngx";
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {LoginPage} from "../pages/login/login";
 import {Camera} from "@ionic-native/camera";
@@ -26,9 +29,7 @@ import { UserProvider } from '../providers/user/user';
 import {TabsPage} from "../pages/tabs/tabs";
 import {BuddiesPage} from "../pages/buddies/buddies";
 import { ImghandlerProvider } from '../providers/imghandler/imghandler';
-import {File} from '@ionic-native/file';
-import {FilePath} from "@ionic-native/file-path";
-import {FileChooser} from "@ionic-native/file-chooser";
+
 import { RequestsProvider } from '../providers/requests/requests';
 import { ChatProvider } from '../providers/chat/chat';
 import { SwipeCardsModule } from 'ng2-swipe-cards';
@@ -91,11 +92,11 @@ var config = {
   providers: [
     StatusBar,
     SplashScreen,
-//    File,
-    // FilePath,
-    // FileChooser,
     Camera,
     AngularFireAuth,
+     File,
+     FilePath,
+     FileChooser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     UserProvider,

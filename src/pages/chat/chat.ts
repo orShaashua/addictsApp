@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, Content, LoadingController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database'
 import {ChatProvider} from "../../providers/chat/chat";
+import {ImghandlerProvider} from "../../providers/imghandler/imghandler";
 import firebase from 'firebase';
 
 
@@ -26,7 +27,7 @@ export class ChatPage {
   photoURL;
   constructor(public db: AngularFireDatabase,
               public navCtrl: NavController, public navParams: NavParams,public events: Events,
-            public chatservice: ChatProvider) {
+            public chatservice: ChatProvider, public loadingCtrl: LoadingController, public imgstore: ImghandlerProvider) {
 
     this.buddy = this.chatservice.buddy;
 
@@ -56,4 +57,12 @@ export class ChatPage {
       this.content.scrollToBottom();
     },1000);
   }
+  sendPicture(){
+    let loader = this.loadingCtrl.create({
+      content: 'Please wait'
+    });
+    loader.present();
+    //this.imgstore.u
+  }
+
 }
