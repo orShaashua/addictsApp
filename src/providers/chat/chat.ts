@@ -52,7 +52,6 @@ export class ChatProvider {
       for(var tempkey in temp){
         this.buddymessages.push(temp[tempkey]);
       }
-      alert("getbuddymessages");
       this.events.publish('newmessage');
     })
   }

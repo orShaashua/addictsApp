@@ -31,6 +31,10 @@ import {FilePath} from "@ionic-native/file-path";
 import {FileChooser} from "@ionic-native/file-chooser";
 import { RequestsProvider } from '../providers/requests/requests';
 import { ChatProvider } from '../providers/chat/chat';
+import { SwipeCardsModule } from 'ng2-swipe-cards';
+import {SearchFriendsPage} from "../pages/search-friends/search-friends";
+import {MatchPage} from "../pages/match/match";
+
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
   authDomain: "addictsapp.firebaseapp.com",
@@ -55,13 +59,16 @@ var config = {
     ProfilepicPage,
     ChatPage,
     TabsPage,
-    BuddiesPage
+    SearchFriendsPage,
+    BuddiesPage,
+    MatchPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp, {tabsPlacement: 'top'}),
     AngularFireModule.initializeApp(config),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    SwipeCardsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -76,8 +83,10 @@ var config = {
     TabsPage,
     BuddiesPage,
     ChatPage,
+    SearchFriendsPage,
     PasswordresetPage,
-    ProfilepicPage
+    ProfilepicPage,
+    MatchPage
   ],
   providers: [
     StatusBar,
