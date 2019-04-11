@@ -31,6 +31,8 @@ import {FilePath} from "@ionic-native/file-path";
 import {FileChooser} from "@ionic-native/file-chooser";
 import { RequestsProvider } from '../providers/requests/requests';
 import { ChatProvider } from '../providers/chat/chat';
+import { HttpClientModule } from '@angular/common/http';
+import { SwingModule } from 'angular2-swing';
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
   authDomain: "addictsapp.firebaseapp.com",
@@ -55,13 +57,16 @@ var config = {
     ProfilepicPage,
     ChatPage,
     TabsPage,
-    BuddiesPage
+    BuddiesPage,
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp, {tabsPlacement: 'top'}),
     AngularFireModule.initializeApp(config),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    BrowserModule,
+    HttpClientModule,
+    IonicModule.forRoot(MyApp, {tabsPlacement: 'top'}),
+    SwingModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -77,7 +82,7 @@ var config = {
     BuddiesPage,
     ChatPage,
     PasswordresetPage,
-    ProfilepicPage
+    ProfilepicPage,
   ],
   providers: [
     StatusBar,

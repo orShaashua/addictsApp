@@ -116,6 +116,7 @@ export class SettingsPage {
     });
 
   }
+
   ionViewWillEnter(){
     this.loadusersettings();
   }
