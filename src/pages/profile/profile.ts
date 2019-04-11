@@ -6,6 +6,9 @@ import {ImghandlerProvider} from '../../providers/imghandler/imghandler';
 import {UserProvider} from "../../providers/user/user";
 import firebase from 'firebase';
 import {LoginPage} from "../login/login";
+import {SearchFriendsPage} from "../search-friends/search-friends";
+import { ModalController } from 'ionic-angular';
+import { MatchPage } from '../match/match';
 
 /**
  * Generated class for the ProfilePage page.
@@ -24,7 +27,7 @@ export class ProfilePage {
   avatar: string;
   displayName: string;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController) {
+              public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController, public modalCtrl: ModalController) {
     this.username = this.navParams.get('username');
   }
 
@@ -54,7 +57,7 @@ export class ProfilePage {
   }
 
   goToSearchFriends(){
-
+    this.navCtrl.push(SearchFriendsPage);
   }
 
   logout(){
@@ -109,5 +112,10 @@ export class ProfilePage {
     });
     alert.present();
 
+  }
+
+  presentModal() {
+    let modal = this.modalCtrl.create(MatchPage);
+    modal.present();
   }
 }

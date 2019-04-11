@@ -1,7 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, Content, LoadingController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database'
 import {ChatProvider} from "../../providers/chat/chat";
+import {ImghandlerProvider} from "../../providers/imghandler/imghandler";
 import firebase from 'firebase';
 
 
@@ -22,14 +23,14 @@ export class ChatPage {
   @ViewChild('content') content: Content;
   newmessage: string = '';
   allmessages = [];
-
   buddy: any;
   photoURL;
   constructor(public db: AngularFireDatabase,
               public navCtrl: NavController, public navParams: NavParams,public events: Events,
-            public chatservice: ChatProvider) {
+            public chatservice: ChatProvider, public loadingCtrl: LoadingController, public imgstore: ImghandlerProvider) {
 
     this.buddy = this.chatservice.buddy;
+
     this.photoURL = firebase.auth().currentUser.photoURL;
     this.scrollto();
     this.events.subscribe('newmessage', ()=>{
@@ -48,10 +49,20 @@ export class ChatPage {
   ionViewDidEnter(){
     this.chatservice.getbuddymessages();
   }
-
+  ionViewDidLeave(){
+    this.events.unsubscribe('newmessage');
+  }
   scrollto(){
     setTimeout(()=>{
       this.content.scrollToBottom();
     },1000);
   }
+  sendPicture(){
+    let loader = this.loadingCtrl.create({
+      content: 'Please wait'
+    });
+    loader.present();
+    //this.imgstore.u
+  }
+
 }

@@ -11,6 +11,9 @@ import { ListPage } from '../pages/list/list';
 import {RegisterPage} from '../pages/register/register';
 
 import { StatusBar } from '@ionic-native/status-bar';
+import {File} from '@ionic-native/file/ngx';
+import {FilePath} from "@ionic-native/file-path/ngx";
+import {FileChooser} from "@ionic-native/file-chooser/ngx";
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {LoginPage} from "../pages/login/login";
 import {Camera} from "@ionic-native/camera";
@@ -26,13 +29,13 @@ import { UserProvider } from '../providers/user/user';
 import {TabsPage} from "../pages/tabs/tabs";
 import {BuddiesPage} from "../pages/buddies/buddies";
 import { ImghandlerProvider } from '../providers/imghandler/imghandler';
-import {File} from '@ionic-native/file';
-import {FilePath} from "@ionic-native/file-path";
-import {FileChooser} from "@ionic-native/file-chooser";
+
 import { RequestsProvider } from '../providers/requests/requests';
 import { ChatProvider } from '../providers/chat/chat';
-import { HttpClientModule } from '@angular/common/http';
-import { SwingModule } from 'angular2-swing';
+import { SwipeCardsModule } from 'ng2-swipe-cards';
+import {SearchFriendsPage} from "../pages/search-friends/search-friends";
+import {MatchPage} from "../pages/match/match";
+
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
   authDomain: "addictsapp.firebaseapp.com",
@@ -57,16 +60,16 @@ var config = {
     ProfilepicPage,
     ChatPage,
     TabsPage,
+    SearchFriendsPage,
     BuddiesPage,
+    MatchPage
   ],
   imports: [
     BrowserModule,
+    IonicModule.forRoot(MyApp, {tabsPlacement: 'top'}),
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
-    BrowserModule,
-    HttpClientModule,
-    IonicModule.forRoot(MyApp, {tabsPlacement: 'top'}),
-    SwingModule
+    SwipeCardsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -81,17 +84,19 @@ var config = {
     TabsPage,
     BuddiesPage,
     ChatPage,
+    SearchFriendsPage,
     PasswordresetPage,
     ProfilepicPage,
+    MatchPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-//    File,
-    // FilePath,
-    // FileChooser,
     Camera,
     AngularFireAuth,
+     File,
+     FilePath,
+     FileChooser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     UserProvider,
