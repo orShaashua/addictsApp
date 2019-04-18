@@ -144,4 +144,25 @@ export class UserProvider {
       })
     })
   }
+
+  updateimage(imageurl){
+    return new Promise((resolve, reject)=>{
+      this.afirauth.auth.currentUser.updateProfile({
+        displayName: this.afirauth.auth.currentUser.displayName,
+        photoURL: imageurl
+      }).then(()=>{
+        firebase.database().ref('/users/' + firebase.auth().currentUser.uid).update({
+          displayName: this.afirauth.auth.currentUser.displayName,
+          photoURL: imageurl,
+          uid: firebase.auth().currentUser.uid
+        }).then(() => {
+            resolve({success: true})
+          }).catch((err) => {
+            alert(err);
+          })
+      }).catch((err) => {
+        alert(err);
+      })
+    })
+  }
 }

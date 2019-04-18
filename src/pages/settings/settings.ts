@@ -5,6 +5,7 @@ import {ProfilePage} from "../profile/profile";
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import {UserProvider} from "../../providers/user/user";
 import {TabsPage} from "../tabs/tabs";
+import {ProfilepicPage} from "../profilepic/profilepic";
 
 /**
  * Generated class for the SettingsPage page.
@@ -74,7 +75,7 @@ export class SettingsPage {
       this.about.value).then((res: any) => {
         loader.dismiss();
         if(res.success){
-          this.navCtrl.push(TabsPage);
+          this.navCtrl.push(ProfilepicPage);
         } else {
           loader.dismissAll();
           alert('error: ' + res);

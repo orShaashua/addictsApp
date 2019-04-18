@@ -18,7 +18,7 @@ export class ImghandlerProvider {
   }
 
   uploadimage() {
-    var promise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.filechooser.open().then((url) => {
         (<any>window).FilePath.resolveNativePath(url, (result) => {
           this.nativepath = result;
@@ -43,8 +43,7 @@ export class ImghandlerProvider {
           })
         })
       })
-    })
-    return promise;
+    });
   }
 
 }
