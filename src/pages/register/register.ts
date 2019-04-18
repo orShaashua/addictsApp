@@ -17,6 +17,7 @@ import {SettingsPage} from "../settings/settings";
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+  public loader;
   username: string;
   password: string;
   showUserName = false; //show red alerts and text for username box
@@ -39,22 +40,20 @@ export class RegisterPage {
 
   signUp() {
 
-
     if(this.newuser.displayName == '' || this.newuser.password == '' || this.newuser.email == ''){
       this.showDisplayName = true;
     } else {
-      let loader = this.loadingCtrl.create({
+      this.loader = this.loadingCtrl.create({
         content: 'אנא המתן'
       });
-      loader.present();
-      this.userservice.adduser(this.newuser,loader).then((res: any) => {
-        loader.dismiss();
+      this.loader.present();
+      this.userservice.adduser(this.newuser,this.loader).then((res: any) => {
+        this.loader.dismissAll();
       if(res.success){
         this.navCtrl.push(SettingsPage);
       } else {
-        loader.dismiss();
-
-        alert('error: ' + res);
+        this.loader.dismissAll();
+        alert('error1: ' + res);
       }
     })
 

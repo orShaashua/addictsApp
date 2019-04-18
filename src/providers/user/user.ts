@@ -61,18 +61,23 @@ export class UserProvider {
           }).then(()=>{
             resolve({success: true});
           }).catch((err)=>{
-            loader.dismissAll();
             alert(err);
+            setTimeout(() => {
+            }, 0);
             // reject(err);
           })
         }).catch((err)=>{
-          loader.dismissAll();
           alert(err);
+          setTimeout(() => {
+            loader.dismiss();
+          }, 0);
           // reject(err);
         })
       }).catch((err)=>{
-        loader.dismissAll();
         alert(err);
+        setTimeout(() => {
+          loader.dismiss();
+        }, 0);
         // reject(err);
       })
     });

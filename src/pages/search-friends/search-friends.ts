@@ -37,7 +37,7 @@ export class SearchFriendsPage {
     "http://starsvilla.com/wp-content/uploads/2017/09/19425346_145774522639533_5306252787913326592_n.jpg",
     "https://i1.wp.com/akmatter.com/wp-content/uploads/2018/01/Rakul-Preet-Singh.jpg",
     "https://data1.ibtimes.co.in/cache-img-600-450/en/full/571296/1494666323_anushka-shetty-baahubali.jpg"
-  ]
+  ];
   constructor(private sanitizer: DomSanitizer) {
 
     for (let i = 0; i < this.images.length; i++) {
