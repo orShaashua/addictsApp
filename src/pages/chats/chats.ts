@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {Events, IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
-import {MatchesPage} from "../matches/matches";
 import {BuddiesPage} from "../buddies/buddies";
 import {RequestsProvider} from "../../providers/requests/requests";
 import {ChatProvider} from "../../providers/chat/chat";

@@ -1,5 +1,5 @@
 import {Component, NgZone} from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import {FilterPage} from "../filter/filter";
 import {ImghandlerProvider} from '../../providers/imghandler/imghandler';
@@ -31,7 +31,7 @@ export class ProfilePage {
   myPhoto: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController,
-              public modalCtrl: ModalController,public imghandler: ImghandlerProvider,  private camera: Camera) {
+              public modalCtrl: ModalController,public imghandler: ImghandlerProvider,  private camera: Camera, public loadingCtrl: LoadingController) {
     this.username = this.navParams.get('username');
   }
 
@@ -71,12 +71,17 @@ export class ProfilePage {
   }
 
   editimage() {
+    let loader = this.loadingCtrl.create({
+      content: 'אנא המתן'
+    });
+    loader.present();
     let statusalert = this.alertCtrl.create({
       buttons: ['okay']
     });
+    loader.present();
     this.imghandler.uploadimage().then((url: any) => {
-      alert("url:" + url)
       this.userservice.updateimage(url).then((res: any) => {
+        loader.dismiss();
         if (res.success) {
           statusalert.setTitle('Updated');
           statusalert.setSubTitle('Your profile pic has been changed successfully!!');
@@ -86,6 +91,7 @@ export class ProfilePage {
           })
         }
       }).catch((err) => {
+        loader.dismissAll();
         statusalert.setTitle('Failed');
         statusalert.setSubTitle('Your profile pic was not changed');
         statusalert.present();

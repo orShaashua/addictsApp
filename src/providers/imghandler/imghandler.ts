@@ -32,27 +32,37 @@ export class ImghandlerProvider {
         correctOrientation: true
       };
       this.camera.getPicture(options).then((imageData) => {
-        this.nativepath = 'data:image/jpeg;base64,' + imageData;
-        alert(imageData);
+         this.nativepath =  imageData;
+        // alert(imageData);
+        // var imageStore = this.firestore.ref('/profileimages').child(firebase.auth().currentUser.uid);
+        // alert(imageStore);
+        // imageStore.putString(this.nativepath, 'base64', { contentType: 'image/jpg' }).then(function (snapshot) {
+        // //   this.firestore.ref('/profileimages').child(firebase.auth().currentUser.uid).getDownloadURL().then((url) => {
+        // //     alert(url);
+        // //     resolve(url);
+        // //   }).catch((err) => {
+        // //     reject(err);
+        // //     alert(err +" error");
+        // //   })
+        // }).catch((err) => {
+        //   reject(err);
+        //   alert(err +" error");
+        // });
          (<any>window).resolveLocalFileSystemURL(this.nativepath, (res) => {
            res.file((resFile) => {
              var reader = new FileReader();
              reader.readAsArrayBuffer(resFile);
              reader.onloadend = (evt: any) => {
-               alert ("evt" + evt);
                var imgBlob = new Blob([evt.target.result], { type: 'image/jpeg' });
                var imageStore = this.firestore.ref('/profileimages').child(firebase.auth().currentUser.uid);
                imageStore.put(imgBlob).then((res) => {
                  this.firestore.ref('/profileimages').child(firebase.auth().currentUser.uid).getDownloadURL().then((url) => {
-                   alert(url);
                    resolve(url);
                  }).catch((err) => {
                    reject(err);
-                   alert(err +" error");
                  })
                }).catch((err) => {
                  reject(err);
-                 alert(err +" error");
                })
              }
            })

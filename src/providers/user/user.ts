@@ -161,7 +161,7 @@ export class UserProvider {
             reject(err);
           })
       }).catch((err) => {
-        alert(err);
+        reject(err);
       })
     })
   }
