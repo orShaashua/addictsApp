@@ -37,13 +37,13 @@ export class ProfilepicPage {
     })
   }
   proceed(){
-    this.navCtrl.setRoot(TabsPage);
+    this.navCtrl.setRoot('TabsPage');
   }
 
   updateproceed(){
     this.userservice.updateimage(this.imgurl).then((res: any) => {
       if(res.success) {
-        this.navCtrl.setRoot(TabsPage);
+        this.navCtrl.setRoot('TabsPage');
       } else {
         alert(res);
       }

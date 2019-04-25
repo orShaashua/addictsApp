@@ -9,6 +9,8 @@ import {LoginPage} from "../login/login";
 import {SearchFriendsPage} from "../search-friends/search-friends";
 import { ModalController } from 'ionic-angular';
 import { MatchPage } from '../match/match';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+
 
 /**
  * Generated class for the ProfilePage page.
@@ -26,8 +28,10 @@ export class ProfilePage {
   username: string = '';
   avatar: string;
   displayName: string;
+  myPhoto: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController, public modalCtrl: ModalController) {
+              public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController,
+              public modalCtrl: ModalController,public imghandler: ImghandlerProvider,  private camera: Camera) {
     this.username = this.navParams.get('username');
   }
 
@@ -66,8 +70,27 @@ export class ProfilePage {
     })
   }
 
-  editimage(){
-
+  editimage() {
+    let statusalert = this.alertCtrl.create({
+      buttons: ['okay']
+    });
+    this.imghandler.uploadimage().then((url: any) => {
+      alert("url:" + url)
+      this.userservice.updateimage(url).then((res: any) => {
+        if (res.success) {
+          statusalert.setTitle('Updated');
+          statusalert.setSubTitle('Your profile pic has been changed successfully!!');
+          statusalert.present();
+          this.zone.run(() => {
+            this.avatar = url;
+          })
+        }
+      }).catch((err) => {
+        statusalert.setTitle('Failed');
+        statusalert.setSubTitle('Your profile pic was not changed');
+        statusalert.present();
+      })
+    })
   }
 
   editname(){

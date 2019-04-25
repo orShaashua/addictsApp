@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import {Component, NgZone, ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, Content, LoadingController } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database'
 import {ChatProvider} from "../../providers/chat/chat";
@@ -23,20 +23,36 @@ export class ChatPage {
   @ViewChild('content') content: Content;
   newmessage: string = '';
   allmessages = [];
+  allmessagestimestamp = [];
   buddy: any;
   photoURL;
+  imageornot;
   constructor(public db: AngularFireDatabase,
               public navCtrl: NavController, public navParams: NavParams,public events: Events,
-            public chatservice: ChatProvider, public loadingCtrl: LoadingController, public imgstore: ImghandlerProvider) {
+            public chatservice: ChatProvider,public zone: NgZone, public loadingCtrl: LoadingController, public imgstore: ImghandlerProvider) {
 
     this.buddy = this.chatservice.buddy;
-
     this.photoURL = firebase.auth().currentUser.photoURL;
     this.scrollto();
     this.events.subscribe('newmessage', ()=>{
       this.allmessages = [];
-      this.allmessages = this.chatservice.buddymessages;
-      this.scrollto();
+      this.imageornot =[];
+      this.zone.run(()=>{
+        this.allmessages = this.chatservice.buddymessages;
+        for(var key in this.allmessages){
+          var date = new Date(this.allmessages[key].timestamp);
+          this.allmessagestimestamp.push(date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() + " "
+            + date.getHours() + ":" + date.getMinutes());
+          if (this.allmessages[key].message.substring(0,4)=='http'){
+            this.imageornot.push(true);
+          }else{
+            this.imageornot.push(false);
+          }
+
+        }
+      })
+
+      //this.scrollto();
     });
   }
 
@@ -58,11 +74,20 @@ export class ChatPage {
     },1000);
   }
   sendPicture(){
-    let loader = this.loadingCtrl.create({
-      content: 'Please wait'
+    // let loader = this.loadingCtrl.create({
+    //   content: 'Please wait'
+    // });
+    // loader.present();
+    this.imgstore.picmsgstore().then((imgurl)=>{
+      //loader.dismiss();
+      this.chatservice.addnewmessage(imgurl).then(()=>{
+        this.content.scrollToBottom();
+        this.newmessage ='';
+      }).catch((err)=>{
+        alert(err);
+        //loader.dismiss()
+      });
     });
-    loader.present();
-    //this.imgstore.u
   }
 
 }

@@ -18,15 +18,19 @@ Ionic pages and navigation.
       <ion-item *ngFor="let item of allmessages; let i = index">
         <div class="container" *ngIf="item.sentby === buddy.uid">
             <img src = "{{buddy.photoURL}}" class="right" alt="Avatar">
-            <div class="box3_right right">{{item.message}}
-              <div><span class="time-left">11:00 </span></div>
+          <div class="box3_right right" ><h3 *ngIf="!imageornot[i]">{{item.message}}</h3>
+            <img  src="{{item.message}}" *ngIf="imageornot[i]">
+              <div><span class="time-left">{{allmessagestimestamp[i]}} </span></div>
             </div>
 
         </div>
         <div class="container" *ngIf="item.sentby != buddy.uid">
             <img src = "{{photoURL}}"  alt="Avatar">
-            <div class="box3_left left">{{item.message}}
-              <div><span class="time-right">11:01 </span></div></div>
+            <div class="box3_left left"><h3 *ngIf="!imageornot[i]">{{item.message}}</h3>
+              <img  src="{{item.message}}" *ngIf="imageornot[i]">
+              <div><span class="time-right">{{allmessagestimestamp[i]}} </span>
+                <!--<ion-datetime displayFormat="MMM DD, YYYY HH:mm" >{{allmessagestimestamp[i]}}</ion-datetime>-->
+              </div></div>
         </div>
       </ion-item>
     </ion-list>

@@ -158,7 +158,7 @@ export class UserProvider {
         }).then(() => {
             resolve({success: true})
           }).catch((err) => {
-            alert(err);
+            reject(err);
           })
       }).catch((err) => {
         alert(err);

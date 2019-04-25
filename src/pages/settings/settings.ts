@@ -7,6 +7,7 @@ import {UserProvider} from "../../providers/user/user";
 import {TabsPage} from "../tabs/tabs";
 import {ProfilepicPage} from "../profilepic/profilepic";
 
+
 /**
  * Generated class for the SettingsPage page.
  *
@@ -81,7 +82,6 @@ export class SettingsPage {
           alert('error: ' + res);
         }
     });
-    // this.navCtrl.push(ProfilePage);
   }
 
   // takePhoto() {
