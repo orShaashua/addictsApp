@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { File } from '@ionic-native/file/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
-import { FilePath } from '@ionic-native/file-path/ngx';
 import firebase from 'firebase';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import {LoadingController} from "ionic-angular";
 /*
   Generated class for the ImghandlerProvider provider.
 
@@ -15,10 +14,13 @@ export class ImghandlerProvider {
   nativepath: any;
   firestore = firebase.storage();
 
-  constructor(public filechooser: FileChooser, private camera: Camera) {
+  constructor(public filechooser: FileChooser, private camera: Camera, public loadingCtrl: LoadingController) {
   }
 
   uploadimage() {
+    let loader = this.loadingCtrl.create({
+      content: 'אנא המתן'
+    });
     var promise = new Promise((resolve, reject) => {
       //this.filechooser.open().then((url) => {
         //(<any>window).FilePath.resolveNativePath(url, (result) => {
@@ -32,22 +34,8 @@ export class ImghandlerProvider {
         correctOrientation: true
       };
       this.camera.getPicture(options).then((imageData) => {
-         this.nativepath =  imageData;
-        // alert(imageData);
-        // var imageStore = this.firestore.ref('/profileimages').child(firebase.auth().currentUser.uid);
-        // alert(imageStore);
-        // imageStore.putString(this.nativepath, 'base64', { contentType: 'image/jpg' }).then(function (snapshot) {
-        // //   this.firestore.ref('/profileimages').child(firebase.auth().currentUser.uid).getDownloadURL().then((url) => {
-        // //     alert(url);
-        // //     resolve(url);
-        // //   }).catch((err) => {
-        // //     reject(err);
-        // //     alert(err +" error");
-        // //   })
-        // }).catch((err) => {
-        //   reject(err);
-        //   alert(err +" error");
-        // });
+        loader.present();
+        this.nativepath =  imageData;
          (<any>window).resolveLocalFileSystemURL(this.nativepath, (res) => {
            res.file((resFile) => {
              var reader = new FileReader();
@@ -57,21 +45,24 @@ export class ImghandlerProvider {
                var imageStore = this.firestore.ref('/profileimages').child(firebase.auth().currentUser.uid);
                imageStore.put(imgBlob).then((res) => {
                  this.firestore.ref('/profileimages').child(firebase.auth().currentUser.uid).getDownloadURL().then((url) => {
+                   loader.dismiss();
                    resolve(url);
                  }).catch((err) => {
+                   loader.dismissAll();
                    reject(err);
                  })
                }).catch((err) => {
+                 loader.dismissAll();
                  reject(err);
                })
              }
            })
          })
       }).catch((err)=>{
+        loader.dismissAll();
         reject(err);
       });
     });
-  //})
   return promise;
 }
 
