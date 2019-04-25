@@ -20,6 +20,7 @@ export class ChatProvider {
     this.buddy = buddy;
   }
   addnewmessage(msg){
+    alert(msg);
     if(this.buddy){
       var promise = new Promise((resolve, reject) => {
         this.firebuddychats.child(firebase.auth().currentUser.uid).child(this.buddy.uid).push({

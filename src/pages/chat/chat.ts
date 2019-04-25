@@ -1,5 +1,5 @@
 import {Component, NgZone, ViewChild} from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, Content, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
 import { AngularFireDatabase } from 'angularfire2/database'
 import {ChatProvider} from "../../providers/chat/chat";
 import {ImghandlerProvider} from "../../providers/imghandler/imghandler";
@@ -29,7 +29,7 @@ export class ChatPage {
   imageornot;
   constructor(public db: AngularFireDatabase,
               public navCtrl: NavController, public navParams: NavParams,public events: Events,
-            public chatservice: ChatProvider,public zone: NgZone, public loadingCtrl: LoadingController, public imgstore: ImghandlerProvider) {
+            public chatservice: ChatProvider,public zone: NgZone, public imgstore: ImghandlerProvider) {
 
     this.buddy = this.chatservice.buddy;
     this.photoURL = firebase.auth().currentUser.photoURL;
@@ -74,19 +74,16 @@ export class ChatPage {
     },1000);
   }
   sendPicture(){
-    // let loader = this.loadingCtrl.create({
-    //   content: 'Please wait'
-    // });
-    // loader.present();
     this.imgstore.picmsgstore().then((imgurl)=>{
-      //loader.dismiss();
+      alert(imgurl);
       this.chatservice.addnewmessage(imgurl).then(()=>{
         this.content.scrollToBottom();
         this.newmessage ='';
       }).catch((err)=>{
         alert(err);
-        //loader.dismiss()
       });
+    }).catch((err)=>{
+      alert(err);
     });
   }
 

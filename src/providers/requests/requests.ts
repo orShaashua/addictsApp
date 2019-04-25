@@ -3,7 +3,6 @@ import {Events} from 'ionic-angular';
 import {connreq} from '../../models/interfaces/request';
 import firebase from 'firebase';
 import {UserProvider} from '../user/user';
-import {_catch} from "rxjs-compat/operator/catch";
 
 
 /*

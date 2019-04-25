@@ -3,7 +3,6 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-// import { LoginIonicPage } from '../pages/login/login-ionic';
 import { SettingsPage } from '../pages/settings/settings';
 import { FilterPage } from '../pages/filter/filter';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
@@ -21,7 +20,6 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {ChatPage} from "../pages/chat/chat";
 import {PasswordresetPage} from "../pages/passwordreset/passwordreset";
-import {AngularFireAuthModule} from 'angularfire2/auth';
 import {ProfilepicPage} from "../pages/profilepic/profilepic";
 import {AngularFireAuth} from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';

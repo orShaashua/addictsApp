@@ -1,5 +1,5 @@
 import { Component,EventEmitter } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage,} from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 
 /**
@@ -45,7 +45,7 @@ export class SearchFriendsPage {
         id: i + 1,
         likeEvent: new EventEmitter(),
         destroyEvent: new EventEmitter(),
-        asBg: sanitizer.bypassSecurityTrustStyle('url('+this.images[i]+')')
+        asBg: this.sanitizer.bypassSecurityTrustStyle('url('+this.images[i]+')')
       });
     }
 

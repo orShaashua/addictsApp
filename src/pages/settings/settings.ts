@@ -1,10 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {ProfilePage} from "../profile/profile";
-import { Camera, CameraOptions } from '@ionic-native/camera';
 import {UserProvider} from "../../providers/user/user";
-import {TabsPage} from "../tabs/tabs";
 import {ProfilepicPage} from "../profilepic/profilepic";
 
 
@@ -30,7 +27,7 @@ export class SettingsPage {
   @ViewChild('about') about;
   credentialsForm: FormGroup;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              private formBuilder: FormBuilder, private camera: Camera,
+              private formBuilder: FormBuilder,
               public userservice: UserProvider,
               public loadingCtrl: LoadingController){
     this.credentialsForm = this.formBuilder.group({
@@ -58,11 +55,6 @@ export class SettingsPage {
   }
 
   doneSettings(){
-    // alert("the addicts type is: " + this.addictsType.value + "\n"
-    //   + "the gender: " +this.gender.value+ "\n"
-    //   + "the Birth Date: year: "  + this.BirthDate.value.year+ " mounth: "+this.BirthDate.value.month + " day: "+this.BirthDate.value.day +"\n"
-    //   +"mentor? " +this.mentor.value +"\n"
-    //   + "about me: " +this.about.value +"\n");
     let loader = this.loadingCtrl.create({
       content: 'אנא המתן'
     });
@@ -84,22 +76,6 @@ export class SettingsPage {
     });
   }
 
-  // takePhoto() {
-  //   const options: CameraOptions = {
-  //     quality: 70,
-  //     destinationType: this.camera.DestinationType.FILE_URI,
-  //     encodingType: this.camera.EncodingType.JPEG,
-  //     mediaType: this.camera.MediaType.PICTURE
-  //   };
-  //   this.camera.getPicture(options).then((imageData) => {
-  //     // imageData is either a base64 encoded string or a file URI
-  //     // If it's base64 (DATA_URL):
-  //     this.myPhoto = 'data:image/jpeg;base64,' + imageData;
-  //
-  //   }, (err) => {
-  //     alert(err);
-  //   });
-  // }
 
   loadusersettings(){
     this.userservice.getusersdetails().then((res: any)=>{
@@ -107,11 +83,7 @@ export class SettingsPage {
         this.gender.value = res.gender;
         this.addictsType.value = res.addictstype;
         this.mentor.value = res.mentor;
-
         this.BirthDate.setValue(new Date(res.bdayYear + "-" + res.bdayMonth + "-" + res.bdayDay).toISOString());
-        // this.BirthDate.value.year = res.bdayYear;
-        //  this.BirthDate.value.month = res.bdayMonth;
-        //  this.BirthDate.value.day = res.bdayDay;
         this.about.value = res.description;
       }
     });

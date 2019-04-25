@@ -99,7 +99,7 @@ page-chat {
   }
 
   /* Style images */
-  .container img {
+  .container img.left {
     float: left;
     max-width: 40px;
     width: 100%;
@@ -112,6 +112,9 @@ page-chat {
     float: right;
     margin-left: 10px;
     margin-right:0;
+    max-width: 40px;
+    width: 100%;
+    border-radius: 50%;
   }
   /* Style time text */
   .time-right {
@@ -208,6 +211,14 @@ page-chat {
 
 
 }
+
+  img.thumb1 {
+    height: 250px;
+    width: 250px;
+    border: 0;
+    padding: 0;
+    background-color: grey;
+  }
 
 
 }

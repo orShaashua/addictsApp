@@ -1,5 +1,5 @@
 import {Component, NgZone} from '@angular/core';
-import {IonicPage, NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import {FilterPage} from "../filter/filter";
 import {ImghandlerProvider} from '../../providers/imghandler/imghandler';
@@ -9,7 +9,6 @@ import {LoginPage} from "../login/login";
 import {SearchFriendsPage} from "../search-friends/search-friends";
 import { ModalController } from 'ionic-angular';
 import { MatchPage } from '../match/match';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 
 
 /**

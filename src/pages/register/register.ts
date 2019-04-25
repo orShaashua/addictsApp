@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import {UserProvider} from "../../providers/user/user";
-import {ProfilepicPage} from "../profilepic/profilepic";
 import {SettingsPage} from "../settings/settings";
 
 /**
