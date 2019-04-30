@@ -34,15 +34,18 @@ export class ProfilePage {
     this.username = this.navParams.get('username');
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     console.log('ionViewDidLoad ProfilePage');
+    this.loaduserdetails();
+
   }
 
   ionViewWillEnter(){
-    this.loaduserdetails();
+    // this.loaduserdetails();
   }
 
   loaduserdetails(){
+
     this.userservice.getusersdetails().then((res: any)=>{
       this.displayName = res.displayName;
       this.zone.run(()=>{
@@ -70,7 +73,6 @@ export class ProfilePage {
   }
 
   editimage() {
-
     let statusalert = this.alertCtrl.create({
       buttons: ['okay']
     });
@@ -141,4 +143,6 @@ export class ProfilePage {
     let modal = this.modalCtrl.create(MatchPage);
     modal.present();
   }
+
+
 }

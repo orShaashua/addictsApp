@@ -3,6 +3,7 @@ import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {UserProvider} from "../../providers/user/user";
 import {ProfilepicPage} from "../profilepic/profilepic";
+import {TabsPage} from "../tabs/tabs";
 
 
 /**
@@ -68,7 +69,7 @@ export class SettingsPage {
       this.about.value).then((res: any) => {
         loader.dismiss();
         if(res.success){
-          this.navCtrl.push(ProfilepicPage);
+          this.navCtrl.setRoot(TabsPage);
         } else {
           loader.dismissAll();
           alert('error: ' + res);

@@ -111,13 +111,20 @@ export class UserProvider {
   }
 
   getusersdetails() {
+
     //accessing the particular user based on uid from the user collection and returning it back to the calling function
       return new Promise((resolve, reject) =>{
-        this.firedata.child(firebase.auth().currentUser.uid).once('value', (snapshot)=> {
-          resolve(snapshot.val());
-        }).catch((err) => {
-            reject(err);
-        })
+        try {
+            if (firebase.auth().currentUser.uid != null) {
+              this.firedata.child(firebase.auth().currentUser.uid).once('value', (snapshot) => {
+                resolve(snapshot.val());
+              }).catch((err) => {
+                reject(err);
+              });
+            }
+        }catch(e){
+
+        }
       })
     }
 
