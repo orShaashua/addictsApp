@@ -80,7 +80,10 @@ export class SettingsPage {
 
   loadusersettings(){
     this.userservice.getusersdetails().then((res: any)=>{
+      debugger;
+      debugger;
       if (res.gender) {
+        debugger;
         this.gender.value = res.gender;
         this.addictsType.value = res.addictstype;
         this.mentor.value = res.mentor;
