@@ -68,15 +68,15 @@ export class ProfilePage {
   }
 
   goToSearchFriends(){
-    let filters: any = {};
-    filters = this.serviceFilter.getFilters();
+    // let filters: any = {};
+    // filters = this.serviceFilter.getFilters();
 
-    if (filters == null) {
-      console.log("nothing here");
-    } else {
-      console.log("the filters in profile.ts are: " + filters.addictsType);
-    }
-    this.navCtrl.push(SearchFriendsPage,   {filters: filters});
+    // if (filters == null) {
+    //   console.log("nothing here");
+    // } else {
+    //   console.log("the filters in profile.ts are: " + filters.addictsType);
+    // }
+    this.navCtrl.push(SearchFriendsPage);
   }
 
   logout(){
