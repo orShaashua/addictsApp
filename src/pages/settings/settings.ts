@@ -2,7 +2,6 @@ import {Component, ViewChild} from '@angular/core';
 import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {UserProvider} from "../../providers/user/user";
-import {ProfilepicPage} from "../profilepic/profilepic";
 import {TabsPage} from "../tabs/tabs";
 
 

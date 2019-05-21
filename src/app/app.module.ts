@@ -20,7 +20,6 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {ChatPage} from "../pages/chat/chat";
 import {PasswordresetPage} from "../pages/passwordreset/passwordreset";
-import {ProfilepicPage} from "../pages/profilepic/profilepic";
 import {AngularFireAuth} from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
@@ -56,7 +55,6 @@ var config = {
     RegisterPage,
     ChatPage,
     PasswordresetPage,
-    ProfilepicPage,
     ChatPage,
     TabsPage,
     SearchFriendsPage,
@@ -86,7 +84,6 @@ var config = {
     ChatPage,
     SearchFriendsPage,
     PasswordresetPage,
-    ProfilepicPage,
     MatchPage
   ],
   providers: [

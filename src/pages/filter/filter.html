@@ -4,8 +4,8 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header color="hcolor">
-  <ion-navbar>
+<ion-header>
+  <ion-navbar color="hcolor">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -26,7 +26,7 @@
     </ion-item>
   <ion-label class="my-label">:מרחק מרבי בק"מ </ion-label>
   <ion-item class ="masters">
-    <ion-range #maxDistance pin="" color="secondary" class="ion-color ion-color-dark in-item range-has-pin hydrated">
+    <ion-range #maxDist pin="" color="secondary" class="ion-color ion-color-dark in-item range-has-pin hydrated">
       <ion-icon slot="start" size="small" name="brush" role="img" class="icon-small hydrated" aria-label="brush"></ion-icon>
       <ion-icon slot="end" role="img" class="hydrated" aria-label="brush" range-right name="car"></ion-icon>
     </ion-range>
@@ -50,12 +50,12 @@
     <ion-label class="my-label" >...מוכן ל</ion-label>
     <ion-item>
       <ion-label></ion-label>
-      <ion-select multiple="true" cancelText="ביטול" okText="אישור" #addictsType >
-        <ion-option  #conversation value="conversation" selected>שיחה</ion-option>
-        <ion-option #appointment value="appointment">פגישה</ion-option>
-        <ion-option #recreation value="recreation">בילוי</ion-option>
-        <ion-option #host value="host">לארח</ion-option>
-        <ion-option #visit value="visit">להתארח</ion-option>
+      <ion-select multiple="true" cancelText="ביטול" okText="אישור" #meetingType >
+        <ion-option  value="conversation" selected>שיחה</ion-option>
+        <ion-option value="appointment">פגישה</ion-option>
+        <ion-option  value="recreation">בילוי</ion-option>
+        <ion-option value="host">לארח</ion-option>
+        <ion-option value="visit">להתארח</ion-option>
       </ion-select>
     </ion-item>
 </ion-content>
