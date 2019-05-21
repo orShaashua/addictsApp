@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, ViewChild} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import firebase from 'firebase';
 /*
@@ -24,9 +24,9 @@ export class UserProvider {
       }).then(()=> {
         // this.firedata.child("settings")
         this.firedata.child(this.afirauth.auth.currentUser.uid).child("settings").set({
-          displayName: this.afirauth.auth.currentUser.displayName,
-          photoURL: this.afirauth.auth.currentUser.photoURL,
-          uid: this.afirauth.auth.currentUser.uid,
+          // displayName: this.afirauth.auth.currentUser.displayName,
+          // photoURL: this.afirauth.auth.currentUser.photoURL,
+          // uid: this.afirauth.auth.currentUser.uid,
           addictstype: addictsType,
           gender: gender,
           bdayYear: bdayY,
@@ -47,7 +47,7 @@ export class UserProvider {
     });
   }
 
-  addFiltersToUser(addictsType, maxDis, femaleBoolean, maleBoolean, ageRangelower, ageRangeupper){
+  addFiltersToUser(addictsType, maxDis, femaleBoolean, maleBoolean, ageRangelower, ageRangeupper, meetingType,){
     return new Promise((resolve, reject) => {
       this.afirauth.auth.currentUser.updateProfile({
         // displayName: this.afirauth.auth.currentUser.displayName,
@@ -55,16 +55,16 @@ export class UserProvider {
 
       }).then(()=> {
         this.firedata.child(this.afirauth.auth.currentUser.uid).child("filters").set({
-          displayName: this.afirauth.auth.currentUser.displayName,
-          photoURL: this.afirauth.auth.currentUser.photoURL,
-          uid: this.afirauth.auth.currentUser.uid,
+          // displayName: this.afirauth.auth.currentUser.displayName,
+          // photoURL: this.afirauth.auth.currentUser.photoURL,
+          // uid: this.afirauth.auth.currentUser.uid,
           addictsType: addictsType,
           maxDist: maxDis,
           female: femaleBoolean,
           male: maleBoolean,
           ageRangelower: ageRangelower,
           ageRangeupper: ageRangeupper,
-
+          meetingType: meetingType
         }).then(() => {
           resolve({success: true});
         }).catch((err)=>{
@@ -186,7 +186,6 @@ export class UserProvider {
     //accessing the particular user based on uid from the user collection and returning it back to the calling function
     // this.afirauth.auth.currentUser
     if(node == null){
-      debugger;
       return new Promise((resolve, reject) =>{
         try {
           if (firebase.auth().currentUser.uid != null) {

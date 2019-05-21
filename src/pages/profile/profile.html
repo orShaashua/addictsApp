@@ -10,27 +10,27 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Profile</ion-title>
+    <ion-title >Profile</ion-title>
+
+
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-<h1>hey {{username}}</h1>
-  <!--<p><img src="../../assets/imgs/micky.jpg” alt="hi"></p>-->
   <div class="profile-image" (click) ="editimage()" text-center>
     <img src="{{avatar}}">
   </div>
-
-    <!--<div text-center>-->
-    <!--<ion-avatar>-->
-    <!--</ion-avatar>-->
+  <h1>
+    לחץ על שם המשתמש או תמונה כדי לשנותה
+  </h1>
+  <!--<div text-center>-->
+  <!--<ion-avatar>-->
+  <!--</ion-avatar>-->
   <!--</div>-->
   <div>
     <h2 (click)="editname()">{{displayName}}</h2>
   </div>
-  <div>
-    לחץ על שם המשתמש או תמונה כדי לשנותה
-  </div>
+
   <!--<div class="spacer" style="height: 10px;"></div>-->
   <div class = "button-nav">
     <button ion-button color="secondary" (click)="goToSettings()">הגדרות</button>

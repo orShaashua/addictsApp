@@ -50,7 +50,6 @@ export class RegisterPage {
         this.loader.dismissAll();
       if(res.success){
         this.navCtrl.push(SettingsPage);
-        //this.navCtrl.push(ProfilepicPage);
       } else {
         this.loader.dismissAll();
         alert('error1: ' + res);
