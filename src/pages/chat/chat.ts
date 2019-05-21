@@ -75,7 +75,6 @@ export class ChatPage {
   }
   sendPicture(){
     this.imgstore.picmsgstore().then((imgurl)=>{
-      alert(imgurl);
       this.chatservice.addnewmessage(imgurl).then(()=>{
         this.content.scrollToBottom();
         this.newmessage ='';
