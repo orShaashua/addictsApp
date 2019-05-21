@@ -20,6 +20,7 @@ export class MatchesPage {
   //for now all users matches!! need to handle this!!!
     this.userservice.getallusers().then((res: any)=>{
       this.filteredusers = res;
+
     })
   }
 

@@ -15,14 +15,15 @@ export class UserProvider {
     console.log('Hello UserProvider Provider');
   }
 
-  addsettingstouser(addictsType, gender, bdayY,bdayM,bdayD, mentor, about){
+  addsettingstouser(addictsType, gender, bdayY, bdayM, bdayD, mentor, about){
     return new Promise((resolve, reject) => {
       this.afirauth.auth.currentUser.updateProfile({
         displayName: this.afirauth.auth.currentUser.displayName,
         photoURL: this.afirauth.auth.currentUser.photoURL
 
       }).then(()=> {
-        this.firedata.child(this.afirauth.auth.currentUser.uid).set({
+        // this.firedata.child("settings")
+        this.firedata.child(this.afirauth.auth.currentUser.uid).child("settings").set({
           displayName: this.afirauth.auth.currentUser.displayName,
           photoURL: this.afirauth.auth.currentUser.photoURL,
           uid: this.afirauth.auth.currentUser.uid,
@@ -40,6 +41,37 @@ export class UserProvider {
           // reject(err);
         })
         }).catch((err)=>{
+        alert(err);
+        // reject(err);
+      })
+    });
+  }
+
+  addFiltersToUser(addictsType, maxDis, femaleBoolean, maleBoolean, ageRangelower, ageRangeupper){
+    return new Promise((resolve, reject) => {
+      this.afirauth.auth.currentUser.updateProfile({
+        // displayName: this.afirauth.auth.currentUser.displayName,
+        // photoURL: this.afirauth.auth.currentUser.photoURL
+
+      }).then(()=> {
+        this.firedata.child(this.afirauth.auth.currentUser.uid).child("filters").set({
+          displayName: this.afirauth.auth.currentUser.displayName,
+          photoURL: this.afirauth.auth.currentUser.photoURL,
+          uid: this.afirauth.auth.currentUser.uid,
+          addictsType: addictsType,
+          maxDist: maxDis,
+          female: femaleBoolean,
+          male: maleBoolean,
+          ageRangelower: ageRangelower,
+          ageRangeupper: ageRangeupper,
+
+        }).then(() => {
+          resolve({success: true});
+        }).catch((err)=>{
+          alert(err);
+          // reject(err);
+        })
+      }).catch((err)=>{
         alert(err);
         // reject(err);
       })
@@ -110,23 +142,80 @@ export class UserProvider {
     return promise;
   }
 
-  getusersdetails() {
+  getFilterUsers(userDetails){
 
+    var promise = new Promise ((resolve, reject)=>{
+      this.firedata.orderByChild('uid').once('value', (snapshot)=>{
+        let filteredusersdata = [];
+        //         // let temparr =[];
+        //         // for (var key in userdata){
+        //         //   temparr.push(userdata[key]);
+        //         // }
+        let gender = "";
+        let currentYear = (new Date()).getFullYear();
+        if(userDetails.femaleValue == true && userDetails.maleVale == true){
+          gender = "both"
+        } else if(userDetails.femaleValue == true){
+          gender = "female"
+        } else {
+          gender = "male"
+        }
+        snapshot.forEach(function(child) {
+          if(child.val().addictstype == userDetails.addictsType
+            && (child.val().gender == gender || gender == "both")
+            && (child.val().bdayYear - currentYear > userDetails.ageRange.lower
+              && child.val().bdayYear - currentYear < userDetails.ageRange.upper)){
+            filteredusersdata.push(child)
+          }
+
+          var datas = child.val();
+
+          var firstname=child.val().firstname;
+          console.log(firstname);
+          var lastname=child.val().lastname;
+        });
+        resolve(filteredusersdata);
+      }).catch((err)=>{
+        reject(err);
+      })
+    });
+    return promise;
+  }
+
+  getusersdetails(node) {
     //accessing the particular user based on uid from the user collection and returning it back to the calling function
+    // this.afirauth.auth.currentUser
+    if(node == null){
+      debugger;
       return new Promise((resolve, reject) =>{
         try {
-            if (firebase.auth().currentUser.uid != null) {
-              this.firedata.child(firebase.auth().currentUser.uid).once('value', (snapshot) => {
-                resolve(snapshot.val());
-              }).catch((err) => {
-                reject(err);
-              });
-            }
+          if (firebase.auth().currentUser.uid != null) {
+            this.firedata.child(firebase.auth().currentUser.uid).once('value', (snapshot) => {
+              resolve(snapshot.val());
+            }).catch((err) => {
+              reject(err);
+            });
+          }
         }catch(e){
+          console.log("d");
+        }
+      })
+    } else {
+      return new Promise((resolve, reject) => {
+        try {
+          if (firebase.auth().currentUser.uid != null) {
+            this.firedata.child(firebase.auth().currentUser.uid).child(node).once('value', (snapshot) => {
+              resolve(snapshot.val());
+            }).catch((err) => {
+              reject(err);
+            });
+          }
+        } catch (e) {
 
         }
       })
     }
+  }
 
 
 

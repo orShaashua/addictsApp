@@ -33,6 +33,7 @@ import { ChatProvider } from '../providers/chat/chat';
 import { SwipeCardsModule } from 'ng2-swipe-cards';
 import {SearchFriendsPage} from "../pages/search-friends/search-friends";
 import {MatchPage} from "../pages/match/match";
+import {FiltersService} from "../services/FiltersService";
 
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
@@ -60,7 +61,8 @@ var config = {
     TabsPage,
     SearchFriendsPage,
     BuddiesPage,
-    MatchPage
+    MatchPage,
+
   ],
   imports: [
     BrowserModule,
@@ -100,7 +102,8 @@ var config = {
     UserProvider,
     RequestsProvider,
     ImghandlerProvider,
-    ChatProvider
+    ChatProvider,
+    FiltersService
   ]
 })
 export class AppModule {}

@@ -60,7 +60,7 @@ export class SettingsPage {
       content: 'אנא המתן'
     });
     loader.present();
-    this.userservice. addsettingstouser(this.addictsType.value,
+    this.userservice.addsettingstouser(this.addictsType.value,
       this.gender.value,
       this.BirthDate.value.year,
       this.BirthDate.value.month,
@@ -79,8 +79,10 @@ export class SettingsPage {
 
 
   loadusersettings(){
-    this.userservice.getusersdetails().then((res: any)=>{
-      if (res.gender) {
+
+    this.userservice.getusersdetails("settings").then((res: any)=>{
+      if (res) {
+        console.log("the gender is :" + res.gender);
         this.gender.value = res.gender;
         this.addictsType.value = res.addictstype;
         this.mentor.value = res.mentor;

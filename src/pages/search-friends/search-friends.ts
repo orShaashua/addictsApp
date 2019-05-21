@@ -1,7 +1,8 @@
 import { Component,EventEmitter } from '@angular/core';
-import { IonicPage,} from 'ionic-angular';
+import {IonicPage, NavParams,} from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import firebase from 'firebase';
+import {UserProvider} from "../../providers/user/user";
 /**
  * Generated class for the SearchFriendsPage page.
  *
@@ -38,7 +39,16 @@ export class SearchFriendsPage {
     "https://i1.wp.com/akmatter.com/wp-content/uploads/2018/01/Rakul-Preet-Singh.jpg",
     "https://data1.ibtimes.co.in/cache-img-600-450/en/full/571296/1494666323_anushka-shetty-baahubali.jpg"
   ];
-  constructor(private sanitizer: DomSanitizer) {
+
+  public filteredUsers: Array<any> = [];
+  // public itemRef: firebase.database.Reference = firebase.database().ref('/users');
+
+  filters: any = {};
+
+  constructor(private sanitizer: DomSanitizer,  public userservice: UserProvider, public navParams: NavParams) {
+
+    this.filters = navParams.get('filters');
+    console.log("the filters in searchfriends.ts are: " + this.filters.addictsType);
 
     for (let i = 0; i < this.images.length; i++) {
       this.attendants.push({
@@ -50,6 +60,14 @@ export class SearchFriendsPage {
     }
 
     this.ready = true;
+  }
+
+  ionViewDidLoad() {
+    this.userservice.getFilterUsers(this.filters).then((res: any)=>{
+      this.filteredUsers = res;
+      debugger;
+    })
+
   }
 
   onCardInteract(event) {

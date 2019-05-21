@@ -9,6 +9,7 @@ import {LoginPage} from "../login/login";
 import {SearchFriendsPage} from "../search-friends/search-friends";
 import { ModalController } from 'ionic-angular';
 import { MatchPage } from '../match/match';
+import {FiltersService} from "../../services/FiltersService";
 
 
 /**
@@ -24,14 +25,17 @@ import { MatchPage } from '../match/match';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+  didFilter: boolean;
+  filters: any = {};
   username: string = '';
   avatar: string;
   displayName: string;
   myPhoto: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController,
-              public modalCtrl: ModalController,public imghandler: ImghandlerProvider) {
-    this.username = this.navParams.get('username');
+              public modalCtrl: ModalController,public imghandler: ImghandlerProvider, private serviceFilter: FiltersService) {
+    // this.username = this.navParams.get('username');
+
   }
 
   ionViewDidEnter() {
@@ -42,11 +46,12 @@ export class ProfilePage {
 
   ionViewWillEnter(){
     // this.loaduserdetails();
+
   }
 
   loaduserdetails(){
 
-    this.userservice.getusersdetails().then((res: any)=>{
+    this.userservice.getusersdetails(null).then((res: any)=>{
       this.displayName = res.displayName;
       this.zone.run(()=>{
         this.avatar = res.photoURL;
@@ -63,7 +68,15 @@ export class ProfilePage {
   }
 
   goToSearchFriends(){
-    this.navCtrl.push(SearchFriendsPage);
+    let filters: any = {};
+    filters = this.serviceFilter.getFilters();
+
+    if (filters == null) {
+      console.log("nothing here");
+    } else {
+      console.log("the filters in profile.ts are: " + filters.addictsType);
+    }
+    this.navCtrl.push(SearchFriendsPage,   {filters: filters});
   }
 
   logout(){
