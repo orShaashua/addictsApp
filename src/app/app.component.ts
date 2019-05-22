@@ -62,6 +62,7 @@ export class MyApp {
               this.nav.setRoot(TabsPage);
               this.rootPage = TabsPage;
             } else {
+              this.nav.setRoot(LoginPage);
               this.rootPage = LoginPage;
             }
             console.log("I'm here! HomePage");
