@@ -25,7 +25,7 @@ export class BuddiesPage {
     //for now all users matches!! need to handle this!!!
     let mywishFriendslist = this.requestservice.getmywishfriendslist();
     var add = true;
-    var counter =0
+    var counter =0;
     this.userservice.getallusers().then((res: any)=>{
       this.filteredusers = [];
       this.temparr = [];
