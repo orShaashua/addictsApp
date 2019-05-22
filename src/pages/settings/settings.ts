@@ -56,7 +56,6 @@ export class SettingsPage {
   }
 
   doneSettings(){
-
     this.settingsFromUser.gender = this.gender.value;
     this.settingsFromUser.addictsType = this.addictsType.value;
     this.settingsFromUser.mentor = this.mentor.value;
@@ -64,7 +63,6 @@ export class SettingsPage {
     this.settingsFromUser.bdayMonth = this.BirthDate.value.month;
     this.settingsFromUser.bdayDay = this.BirthDate.value.day;
     this.settingsFromUser.about = this.about.value;
-
     let loader = this.loadingCtrl.create({
       content: 'אנא המתן'
     });

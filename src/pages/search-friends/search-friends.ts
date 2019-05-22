@@ -63,6 +63,7 @@ export class SearchFriendsPage {
     this.userservice.getusersdetails("filters").then((res: any)=>{
       if (res) {
        this.filtersFromUser = res;
+       console.log(this.filteredUsers);
       }
     });
     debugger;

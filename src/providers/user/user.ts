@@ -59,11 +59,11 @@ export class UserProvider {
           // photoURL: this.afirauth.auth.currentUser.photoURL,
           // uid: this.afirauth.auth.currentUser.uid,
           addictsType: filters.addictsType,
-          maxDist: filters.maxDis,
+          maxDist: filters.maxDist,
           female: filters.female,
           male: filters.male,
-          ageRangelower: filters.ageRangelower,
-          ageRangeupper: filters.ageRangeupper,
+          ageRangelower: filters.ageRangeLower,
+          ageRangeupper: filters.ageRangeUpper,
           meetingType: filters.meetingType
         }).then(() => {
           resolve({success: true});
@@ -200,6 +200,7 @@ export class UserProvider {
         }
       })
     } else {
+      debugger;
       return new Promise((resolve, reject) => {
         try {
           if (firebase.auth().currentUser.uid != null) {
