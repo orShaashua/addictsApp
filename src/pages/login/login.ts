@@ -21,8 +21,8 @@ import {PasswordresetPage} from "../passwordreset/passwordreset";
 })
 export class LoginPage {
   credentials = {} as usercreds;
-  username: string;
-  password: string;
+
+  // password: string;
   showUserName = false; //show red alerts and text for username box
   showPassword = false; //show red alerts and text for password box
 

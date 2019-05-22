@@ -43,7 +43,6 @@ export class FilterPage {
   }
 
   doneFilter(){
-    debugger;
     this.filtersFromUser.addictsType =  this.addictsType.value;
     this.filtersFromUser.maxDist = this.maxDist.value;
     this.filtersFromUser.female = this.female.value;

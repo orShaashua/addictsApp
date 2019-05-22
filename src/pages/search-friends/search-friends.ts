@@ -66,7 +66,6 @@ export class SearchFriendsPage {
        console.log(this.filteredUsers);
       }
     });
-    debugger;
     console.log("hi im in search friends the addicts type is = " + this.filtersFromUser.addictsType);
     this.userservice.getFilterUsers(this.filtersFromUser).then((res: any)=>{
       this.filteredUsers = res;

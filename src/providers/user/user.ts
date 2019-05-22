@@ -200,7 +200,6 @@ export class UserProvider {
         }
       })
     } else {
-      debugger;
       return new Promise((resolve, reject) => {
         try {
           if (firebase.auth().currentUser.uid != null) {
