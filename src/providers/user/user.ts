@@ -15,11 +15,11 @@ export class UserProvider {
     console.log('Hello UserProvider Provider');
   }
 
-  addsettingstouser(addictsType, gender, bdayY, bdayM, bdayD, mentor, about){
+  addsettingstouser(settings){
     return new Promise((resolve, reject) => {
       this.afirauth.auth.currentUser.updateProfile({
-        displayName: this.afirauth.auth.currentUser.displayName,
-        photoURL: this.afirauth.auth.currentUser.photoURL
+        // displayName: this.afirauth.auth.currentUser.displayName,
+        // photoURL: this.afirauth.auth.currentUser.photoURL
 
       }).then(()=> {
         // this.firedata.child("settings")
@@ -27,13 +27,13 @@ export class UserProvider {
           // displayName: this.afirauth.auth.currentUser.displayName,
           // photoURL: this.afirauth.auth.currentUser.photoURL,
           // uid: this.afirauth.auth.currentUser.uid,
-          addictstype: addictsType,
-          gender: gender,
-          bdayYear: bdayY,
-          bdayMonth: bdayM,
-          bdayDay: bdayD,
-          mentor: mentor,
-          description: about
+          addictstype: settings.addictsType,
+          gender: settings.gender,
+          mentor: settings.mentor,
+          bdayDay: settings.bdayDay,
+          bdayMonth: settings.bdayDay,
+          bdayYear: settings.bdayYear,
+          description: settings.about
         }).then(() => {
           resolve({success: true});
         }).catch((err)=>{
@@ -47,7 +47,7 @@ export class UserProvider {
     });
   }
 
-  addFiltersToUser(addictsType, maxDis, femaleBoolean, maleBoolean, ageRangelower, ageRangeupper, meetingType,){
+  addFiltersToUser(filters){
     return new Promise((resolve, reject) => {
       this.afirauth.auth.currentUser.updateProfile({
         // displayName: this.afirauth.auth.currentUser.displayName,
@@ -58,13 +58,13 @@ export class UserProvider {
           // displayName: this.afirauth.auth.currentUser.displayName,
           // photoURL: this.afirauth.auth.currentUser.photoURL,
           // uid: this.afirauth.auth.currentUser.uid,
-          addictsType: addictsType,
-          maxDist: maxDis,
-          female: femaleBoolean,
-          male: maleBoolean,
-          ageRangelower: ageRangelower,
-          ageRangeupper: ageRangeupper,
-          meetingType: meetingType
+          addictsType: filters.addictsType,
+          maxDist: filters.maxDis,
+          female: filters.female,
+          male: filters.male,
+          ageRangelower: filters.ageRangelower,
+          ageRangeupper: filters.ageRangeupper,
+          meetingType: filters.meetingType
         }).then(() => {
           resolve({success: true});
         }).catch((err)=>{

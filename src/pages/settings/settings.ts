@@ -3,7 +3,7 @@ import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {UserProvider} from "../../providers/user/user";
 import {TabsPage} from "../tabs/tabs";
-
+import {Settings} from "../../models/settings.model";
 
 /**
  * Generated class for the SettingsPage page.
@@ -25,6 +25,7 @@ export class SettingsPage {
   @ViewChild('BirthDate') BirthDate;
   @ViewChild('mentor') mentor;
   @ViewChild('about') about;
+  settingsFromUser = new Settings();
   credentialsForm: FormGroup;
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private formBuilder: FormBuilder,
@@ -55,17 +56,20 @@ export class SettingsPage {
   }
 
   doneSettings(){
+
+    this.settingsFromUser.gender = this.gender.value;
+    this.settingsFromUser.addictsType = this.addictsType.value;
+    this.settingsFromUser.mentor = this.mentor.value;
+    this.settingsFromUser.bdayYear = this.BirthDate.value.year;
+    this.settingsFromUser.bdayMonth = this.BirthDate.value.month;
+    this.settingsFromUser.bdayDay = this.BirthDate.value.day;
+    this.settingsFromUser.about = this.about.value;
+
     let loader = this.loadingCtrl.create({
       content: 'אנא המתן'
     });
     loader.present();
-    this.userservice.addsettingstouser(this.addictsType.value,
-      this.gender.value,
-      this.BirthDate.value.year,
-      this.BirthDate.value.month,
-      this.BirthDate.value.day,
-      this.mentor.value,
-      this.about.value).then((res: any) => {
+    this.userservice.addsettingstouser(this.settingsFromUser).then((res: any) => {
         loader.dismiss();
         if(res.success){
           this.navCtrl.setRoot(TabsPage);
@@ -80,13 +84,15 @@ export class SettingsPage {
   loadusersettings(){
 
     this.userservice.getusersdetails("settings").then((res: any)=>{
+
       if (res) {
-        console.log("the gender is :" + res.gender);
-        this.gender.value = res.gender;
-        this.addictsType.value = res.addictstype;
-        this.mentor.value = res.mentor;
-        this.BirthDate.setValue(new Date(res.bdayYear + "-" + res.bdayMonth + "-" + res.bdayDay).toISOString());
-        this.about.value = res.description;
+        console.log("the gender is :" + this.settingsFromUser.gender);
+        this.gender.value = this.settingsFromUser.gender;
+        this.addictsType.value = this.settingsFromUser.addictsType;
+        this.mentor.value = this.settingsFromUser.mentor;
+        this.BirthDate.setValue(new Date(this.settingsFromUser.bdayYear
+          + "-" + this.settingsFromUser.bdayMonth + "-" + this.settingsFromUser.bdayDay).toISOString());
+        this.about.value = this.settingsFromUser.about;
       }
     });
 

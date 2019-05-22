@@ -3,6 +3,7 @@ import {IonicPage, NavParams,} from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import firebase from 'firebase';
 import {UserProvider} from "../../providers/user/user";
+import {Filters} from "../../models/filters.model";
 /**
  * Generated class for the SearchFriendsPage page.
  *
@@ -43,13 +44,9 @@ export class SearchFriendsPage {
   public filteredUsers: Array<any> = [];
   // public itemRef: firebase.database.Reference = firebase.database().ref('/users');
 
-  filters: any = {};
+  filtersFromUser = new Filters();
 
   constructor(private sanitizer: DomSanitizer,  public userservice: UserProvider, public navParams: NavParams) {
-
-    this.filters = navParams.get('filters');
-    console.log("the filters in searchfriends.ts are: " + this.filters.addictsType);
-
     for (let i = 0; i < this.images.length; i++) {
       this.attendants.push({
         id: i + 1,
@@ -63,9 +60,15 @@ export class SearchFriendsPage {
   }
 
   ionViewDidLoad() {
-    this.userservice.getFilterUsers(this.filters).then((res: any)=>{
+    this.userservice.getusersdetails("filters").then((res: any)=>{
+      if (res) {
+       this.filtersFromUser = res;
+      }
+    });
+    debugger;
+    console.log("hi im in search friends the addicts type is = " + this.filtersFromUser.addictsType);
+    this.userservice.getFilterUsers(this.filtersFromUser).then((res: any)=>{
       this.filteredUsers = res;
-      debugger;
     })
 
   }
