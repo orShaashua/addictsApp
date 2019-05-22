@@ -31,7 +31,7 @@ export class UserProvider {
           gender: settings.gender,
           mentor: settings.mentor,
           bdayDay: settings.bdayDay,
-          bdayMonth: settings.bdayDay,
+          bdayMonth: settings.bdayMonth,
           bdayYear: settings.bdayYear,
           description: settings.about
         }).then(() => {
