@@ -85,13 +85,6 @@ export class SettingsPage {
     this.userservice.getusersdetails("settings").then((res: any)=>{
 
       if (res) {
-        // console.log("the gender is :" + this.settingsFromUser.gender);
-        // this.gender.value = this.settingsFromUser.gender;
-        // this.addictsType.value = this.settingsFromUser.addictsType;
-        // this.mentor.value = this.settingsFromUser.mentor;
-        // this.BirthDate.setValue(new Date(this.settingsFromUser.bdayYear
-        //   + "-" + this.settingsFromUser.bdayMonth + "-" + this.settingsFromUser.bdayDay).toISOString());
-        // this.about.value = this.settingsFromUser.about;
         this.gender.value = res.gender;
         this.addictsType.value = res.addictstype;
         this.mentor.value = res.mentor;

@@ -12,6 +12,7 @@ import { MatchPage } from '../match/match';
 import {FiltersService} from "../../services/FiltersService";
 
 
+
 /**
  * Generated class for the ProfilePage page.
  *
@@ -155,7 +156,9 @@ export class ProfilePage {
   presentModal() {
     let modal = this.modalCtrl.create(MatchPage);
     modal.present();
+    // this.sim.getSimInfo().then(
+    //   (info) => alert( info),
+    //   (err) => alert( err)
+    // );
   }
-
-
 }

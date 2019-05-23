@@ -15,7 +15,7 @@ import {UserProvider} from '../user/user';
 export class RequestsProvider {
   firereq = firebase.database().ref('/requests');
   firefriends = firebase.database().ref('/friends');
-
+  mywishfriendslist =[];
   userdetails;
   myfriends;
   constructor(public userservice: UserProvider, public events: Events) {
@@ -26,7 +26,8 @@ export class RequestsProvider {
       this.firereq.child(req.recipient).push({
         sender: req.sender
       }).then(()=>{
-        resolve({success:true});
+        this.mywishfriendslist.push(req.recipient);
+        resolve({success:true});///send sms to req.recipient
       }).catch((err)=>{
         resolve(err);
       })
@@ -34,7 +35,9 @@ export class RequestsProvider {
     return promise;
   }
 ;
-
+  getmywishfriendslist(){
+    return this.mywishfriendslist;
+  }
   getmyrequests(){
     let allmyrequests;
     var myrequests =[];
@@ -68,7 +71,7 @@ export class RequestsProvider {
           uid: firebase.auth().currentUser.uid
         }).then(()=>{
           this.deleterequest(buddy).then(()=>{
-            resolve(true);
+            resolve(true);//send a message back
           }).catch((err)=>{
             reject(err);
           })
