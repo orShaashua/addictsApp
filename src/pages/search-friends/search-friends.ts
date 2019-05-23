@@ -59,7 +59,7 @@ export class SearchFriendsPage {
     this.ready = true;
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.userservice.getusersdetails("filters").then((res: any)=>{
       if (res) {
        this.filtersFromUser = res;

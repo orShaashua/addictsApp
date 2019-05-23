@@ -143,7 +143,7 @@ export class UserProvider {
   }
 
   getFilterUsers(userDetails){
-
+    debugger;
     var promise = new Promise ((resolve, reject)=>{
       this.firedata.orderByChild('uid').once('value', (snapshot)=>{
         let filteredusersdata = [];
@@ -171,7 +171,7 @@ export class UserProvider {
           var datas = child.val();
 
           var firstname=child.val().firstname;
-          console.log(firstname);
+          // console.log(firstname);
           var lastname=child.val().lastname;
         });
         resolve(filteredusersdata);
