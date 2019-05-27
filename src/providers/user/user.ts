@@ -209,11 +209,30 @@ export class UserProvider {
               reject(err);
             });
           }
-        } catch (e) {
-
+        } catch (err) {
+          // reject(err);
         }
       })
     }
+  }
+  getallusersdetails(node){
+    return new Promise((resolve, reject) => {
+      let result =[];
+      this.getallusers().then((users: any)=>{
+        debugger;
+        try {
+          if (firebase.auth().currentUser.uid != null) {
+            for (let user in users) {
+              let details = users[user][node];
+                result.push(details);
+            }
+          }
+        }catch (err) {
+          reject(err);
+        }
+      });
+      resolve(result);
+    });
   }
 
 

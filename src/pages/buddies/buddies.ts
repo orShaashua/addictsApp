@@ -23,30 +23,12 @@ export class BuddiesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public userservice: UserProvider,public alertCtrl: AlertController, public requestservice: RequestsProvider) {
     //for now all users matches!! need to handle this!!!
-    let mywishFriendslist = this.requestservice.getmywishfriendslist();
-    var add = true;
-    var counter =0;
-    this.userservice.getallusers().then((res: any)=>{
-      this.filteredusers = [];
-      this.temparr = [];
-
-      for (var key  in res) {
-        add = true;
-        for (var frienduid in mywishFriendslist) {
-          if (mywishFriendslist[frienduid] == res[key].uid) {
-            add = false;
-            counter ++;
-            break;
-          }
-        }
-        if (add) {
-          this.filteredusers.push(res[counter]);//need to be all matches and not all users!
-          this.temparr.push(res[counter]);//need to be all matches and not all users!
-          counter++;
-        }
-      }
-
-    })
+    this.removeUsersThatIAlreadySendRequestFromFilter();
+    let alluserssettings;
+    this.userservice.getallusersdetails("settings").then((res: any)=>{
+      debugger;
+      alluserssettings = res;
+    });
   }
   ionViewDidLoad() {}
 
@@ -81,5 +63,31 @@ export class BuddiesPage {
         alert(err);
       });
     }
+  }
+  removeUsersThatIAlreadySendRequestFromFilter(){
+    let mywishFriendslist = this.requestservice.getmywishfriendslist();
+    var add = true;
+    var counter =0;
+    this.userservice.getallusers().then((res: any)=>{
+      this.filteredusers = [];
+      this.temparr = [];
+
+      for (var key  in res) {
+        add = true;
+        for (var frienduid in mywishFriendslist) {
+          if (mywishFriendslist[frienduid] == res[key].uid) {
+            add = false;
+            counter ++;
+            break;
+          }
+        }
+        if (add) {
+          this.filteredusers.push(res[counter]);//need to be all matches and not all users!
+          this.temparr.push(res[counter]);//need to be all matches and not all users!
+          counter++;
+        }
+      }
+
+    });
   }
 }

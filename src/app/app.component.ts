@@ -9,7 +9,6 @@ import {SettingsPage} from "../pages/settings/settings";
 import {LoginPage} from '../pages/login/login';
 import {ProfilePage} from "../pages/profile/profile";
 import {AngularFireAuth} from 'angularfire2/auth';
-// import {Config} from "ionic-angular/umd";
 import firebase from 'firebase'
 import {TabsPage} from "../pages/tabs/tabs";
 
@@ -34,7 +33,6 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public angularFireAuth: AngularFireAuth,
-    // public authService: AuthenticationService
   ) {
     this.initializeApp();
     // set our app's pages
@@ -70,8 +68,8 @@ export class MyApp {
         });
 
     });
-
   }
+
 
   openPage(page) {
     // close the menu when clicking a link from the menu
