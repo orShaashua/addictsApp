@@ -16,7 +16,8 @@ import {FileChooser} from "@ionic-native/file-chooser/ngx";
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {LoginPage} from "../pages/login/login";
 import {Camera} from "@ionic-native/camera";
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule} from 'angularfire2';
+import {AngularFirestoreModule}from 'angularfire2/firestore';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {ChatPage} from "../pages/chat/chat";
 import {PasswordresetPage} from "../pages/passwordreset/passwordreset";
@@ -33,6 +34,7 @@ import { SwipeCardsModule } from 'ng2-swipe-cards';
 import {SearchFriendsPage} from "../pages/search-friends/search-friends";
 import {MatchPage} from "../pages/match/match";
 import {FiltersService} from "../services/FiltersService";
+import {Push} from "@ionic-native/push/ngx";
 
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
@@ -67,7 +69,8 @@ var config = {
     IonicModule.forRoot(MyApp, {tabsPlacement: 'top'}),
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
-    SwipeCardsModule
+    SwipeCardsModule,
+    AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -91,16 +94,17 @@ var config = {
     SplashScreen,
     Camera,
     AngularFireAuth,
-     File,
-     FilePath,
-     FileChooser,
+    File,
+    FilePath,
+    FileChooser,
+    Push,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     UserProvider,
     RequestsProvider,
     ImghandlerProvider,
     ChatProvider,
-    FiltersService
+    FiltersService,
   ]
 })
 export class AppModule {}
