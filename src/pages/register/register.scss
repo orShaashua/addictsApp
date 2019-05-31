@@ -1,29 +1,37 @@
 page-register {
 
 
-  .item-inner, ion-item  {
+  .item-inner  {
     border-bottom-color: transparent !important;
     box-shadow: none !important;
   }
 
-  .red-border{
-    border-width: 1.5px;
-    border-style: solid;
-    border-color: red;
-  }
+  //.red-border{
+  //  border-width: 1.5px;
+  //  border-style: solid;
+  //  border-color: red;
+  //}
 
-  .bg-style {
-    background:lavender;
-  }
+
   .black-border{
     border-width: 1px;
     border-style: solid;
     border-color: black;
     //border-bottom-color: black;
   }
-  b{
-    color:red;
-    font-size:15px;
+  .masters {
+    background-color: #5eb299;
   }
+
+  ion-input {
+    background-color: #fff;
+    border-radius: 500px;
+    margin: 0 0 25px 0;
+  }
+  .wrapper {
+    text-align: center;
+  }
+
+
 
 }

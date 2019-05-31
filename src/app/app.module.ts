@@ -57,7 +57,6 @@ var config = {
     RegisterPage,
     ChatPage,
     PasswordresetPage,
-    ChatPage,
     TabsPage,
     SearchFriendsPage,
     BuddiesPage,
@@ -84,7 +83,6 @@ var config = {
     ChatPage,
     TabsPage,
     BuddiesPage,
-    ChatPage,
     SearchFriendsPage,
     PasswordresetPage,
     MatchPage

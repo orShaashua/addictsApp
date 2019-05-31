@@ -1,27 +1,30 @@
 page-login {
-  .item-inner, ion-item  {
+  .item-inner{
     border-bottom-color: transparent !important;
     box-shadow: none !important;
   }
 
-  .red-border{
-    border-width: 1.5px;
-    border-style: solid;
-    border-color: red;
+  //.red-border{
+  //  //border-width: 1.5px;
+  //  //border-style: solid;
+  //  //border-color: red;
+  //}
+
+  .masters {
+    background-color: #5eb299;
   }
 
-
-  .bg-style {
-    background:lavender;
+  ion-input {
+    background-color: #fff;
+    border-radius: 500px;
+    margin: 0 0 25px 0;
   }
-  b{
-    color:red;
-    font-size:15px;
+  .wrapper {
+    text-align: center;
   }
-
-
-
-
+  ion-label{
+    color:black;
+  }
 
 
 }
