@@ -180,39 +180,39 @@ page-chat {
   }
 
 
-/* speech bubble 13 */
+  /* speech bubble 13 */
 
-.right:before {
-  content: "";
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  border-left: 15px solid color($colors, 'secondary');
-  border-right: 15px solid transparent;
-  border-top: 15px solid color($colors, 'secondary');
-  border-bottom: 15px solid transparent;
-  right: -16px;
-  top: 0px;
+  .right:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 15px solid color($colors, 'secondary');
+    border-right: 15px solid transparent;
+    border-top: 15px solid color($colors, 'secondary');
+    border-bottom: 15px solid transparent;
+    right: -16px;
+    top: 0px;
 
-}
-
-
-/* speech bubble 14 */
-
-.left:before {
-  content: "";
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  border-left: 15px solid transparent;
-  border-right: 15px solid color($colors, 'primary');
-  border-top: 15px solid color($colors, 'primary');
-  border-bottom: 15px solid transparent;
-  left: -16px;
-  top: 0px;
+  }
 
 
-}
+  /* speech bubble 14 */
+
+  .left:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 15px solid transparent;
+    border-right: 15px solid color($colors, 'primary');
+    border-top: 15px solid color($colors, 'primary');
+    border-bottom: 15px solid transparent;
+    left: -16px;
+    top: 0px;
+
+
+  }
 
   img.thumb1 {
     width: 100%;
@@ -220,6 +220,4 @@ page-chat {
     padding: 0;
     background-color: grey;
   }
-
-
 }

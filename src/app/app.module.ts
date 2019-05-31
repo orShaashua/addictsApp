@@ -34,7 +34,6 @@ import { SwipeCardsModule } from 'ng2-swipe-cards';
 import {SearchFriendsPage} from "../pages/search-friends/search-friends";
 import {MatchPage} from "../pages/match/match";
 import {FiltersService} from "../services/FiltersService";
-import {Push} from "@ionic-native/push/ngx";
 
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
@@ -57,7 +56,6 @@ var config = {
     RegisterPage,
     ChatPage,
     PasswordresetPage,
-    ChatPage,
     TabsPage,
     SearchFriendsPage,
     BuddiesPage,
@@ -84,7 +82,6 @@ var config = {
     ChatPage,
     TabsPage,
     BuddiesPage,
-    ChatPage,
     SearchFriendsPage,
     PasswordresetPage,
     MatchPage
@@ -97,7 +94,6 @@ var config = {
     File,
     FilePath,
     FileChooser,
-    Push,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     UserProvider,

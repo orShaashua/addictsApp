@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import {IonicPage, NavController, AlertController, LoadingController} from 'ionic-angular';
 import {RegisterPage} from "../register/register";
 import {usercreds} from '../../models/interfaces/usercreds'
 import {AuthProvider} from "../../providers/auth/auth";
 import {TabsPage} from "../tabs/tabs";
 
 import {PasswordresetPage} from "../passwordreset/passwordreset";
+import {SettingsPage} from "../settings/settings";
+import {UserProvider} from "../../providers/user/user";
 
 /**
  * Generated class for the LoginPage page.
@@ -20,37 +22,35 @@ import {PasswordresetPage} from "../passwordreset/passwordreset";
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  credentials = {} as usercreds;
-
-  // password: string;
+  public loader;
   showUserName = false; //show red alerts and text for username box
   showPassword = false; //show red alerts and text for password box
+  credentials = {} as usercreds;
 
+  // showUserName = false; //show red alerts and text for username box
+  // showPassword = false; //show red alerts and text for password box
+  private opt: string = 'signin';
   constructor(public navCtrl: NavController, public alertCtrl: AlertController,
-              public authservice: AuthProvider) {
+              public authservice: AuthProvider,
+              public userservice: UserProvider, public loadingCtrl: LoadingController) {
     this.credentials.email = "";
     this.credentials.password = "";
-
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  input1func() {
-    this.showUserName = false;
-    this.showPassword = false;
-  }
-
-  input2func() {
-    this.showPassword = false;
-    this.showUserName = false;
-  }
-
+  // input1func() {
+  //   this.showUserName = false;
+  //   this.showPassword = false;
+  // }
   //
-  register() {
-    this.navCtrl.push(RegisterPage);
-  }
+  // input2func() {
+  //   this.showPassword = false;
+  //   this.showUserName = false;
+  // }
+
 
   alert(message: string) {
     this.alertCtrl.create({
@@ -63,14 +63,10 @@ export class LoginPage {
   //
   signIn() {
     if ((this.credentials.email.length == 0)) {
-      if (this.showUserName == false) {
-        this.showUserName = true;
-      }
+      alert("לא הוזן איימל")
     }
-    if ((this.credentials.password.length == 0)) {
-      if (this.showPassword == false) {
-        this.showPassword = true;
-      }
+    else if ((this.credentials.password.length == 0)) {
+      alert("לא הוזנה סיסמאה")
     }
 
 
@@ -82,9 +78,6 @@ export class LoginPage {
           alert(res);
         }
       })
-      // this.fire.auth.currentUser.get
-      // alert("hi! your name is: " + this.username.toString() + "\nand your password is: " + this.password.toString());
-      // this.navCtrl.push(ProfilePage,{username:this.username})
     }
 
 
@@ -93,4 +86,15 @@ export class LoginPage {
   passwordreset(){
     this.navCtrl.push(PasswordresetPage);
   }
+
+  refreshPage(){
+    if (this.opt ==='signin'){
+      this.navCtrl.push(LoginPage);
+    }else if (this.opt ==='signup'){
+      this.navCtrl.push(RegisterPage);
+    }
+
+  }
+
+
 }
