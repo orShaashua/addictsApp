@@ -30,7 +30,7 @@ export class UserProvider {
           // displayName: this.afirauth.auth.currentUser.displayName,
           // photoURL: this.afirauth.auth.currentUser.photoURL,
           // uid: this.afirauth.auth.currentUser.uid,
-          addictstype: settings.addictsType,
+          addictsType: settings.addictsType,
           gender: settings.gender,
           mentor: settings.mentor,
           bdayDay: settings.bdayDay,
@@ -161,13 +161,13 @@ export class UserProvider {
       });
 
     // debugger;
-    this.filtersFromUser.addictsType =  "alcohol";
-    this.filtersFromUser.maxDist = 80;
-    this.filtersFromUser.female = true;
-    this.filtersFromUser.male = true;
-    this.filtersFromUser.ageRangeLower = 12;
-    this.filtersFromUser.ageRangeUpper = 80;
-    this.filtersFromUser.meetingType = "conversation";
+    // this.filtersFromUser.addictsType =  "alcohol";
+    // this.filtersFromUser.maxDist = 80;
+    // this.filtersFromUser.female = true;
+    // this.filtersFromUser.male = true;
+    // this.filtersFromUser.ageRangeLower = 12;
+    // this.filtersFromUser.ageRangeUpper = 80;
+    // this.filtersFromUser.meetingType = "conversation";
     const data1234 = this.firedata.child('settings');
     console.log("hi the data1234 is = " + data1234.toString());
     var promise = new Promise ((resolve, reject)=>{
@@ -243,15 +243,50 @@ export class UserProvider {
     }
   }
   getallusersdetails(node){
+    let filtersFromUser = new Filters();
+    //this is suppose to work, for shula it doesnt and for Or it does. so in the mean time im doing a demo filter
+    this.getusersdetails("filters").then((res: any)=>{
+      if (res) {
+        filtersFromUser = res;
+      }
+    });
+    this.filtersFromUser.addictsType = "alcohol";
+    this.filtersFromUser.maxDist = 80;
+    this.filtersFromUser.female = true;
+    this.filtersFromUser.male = true;
+    this.filtersFromUser.ageRangeLower = 18;
+    this.filtersFromUser.ageRangeUpper = 42;
+    this.filtersFromUser.meetingType = "conversation";
+    debugger;
+
+    let gender = "";
+    let currentYear = (new Date()).getFullYear();
+    if(this.filtersFromUser.female == true && this.filtersFromUser.male == true){
+      gender = "both"
+    } else if(this.filtersFromUser.female == true){
+      gender = "female"
+    } else {
+      gender = "male"
+    }
+
     return new Promise((resolve, reject) => {
       let result =[];
+      // debugger;
       this.getallusers().then((users: any)=>{
-        debugger;
+        // debugger;
         try {
           if (firebase.auth().currentUser.uid != null) {
             for (let user in users) {
+              debugger;
               let details = users[user][node];
-                result.push(details);
+              if(details.addictsType == this.filtersFromUser.addictsType
+                && (details.gender == gender || gender == "both")
+                && (currentYear - details.bdayYear >  this.filtersFromUser.ageRangeLower
+                  && currentYear - details.bdayYear <  this.filtersFromUser.ageRangeUpper)){
+                result.push(details)
+              }
+              // console.log(details.gender);
+                // result.push(details);
             }
           }
         }catch (err) {
