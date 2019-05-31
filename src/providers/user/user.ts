@@ -331,10 +331,10 @@ export class UserProvider {
           photoURL: imageurl,
           uid: firebase.auth().currentUser.uid
         }).then(() => {
-            resolve({success: true})
-          }).catch((err) => {
-            reject(err);
-          })
+          resolve({success: true})
+        }).catch((err) => {
+          reject(err);
+        })
       }).catch((err) => {
         reject(err);
       })
