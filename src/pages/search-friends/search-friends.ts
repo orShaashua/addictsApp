@@ -57,20 +57,31 @@ export class SearchFriendsPage {
     }
 
     this.ready = true;
+
+    let alluserssettings;
+    this.userservice.getallusersdetails("settings").then((res: any)=>{
+      alluserssettings = res;
+    });
+    debugger;
+
   }
 
-  ionViewDidLoad() {
-    this.userservice.getusersdetails("filters").then((res: any)=>{
-      if (res) {
-       this.filtersFromUser = res;
-       console.log(this.filteredUsers);
-      }
-    });
-    console.log("hi im in search friends the addicts type is = " + this.filtersFromUser.addictsType);
-    this.userservice.getFilterUsers(this.filtersFromUser).then((res: any)=>{
-      this.filteredUsers = res;
-    })
-
+  ionViewWillEnter() {
+    // this.userservice.getusersdetails("filters").then((res: any)=>{
+    //   if (res) {
+    //    this.filtersFromUser = res;
+    //    console.log(this.filteredUsers);
+    //   }
+    // });
+    // console.log("hi im in search friends the addicts type is = " + this.filtersFromUser.addictsType);
+    // this.userservice.getFilterUsers(this.filtersFromUser).then((res: any)=>{
+    //   this.filteredUsers = res;
+    // })
+    // let alluserssettings;
+    // this.userservice.getallusersdetails("settings").then((res: any)=>{
+    //   debugger;
+    //   alluserssettings = res;
+    // });
   }
 
   onCardInteract(event) {

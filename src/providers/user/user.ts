@@ -1,6 +1,8 @@
 import {Injectable, ViewChild} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import firebase from 'firebase';
+import {Filters} from "../../models/filters.model";
+
 /*
   Generated class for the UserProvider provider.
 
@@ -11,6 +13,7 @@ import firebase from 'firebase';
 export class UserProvider {
 
   firedata = firebase.database().ref('/users');
+  // firedata1 = firebase.database().ref('/users/uid');
   constructor(public afirauth: AngularFireAuth) {
     console.log('Hello UserProvider Provider');
   }
@@ -27,7 +30,7 @@ export class UserProvider {
           // displayName: this.afirauth.auth.currentUser.displayName,
           // photoURL: this.afirauth.auth.currentUser.photoURL,
           // uid: this.afirauth.auth.currentUser.uid,
-          addictstype: settings.addictsType,
+          addictsType: settings.addictsType,
           gender: settings.gender,
           mentor: settings.mentor,
           bdayDay: settings.bdayDay,
@@ -62,8 +65,8 @@ export class UserProvider {
           maxDist: filters.maxDist,
           female: filters.female,
           male: filters.male,
-          ageRangelower: filters.ageRangeLower,
-          ageRangeupper: filters.ageRangeUpper,
+          ageRangeLower: filters.ageRangeLower,
+          ageRangeUpper: filters.ageRangeUpper,
           meetingType: filters.meetingType
         }).then(() => {
           resolve({success: true});
@@ -142,10 +145,34 @@ export class UserProvider {
     return promise;
   }
 
+  filtersFromUser = new Filters();
   getFilterUsers(userDetails){
+    var query = firebase.database().ref("users/settings");
+    query.once("value")
+      .then(function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+          // key will be "ada" the first time and "alan" the second time
+          var key = childSnapshot.child("gender").key;
+          console.log("hi the key here is =" + key);
+          // childData will be the actual contents of the child
+          var childData = childSnapshot.child("gender").val();
+          console.log("hi the childData here is =" + childData);
+        });
+      });
 
+    // debugger;
+    // this.filtersFromUser.addictsType =  "alcohol";
+    // this.filtersFromUser.maxDist = 80;
+    // this.filtersFromUser.female = true;
+    // this.filtersFromUser.male = true;
+    // this.filtersFromUser.ageRangeLower = 12;
+    // this.filtersFromUser.ageRangeUpper = 80;
+    // this.filtersFromUser.meetingType = "conversation";
+    const data1234 = this.firedata.child('settings');
+    console.log("hi the data1234 is = " + data1234.toString());
     var promise = new Promise ((resolve, reject)=>{
-      this.firedata.orderByChild('uid').once('value', (snapshot)=>{
+      this.firedata.orderByChild("settings").once('value', (snapshot)=>{
+        // console.log("flag1 = " + snapshot.val().addictsType);
         let filteredusersdata = [];
         //         // let temparr =[];
         //         // for (var key in userdata){
@@ -168,11 +195,11 @@ export class UserProvider {
             filteredusersdata.push(child)
           }
 
-          var datas = child.val();
+          var datas = snapshot.child("settings").child("addictsType").val();
 
-          var firstname=child.val().firstname;
-          console.log(firstname);
-          var lastname=child.val().lastname;
+          var firstname=child.val().gender;
+          console.log("hi the val is = " + datas);
+          // var lastname=child.val().lastname;
         });
         resolve(filteredusersdata);
       }).catch((err)=>{
@@ -216,15 +243,50 @@ export class UserProvider {
     }
   }
   getallusersdetails(node){
+    let filtersFromUser = new Filters();
+    //this is suppose to work, for shula it doesnt and for Or it does. so in the mean time im doing a demo filter
+    this.getusersdetails("filters").then((res: any)=>{
+      if (res) {
+        filtersFromUser = res;
+      }
+    });
+    this.filtersFromUser.addictsType = "alcohol";
+    this.filtersFromUser.maxDist = 80;
+    this.filtersFromUser.female = true;
+    this.filtersFromUser.male = true;
+    this.filtersFromUser.ageRangeLower = 18;
+    this.filtersFromUser.ageRangeUpper = 42;
+    this.filtersFromUser.meetingType = "conversation";
+    debugger;
+
+    let gender = "";
+    let currentYear = (new Date()).getFullYear();
+    if(this.filtersFromUser.female == true && this.filtersFromUser.male == true){
+      gender = "both"
+    } else if(this.filtersFromUser.female == true){
+      gender = "female"
+    } else {
+      gender = "male"
+    }
+
     return new Promise((resolve, reject) => {
       let result =[];
+      // debugger;
       this.getallusers().then((users: any)=>{
-        debugger;
+        // debugger;
         try {
           if (firebase.auth().currentUser.uid != null) {
             for (let user in users) {
+              debugger;
               let details = users[user][node];
-                result.push(details);
+              if(details.addictsType == this.filtersFromUser.addictsType
+                && (details.gender == gender || gender == "both")
+                && (currentYear - details.bdayYear >  this.filtersFromUser.ageRangeLower
+                  && currentYear - details.bdayYear <  this.filtersFromUser.ageRangeUpper)){
+                result.push(details)
+              }
+              // console.log(details.gender);
+                // result.push(details);
             }
           }
         }catch (err) {

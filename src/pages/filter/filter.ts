@@ -35,7 +35,7 @@ export class FilterPage {
   // filters: any = {
   // };
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public serviceFilter: FiltersService, public userservice: UserProvider) {
+              public userservice: UserProvider) {
   }
 
   ionViewDidLoad() {
@@ -69,8 +69,8 @@ export class FilterPage {
     this.userservice.getusersdetails("filters").then((res: any)=>{
       debugger;
       if (res) {
-          this.ageRange.lower = res.ageRangelower;
-          this.ageRange.upper = res.ageRangeupper;
+          this.ageRange.lower = res.ageRangeLower;
+          this.ageRange.upper = res.ageRangeUpper;
           this.addictsType.value = res.addictsType;
           this.maxDist.value = res.maxDist;
           this.female.value = res.female;
