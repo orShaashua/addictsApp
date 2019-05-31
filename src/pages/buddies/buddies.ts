@@ -24,11 +24,11 @@ export class BuddiesPage {
               public userservice: UserProvider,public alertCtrl: AlertController, public requestservice: RequestsProvider) {
     //for now all users matches!! need to handle this!!!
     this.removeUsersThatIAlreadySendRequestFromFilter();
-    let alluserssettings;
-    this.userservice.getallusersdetails("settings").then((res: any)=>{
-      debugger;
-      alluserssettings = res;
-    });
+    // let alluserssettings;
+    // this.userservice.getallusersdetails("settings").then((res: any)=>{
+    //   debugger;
+    //   alluserssettings = res;
+    // });
   }
   ionViewDidLoad() {}
 

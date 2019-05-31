@@ -292,8 +292,8 @@ export class UserProvider {
         }catch (err) {
           reject(err);
         }
+        resolve(result);
       });
-      resolve(result);
     });
   }
 
