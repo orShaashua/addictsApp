@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import firebase from 'firebase';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import {LoadingController} from "ionic-angular";
@@ -14,16 +13,17 @@ export class ImghandlerProvider {
   nativepath: any;
   firestore = firebase.storage();
 
-  constructor(public filechooser: FileChooser, private camera: Camera, public loadingCtrl: LoadingController) {
+  constructor(private camera: Camera, public loadingCtrl: LoadingController) {
   }
+
+
+
 
   uploadimage() {
     let loader = this.loadingCtrl.create({
       content: 'אנא המתן'
     });
     return new Promise((resolve, reject) => {
-      //this.filechooser.open().then((url) => {
-        //(<any>window).FilePath.resolveNativePath(url, (result) => {
       const options: CameraOptions = {
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         destinationType: this.camera.DestinationType.FILE_URI,
@@ -34,6 +34,7 @@ export class ImghandlerProvider {
         correctOrientation: true
       };
       this.camera.getPicture(options).then((imageData) => {
+        alert(imageData);
         loader.present();
         this.nativepath =  imageData;
          (<any>window).resolveLocalFileSystemURL(this.nativepath, (res) => {
@@ -70,8 +71,6 @@ export class ImghandlerProvider {
         content: 'אנא המתן'
       });
       return new Promise((resolve, reject) => {
-        //this.filechooser.open().then((url) => {
-        //(<any>window).FilePath.resolveNativePath(url, (result) => {
         const options: CameraOptions = {
           sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
           destinationType: this.camera.DestinationType.FILE_URI,
