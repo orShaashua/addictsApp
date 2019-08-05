@@ -90,12 +90,14 @@ export class SearchFriendsPage {
       this.newrrequest.recipient = recipient.uid;
       this.firedata.orderByChild(this.newrrequest.sender).once('value', (snapshot) => {
         // resolve(snapshot.val());
-        let userdata =snapshot.val();
+        let usersdata =snapshot.val();
         let temparr =[];
-        for (var key in userdata){
+        for (var key in usersdata){
           //this means that both users liked each other
-          if (recipient.uid == userdata[key].sender){
-            var jll = 0
+          for (var user in usersdata[key]) {
+            if (recipient.uid == usersdata[key][user].sender) {
+              var jll = 0
+            }
           }
         }
         this.likesService.sendlike(this.newrrequest).then((res: any) => {
