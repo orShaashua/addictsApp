@@ -94,7 +94,7 @@ export class SearchFriendsPage {
         let temparr =[];
         for (var key in userdata){
           //this means that both users liked each other
-          if (recipient.uid == userdata[key]){
+          if (recipient.uid == userdata[key].sender){
             var jll = 0
           }
         }
