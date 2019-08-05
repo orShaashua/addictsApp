@@ -17,7 +17,7 @@
              [tinder-card]="cardOverlay"
              [callDestroy]="attendant.destroyEvent"
              [callLike]="attendant.likeEvent"
-             (onLike)="onCardInteract($event)">
+             (onLike)="onCardInteract($event, attendant)">
       <div class="user_img" [style.background-image]="attendant.asBg"></div>
       <!--<div class="user_displayname" [(ngModel)] = "attendant.displayName"></div>-->
     </sc-card>
