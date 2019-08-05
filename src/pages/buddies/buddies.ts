@@ -67,7 +67,7 @@ export class BuddiesPage {
   removeUsersThatIAlreadySendRequestFromFilter(){
     let mywishFriendslist = this.requestservice.getmywishfriendslist();
     var add = true;
-    var counter =0;
+    var counter = 0;
     this.userservice.getallusers().then((res: any)=>{
       this.filteredusers = [];
       this.temparr = [];
