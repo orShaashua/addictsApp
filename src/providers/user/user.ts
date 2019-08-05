@@ -170,40 +170,40 @@ export class UserProvider {
     // this.filtersFromUser.ageRangeUpper = 80;
     // this.filtersFromUser.meetingType = "conversation";
     const data1234 = this.firedata.child('settings');
-    console.log("hi the data1234 is = " + data1234.toString());
-    var promise = new Promise ((resolve, reject)=>{
-      this.firedata.orderByChild("settings").once('value', (snapshot)=>{
-        // console.log("flag1 = " + snapshot.val().addictsType);
-        let filteredusersdata = [];
-        //         // let temparr =[];
-        //         // for (var key in userdata){
-        //         //   temparr.push(userdata[key]);
-        //         // }
-        let gender = "";
-        let currentYear = (new Date()).getFullYear();
-        if(userDetails.femaleValue == true && userDetails.maleVale == true){
-          gender = "both"
-        } else if(userDetails.femaleValue == true){
-          gender = "female"
-        } else {
-          gender = "male"
-        }
-        snapshot.forEach(function(child) {
-          if(child.val().addictstype == userDetails.addictsType
-            && (child.val().gender == gender || gender == "both")
-            && (child.val().bdayYear - currentYear > userDetails.ageRange.lower
-              && child.val().bdayYear - currentYear < userDetails.ageRange.upper)){
-            filteredusersdata.push(child)
-          }
+        console.log("hi the data1234 is = " + data1234.toString());
+        var promise = new Promise ((resolve, reject)=>{
+          this.firedata.orderByChild("settings").once('value', (snapshot)=>{
+            // console.log("flag1 = " + snapshot.val().addictsType);
+            let filteredusersdata = [];
+            //         // let temparr =[];
+            //         // for (var key in userdata){
+            //         //   temparr.push(userdata[key]);
+            //         // }
+            let gender = "";
+            let currentYear = (new Date()).getFullYear();
+            if(userDetails.femaleValue == true && userDetails.maleVale == true){
+              gender = "both"
+            } else if(userDetails.femaleValue == true){
+              gender = "female"
+            } else {
+              gender = "male"
+            }
+            snapshot.forEach(function(child) {
+              if(child.val().addictstype == userDetails.addictsType
+                && (child.val().gender == gender || gender == "both")
+                && (child.val().bdayYear - currentYear > userDetails.ageRange.lower
+                  && child.val().bdayYear - currentYear < userDetails.ageRange.upper)){
+                filteredusersdata.push(child)
+              }
 
-          var datas = snapshot.child("settings").child("addictsType").val();
+              var datas = snapshot.child("settings").child("addictsType").val();
 
-          var firstname=child.val().gender;
-          console.log("hi the val is = " + datas);
-          // var lastname=child.val().lastname;
-        });
-        resolve(filteredusersdata);
-      }).catch((err)=>{
+              var firstname=child.val().gender;
+              console.log("hi the val is = " + datas);
+              // var lastname=child.val().lastname;
+            });
+            resolve(filteredusersdata);
+          }).catch((err)=>{
         reject(err);
       })
     });
@@ -269,7 +269,6 @@ export class UserProvider {
                 && (currentYear - settingsFromUser.bdayYear >=  details.ageRangeLower
                   && currentYear - settingsFromUser.bdayYear <=  details.ageRangeUpper)){
                 result.push(users[user]);
-                debugger;
               }
             }
             resolve(result);
