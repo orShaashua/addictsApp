@@ -271,39 +271,12 @@ export class UserProvider {
         }
       });
     });
-      // let result =[];
-      // // debugger;
-      // this.getallusers().then((users: any)=>{
-      //   // debugger;
-      //   try {
-      //     if (firebase.auth().currentUser.uid != null) {
-      //       for (let user in users) {
-      //         debugger;
-      //         let details = users[user]["settings"];
-      //         if(details.addictsType == this.filtersFromUser.addictsType
-      //           && (details.gender == gender || gender == "both")
-      //           && (currentYear - details.bdayYear >  this.filtersFromUser.ageRangeLower
-      //             && currentYear - details.bdayYear <  this.filtersFromUser.ageRangeUpper)){
-      //           result.push(users[user])
-      //         }
-      //         // console.log(details.gender);
-      //         // result.push(details);
-      //       }
-      //     }
-      //   }catch (err) {
-      //     reject(err);
-      //   }
-      //   resolve(result);
-      // });
-
-
   }
 
 
 
 
   getUsersMatchedToMyFilter(){
-    // debugger;
     return new Promise((resolve, reject) => {
       let filtersFromUser = new Filters();
       //this is suppose to work, for shula it doesnt and for Or it does. so in the mean time im doing a demo filter
@@ -355,9 +328,6 @@ export class UserProvider {
       });
     });
   }
-
-
-
 
   updatedisplayname(newname){
     return new Promise((resolve, reject) => {

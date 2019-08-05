@@ -99,10 +99,10 @@ export class SearchFriendsPage {
           }
         }
         this.likesService.sendlike(this.newrrequest).then((res: any) => {
-          // if (res.success) {
-          //   let sentuser = this.filteredusers.indexOf(recipient);
-          //   this.filteredusers.splice(sentuser, 1);
-          // }
+          if (res.success) {
+            let sentuser = this.attendants.indexOf(recipient);
+            this.attendants.splice(sentuser, 1);
+          }
         }).catch((err) => {
           alert(err);
         });
