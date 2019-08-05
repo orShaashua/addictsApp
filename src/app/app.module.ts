@@ -34,6 +34,7 @@ import { SwipeCardsModule } from 'ng2-swipe-cards';
 import {SearchFriendsPage} from "../pages/search-friends/search-friends";
 import {MatchPage} from "../pages/match/match";
 import {FiltersService} from "../services/FiltersService";
+import { LikesProvider } from '../providers/likes/likes';
 
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
@@ -101,6 +102,7 @@ var config = {
     ImghandlerProvider,
     ChatProvider,
     FiltersService,
+    LikesProvider,
   ]
 })
 export class AppModule {}
