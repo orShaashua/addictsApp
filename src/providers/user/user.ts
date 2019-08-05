@@ -146,7 +146,6 @@ export class UserProvider {
     return promise;
   }
 
-  filtersFromUser = new Filters();
   getFilterUsers(userDetails){
     var query = firebase.database().ref("users/settings");
     query.once("value")
@@ -319,9 +318,9 @@ export class UserProvider {
           filtersFromUser.meetingType = res.meetingType;
           let gender = "";
           let currentYear = (new Date()).getFullYear();
-          if(this.filtersFromUser.female == true && this.filtersFromUser.male == true){
+          if(filtersFromUser.female == true && filtersFromUser.male == true){
             gender = "both"
-          } else if(this.filtersFromUser.female == true){
+          } else if(filtersFromUser.female == true){
             gender = "female"
           } else {
             gender = "male"
@@ -333,10 +332,10 @@ export class UserProvider {
                 for (let user in users) {
 
                   let details = users[user]["settings"];
-                  if(details.addictsType == this.filtersFromUser.addictsType
+                  if(details.addictsType == filtersFromUser.addictsType
                     && (details.gender == gender || gender == "both")
-                    && (currentYear - details.bdayYear >=  this.filtersFromUser.ageRangeLower
-                      && currentYear - details.bdayYear <=  this.filtersFromUser.ageRangeUpper)){
+                    && (currentYear - details.bdayYear >=  filtersFromUser.ageRangeLower
+                      && currentYear - details.bdayYear <=  filtersFromUser.ageRangeUpper)){
                     result.push(users[user])
                   }
                   // console.log(details.gender);
