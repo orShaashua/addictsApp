@@ -17,7 +17,7 @@ import {Filters} from "../../models/filters.model";
   templateUrl: 'search-friends.html',
 })
 export class SearchFriendsPage {
-
+  users:any;
   ready = false;
   attendants = [];
   cardDirection = "xy";
@@ -41,28 +41,33 @@ export class SearchFriendsPage {
     "https://data1.ibtimes.co.in/cache-img-600-450/en/full/571296/1494666323_anushka-shetty-baahubali.jpg"
   ];
 
-  public filteredUsers: Array<any> = [];
+  // public filteredUsers: Array<any> = [];
   // public itemRef: firebase.database.Reference = firebase.database().ref('/users');
 
-  filtersFromUser = new Filters();
+  // filtersFromUser = new Filters();
 
   constructor(private sanitizer: DomSanitizer,  public userservice: UserProvider, public navParams: NavParams) {
-    for (let i = 0; i < this.images.length; i++) {
-      this.attendants.push({
-        id: i + 1,
-        likeEvent: new EventEmitter(),
-        destroyEvent: new EventEmitter(),
-        asBg: this.sanitizer.bypassSecurityTrustStyle('url('+this.images[i]+')')
-      });
-    }
+
 
     this.ready = true;
 
-    let alluserssettings;
-    this.userservice.getallusersdetails("settings").then((res: any)=>{
-      alluserssettings = res;
+    this.userservice.getMySearchFriends().then((res: any)=>{
+      this.users = res;
+
+      for (let i = 0; i < this.users.length; i++) {
+        debugger;
+        this.attendants.push({
+          id: i + 1,
+          likeEvent: new EventEmitter(),
+          destroyEvent: new EventEmitter(),
+          asBg: this.sanitizer.bypassSecurityTrustStyle('url('+this.users[i].photoURL+')'),
+          displayName: this.users[i].displayName
+        });
+      }
     });
-    debugger;
+
+
+
 
   }
 

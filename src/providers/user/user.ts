@@ -2,6 +2,7 @@ import {Injectable, ViewChild} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import firebase from 'firebase';
 import {Filters} from "../../models/filters.model";
+import {Settings} from "../../models/settings.model";
 
 /*
   Generated class for the UserProvider provider.
@@ -160,7 +161,7 @@ export class UserProvider {
         });
       });
 
-    // debugger;
+
     // this.filtersFromUser.addictsType =  "alcohol";
     // this.filtersFromUser.maxDist = 80;
     // this.filtersFromUser.female = true;
@@ -242,7 +243,73 @@ export class UserProvider {
       })
     }
   }
-  getallusersdetails(node){
+
+  getMySearchFriends(){
+    return new Promise((resolve, reject) => {
+      let settingsFromUser = new Settings();
+      let result =[];
+      this.getusersdetails("settings").then((res: any)=>{
+        if (res) {
+          settingsFromUser = res;
+          let gender = "";
+          let currentYear = (new Date()).getFullYear();
+          this.getUsersMatchedToMyFilter().then((users: any)=>{
+            for (let user in users){
+              let details = users[user]["filters"];
+              if(details.female == true && details.male == true){
+                gender = "both"
+              } else if(details.female == true){
+                gender = "female"
+              } else {
+                gender = "male"
+              }
+
+              if(settingsFromUser.addictsType == details.addictsType
+                && (settingsFromUser.gender == gender || gender == "both")
+                && (currentYear - settingsFromUser.bdayYear >=  details.ageRangeLower
+                  && currentYear - settingsFromUser.bdayYear <=  details.ageRangeUpper)){
+                result.push(users[user]);
+                debugger;
+              }
+            }
+            resolve(result);
+          });
+        }
+      });
+    });
+      // let result =[];
+      // // debugger;
+      // this.getallusers().then((users: any)=>{
+      //   // debugger;
+      //   try {
+      //     if (firebase.auth().currentUser.uid != null) {
+      //       for (let user in users) {
+      //         debugger;
+      //         let details = users[user]["settings"];
+      //         if(details.addictsType == this.filtersFromUser.addictsType
+      //           && (details.gender == gender || gender == "both")
+      //           && (currentYear - details.bdayYear >  this.filtersFromUser.ageRangeLower
+      //             && currentYear - details.bdayYear <  this.filtersFromUser.ageRangeUpper)){
+      //           result.push(users[user])
+      //         }
+      //         // console.log(details.gender);
+      //         // result.push(details);
+      //       }
+      //     }
+      //   }catch (err) {
+      //     reject(err);
+      //   }
+      //   resolve(result);
+      // });
+
+
+  }
+
+
+
+
+  getUsersMatchedToMyFilter(){
+    // debugger;
     let filtersFromUser = new Filters();
     //this is suppose to work, for shula it doesnt and for Or it does. so in the mean time im doing a demo filter
     this.getusersdetails("filters").then((res: any)=>{
@@ -257,7 +324,7 @@ export class UserProvider {
     this.filtersFromUser.ageRangeLower = 18;
     this.filtersFromUser.ageRangeUpper = 42;
     this.filtersFromUser.meetingType = "conversation";
-    debugger;
+    // debugger;
 
     let gender = "";
     let currentYear = (new Date()).getFullYear();
@@ -277,13 +344,13 @@ export class UserProvider {
         try {
           if (firebase.auth().currentUser.uid != null) {
             for (let user in users) {
-              debugger;
-              let details = users[user][node];
+
+              let details = users[user]["settings"];
               if(details.addictsType == this.filtersFromUser.addictsType
                 && (details.gender == gender || gender == "both")
-                && (currentYear - details.bdayYear >  this.filtersFromUser.ageRangeLower
-                  && currentYear - details.bdayYear <  this.filtersFromUser.ageRangeUpper)){
-                result.push(details)
+                && (currentYear - details.bdayYear >=  this.filtersFromUser.ageRangeLower
+                  && currentYear - details.bdayYear <=  this.filtersFromUser.ageRangeUpper)){
+                result.push(users[user])
               }
               // console.log(details.gender);
                 // result.push(details);
@@ -296,6 +363,7 @@ export class UserProvider {
       });
     });
   }
+
 
 
 

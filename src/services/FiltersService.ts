@@ -10,7 +10,7 @@ export class FiltersService {
 
   setFilters(filters) {
     // console.log(filters.maxDis);
-    debugger;
+    // debugger;
     this.filtersFromUser.maxDist = filters.maxDist;
     this.filtersFromUser.addictsType = filters.addictsType;
     this.filtersFromUser.female = filters.female;

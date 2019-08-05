@@ -26,7 +26,7 @@ export class BuddiesPage {
     this.removeUsersThatIAlreadySendRequestFromFilter();
     // let alluserssettings;
     // this.userservice.getallusersdetails("settings").then((res: any)=>{
-    //   debugger;
+
     //   alluserssettings = res;
     // });
   }

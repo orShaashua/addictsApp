@@ -86,7 +86,7 @@ export class SettingsPage {
 
       if (res) {
         this.gender.value = res.gender;
-        this.addictsType.value = res.addictstype;
+        this.addictsType.value = res.addictsType;
         this.mentor.value = res.mentor;
         this.BirthDate.setValue(new Date(res.bdayYear + "-" + res.bdayMonth + "-" + res.bdayDay).toISOString());
         this.about.value = res.description;

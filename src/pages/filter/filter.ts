@@ -67,7 +67,7 @@ export class FilterPage {
 
   loaduserfilters(){
     this.userservice.getusersdetails("filters").then((res: any)=>{
-      debugger;
+
       if (res) {
           this.ageRange.lower = res.ageRangeLower;
           this.ageRange.upper = res.ageRangeUpper;
