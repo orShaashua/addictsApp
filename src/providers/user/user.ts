@@ -306,7 +306,7 @@ export class UserProvider {
 
 
 
-
+  //return the users who match my filter
   getUsersMatchedToMyFilter(){
     // debugger;
     let filtersFromUser = new Filters();
