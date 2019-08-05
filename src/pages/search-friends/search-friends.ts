@@ -41,6 +41,7 @@ export class SearchFriendsPage {
     });
     loader.present();
     this.userservice.getMySearchFriends().then((res: any)=>{
+
       this.users = res;
       this.ready = true;
       for (let i = 0; i < this.users.length; i++) {
@@ -55,6 +56,7 @@ export class SearchFriendsPage {
       loader.dismissAll();
 
     });
+    loader.dismissAll();
   }
 
   ionViewWillEnter() {
@@ -76,6 +78,9 @@ export class SearchFriendsPage {
   }
 
   onCardInteract(event) {
+    if(event.like){
+
+    }
     console.log(event);
   }
 

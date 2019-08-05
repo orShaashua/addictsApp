@@ -1,4 +1,4 @@
-import {Injectable, ViewChild} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import firebase from 'firebase';
 import {Filters} from "../../models/filters.model";
@@ -161,14 +161,6 @@ export class UserProvider {
         });
       });
 
-
-    // this.filtersFromUser.addictsType =  "alcohol";
-    // this.filtersFromUser.maxDist = 80;
-    // this.filtersFromUser.female = true;
-    // this.filtersFromUser.male = true;
-    // this.filtersFromUser.ageRangeLower = 12;
-    // this.filtersFromUser.ageRangeUpper = 80;
-    // this.filtersFromUser.meetingType = "conversation";
     const data1234 = this.firedata.child('settings');
         console.log("hi the data1234 is = " + data1234.toString());
         var promise = new Promise ((resolve, reject)=>{
@@ -198,7 +190,7 @@ export class UserProvider {
 
               var datas = snapshot.child("settings").child("addictsType").val();
 
-              var firstname=child.val().gender;
+              var firstname = child.val().gender;
               console.log("hi the val is = " + datas);
               // var lastname=child.val().lastname;
             });
@@ -256,6 +248,10 @@ export class UserProvider {
           this.getUsersMatchedToMyFilter().then((users: any)=>{
             for (let user in users){
               let details = users[user]["filters"];
+              if (!details){
+                result.push(users[user]);
+                continue;
+              }
               if(details.female == true && details.male == true){
                 gender = "both"
               } else if(details.female == true){
@@ -309,56 +305,54 @@ export class UserProvider {
 
   getUsersMatchedToMyFilter(){
     // debugger;
-    let filtersFromUser = new Filters();
-    //this is suppose to work, for shula it doesnt and for Or it does. so in the mean time im doing a demo filter
-    this.getusersdetails("filters").then((res: any)=>{
-      if (res) {
-        filtersFromUser = res;
-      }
-    });
-    this.filtersFromUser.addictsType = "alcohol";
-    this.filtersFromUser.maxDist = 80;
-    this.filtersFromUser.female = true;
-    this.filtersFromUser.male = true;
-    this.filtersFromUser.ageRangeLower = 18;
-    this.filtersFromUser.ageRangeUpper = 42;
-    this.filtersFromUser.meetingType = "conversation";
-    // debugger;
-
-    let gender = "";
-    let currentYear = (new Date()).getFullYear();
-    if(this.filtersFromUser.female == true && this.filtersFromUser.male == true){
-      gender = "both"
-    } else if(this.filtersFromUser.female == true){
-      gender = "female"
-    } else {
-      gender = "male"
-    }
-
     return new Promise((resolve, reject) => {
-      let result =[];
-      // debugger;
-      this.getallusers().then((users: any)=>{
-        // debugger;
-        try {
-          if (firebase.auth().currentUser.uid != null) {
-            for (let user in users) {
-
-              let details = users[user]["settings"];
-              if(details.addictsType == this.filtersFromUser.addictsType
-                && (details.gender == gender || gender == "both")
-                && (currentYear - details.bdayYear >=  this.filtersFromUser.ageRangeLower
-                  && currentYear - details.bdayYear <=  this.filtersFromUser.ageRangeUpper)){
-                result.push(users[user])
-              }
-              // console.log(details.gender);
-                // result.push(details);
-            }
+      let filtersFromUser = new Filters();
+      //this is suppose to work, for shula it doesnt and for Or it does. so in the mean time im doing a demo filter
+      this.getusersdetails("filters").then((res: any)=>{
+        if (res) {
+          filtersFromUser.addictsType = res.addictsType;
+          filtersFromUser.maxDist = res.maxDist;
+          filtersFromUser.female =res.female;
+          filtersFromUser.male = res.male ;
+          filtersFromUser.ageRangeLower =res.ageRangeLower;
+          filtersFromUser.ageRangeUpper = res.ageRangeUpper;
+          filtersFromUser.meetingType = res.meetingType;
+          let gender = "";
+          let currentYear = (new Date()).getFullYear();
+          if(this.filtersFromUser.female == true && this.filtersFromUser.male == true){
+            gender = "both"
+          } else if(this.filtersFromUser.female == true){
+            gender = "female"
+          } else {
+            gender = "male"
           }
-        }catch (err) {
-          reject(err);
+          let result =[];
+          this.getallusers().then((users: any)=>{
+            try {
+              if (firebase.auth().currentUser.uid != null) {
+                for (let user in users) {
+
+                  let details = users[user]["settings"];
+                  if(details.addictsType == this.filtersFromUser.addictsType
+                    && (details.gender == gender || gender == "both")
+                    && (currentYear - details.bdayYear >=  this.filtersFromUser.ageRangeLower
+                      && currentYear - details.bdayYear <=  this.filtersFromUser.ageRangeUpper)){
+                    result.push(users[user])
+                  }
+                  // console.log(details.gender);
+                  // result.push(details);
+                }
+              }
+            }catch (err) {
+              reject(err);
+            }
+            resolve(result);
+          });
+        }else {
+            this.getallusers().then((users: any)=>{
+              resolve(users);
+            });
         }
-        resolve(result);
       });
     });
   }
