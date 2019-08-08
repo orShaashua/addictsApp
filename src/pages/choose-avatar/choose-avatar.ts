@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ProfilePage} from "../profile/profile";
-import {ImghandlerProvider} from "../../providers/imghandler/imghandler";
 import {UserProvider} from "../../providers/user/user";
 
 /**

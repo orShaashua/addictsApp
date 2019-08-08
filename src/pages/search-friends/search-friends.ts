@@ -2,7 +2,6 @@ import { Component,EventEmitter } from '@angular/core';
 import {IonicPage, LoadingController, NavParams,} from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import {UserProvider} from "../../providers/user/user";
-import {RequestsProvider} from "../../providers/requests/requests";
 import {LikesProvider} from "../../providers/likes/likes";
 import firebase from "firebase";
 import {connreq} from "../../models/interfaces/request";
@@ -85,7 +84,6 @@ export class SearchFriendsPage {
       this.firedata.orderByChild(this.newrrequest.sender).once('value', (snapshot) => {
         // resolve(snapshot.val());
         let usersdata =snapshot.val();
-        let temparr =[];
         for (var key in usersdata){
           //this means that both users liked each other
           for (var user in usersdata[key]) {
