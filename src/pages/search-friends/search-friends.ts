@@ -2,7 +2,6 @@ import { Component,EventEmitter } from '@angular/core';
 import {IonicPage, LoadingController, NavParams,} from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import {UserProvider} from "../../providers/user/user";
-import {RequestsProvider} from "../../providers/requests/requests";
 import {LikesProvider} from "../../providers/likes/likes";
 import firebase from "firebase";
 import {connreq} from "../../models/interfaces/request";
@@ -20,7 +19,7 @@ import {connreq} from "../../models/interfaces/request";
   templateUrl: 'search-friends.html',
 })
 export class SearchFriendsPage {
-  users:any;
+  searchedFriends:any;
   firedata = firebase.database().ref('/likes');
   newrrequest ={} as connreq;
   ready = false;
@@ -47,41 +46,34 @@ export class SearchFriendsPage {
     });
     loader.present();
     this.userservice.getMySearchFriends().then((res: any)=>{
-
-      this.users = res;
+      this.searchedFriends = res;
       this.ready = true;
-      for (let i = 0; i < this.users.length; i++) {
-        this.attendants.push({
-          id: i + 1,
-          likeEvent: new EventEmitter(),
-          destroyEvent: new EventEmitter(),
-          asBg: this.sanitizer.bypassSecurityTrustStyle('url('+this.users[i].photoURL+')'),
-          uid: this.users[i].uid,
-          // displayName: this.users[i].displayName
-        });
-      }
-      loader.dismissAll();
-
+      this.likesService.getMyLikedList().then((alreadyLiked: any)=>{
+        for (let i = 0; i < this.searchedFriends.length; i++) {
+          var addToSearchFriends = true;
+          for (let j = 0; j < alreadyLiked.length; j++) {
+            if (this.searchedFriends[i].uid == alreadyLiked[j]) {
+              addToSearchFriends = false;
+              break;
+            }
+          }
+          if (addToSearchFriends) {
+            this.attendants.push({
+              id: i + 1,
+              likeEvent: new EventEmitter(),
+              destroyEvent: new EventEmitter(),
+              asBg: this.sanitizer.bypassSecurityTrustStyle('url(' + this.searchedFriends[i].photoURL + ')'),
+              uid: this.searchedFriends[i].uid,
+              // displayName: this.users[i].displayName
+            });
+          }
+        }
+        loader.dismiss();
+      });
     });
-    loader.dismissAll();
   }
 
   ionViewWillEnter() {
-    // this.userservice.getusersdetails("filters").then((res: any)=>{
-    //   if (res) {
-    //    this.filtersFromUser = res;
-    //    console.log(this.filteredUsers);
-    //   }
-    // });
-    // console.log("hi im in search friends the addicts type is = " + this.filtersFromUser.addictsType);
-    // this.userservice.getFilterUsers(this.filtersFromUser).then((res: any)=>{
-    //   this.filteredUsers = res;
-    // })
-    // let alluserssettings;
-    // this.userservice.getallusersdetails("settings").then((res: any)=>{
-    //   debugger;
-    //   alluserssettings = res;
-    // });
   }
 
   onCardInteract(event, recipient) {
@@ -91,7 +83,6 @@ export class SearchFriendsPage {
       this.firedata.orderByChild(this.newrrequest.sender).once('value', (snapshot) => {
         // resolve(snapshot.val());
         let usersdata =snapshot.val();
-        let temparr =[];
         for (var key in usersdata){
           //this means that both users liked each other
           for (var user in usersdata[key]) {
@@ -102,8 +93,8 @@ export class SearchFriendsPage {
         }
         this.likesService.sendlike(this.newrrequest).then((res: any) => {
           if (res.success) {
-            let sentuser = this.attendants.indexOf(recipient);
-            this.attendants.splice(sentuser, 1);
+            // let sentuser = this.attendants.indexOf(recipient);
+            // this.attendants.splice(sentuser, 1);
           }
         }).catch((err) => {
           alert(err);

@@ -11,13 +11,14 @@ import firebase from "firebase";
 @Injectable()
 export class LikesProvider {
   firereq = firebase.database().ref('/likes');
+  alreadyLiked = [];
   constructor() {
     console.log('Hello LikesProvider Provider');
   }
   sendlike(req: connreq){
     var promise = new Promise((resolve,reject) => {
       this.firereq.child(req.recipient).push({
-        sender: req.sender
+        sender: req.sender,
       }).then(()=>{
         // this.mywishfriendslist.push(req.recipient);
         resolve({success:true});///send sms to req.recipient
@@ -27,5 +28,20 @@ export class LikesProvider {
     });
     return promise;
   }
+  getMyLikedList(){
+    return new Promise((resolve,reject) => {
+      this.firereq.orderByChild(firebase.auth().currentUser.uid).once('value', (snapshot)=>{
+        let userdata =snapshot.val();
+        let temparr =[];
+        for (var key in userdata){
+            temparr.push(key);
+        }
+        resolve(temparr);
+      }).catch((err)=>{
+        reject(err);
+      })
+    });
+  }
+
 
 }

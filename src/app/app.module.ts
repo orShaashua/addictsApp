@@ -35,6 +35,7 @@ import {SearchFriendsPage} from "../pages/search-friends/search-friends";
 import {MatchPage} from "../pages/match/match";
 import {FiltersService} from "../services/FiltersService";
 import { LikesProvider } from '../providers/likes/likes';
+import {ChooseAvatarPage} from "../pages/choose-avatar/choose-avatar";
 
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
@@ -61,6 +62,7 @@ var config = {
     SearchFriendsPage,
     BuddiesPage,
     MatchPage,
+    ChooseAvatarPage
 
   ],
   imports: [
@@ -85,7 +87,9 @@ var config = {
     BuddiesPage,
     SearchFriendsPage,
     PasswordresetPage,
-    MatchPage
+    MatchPage,
+    ChooseAvatarPage
+
   ],
   providers: [
     StatusBar,

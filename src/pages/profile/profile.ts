@@ -1,4 +1,4 @@
-import {Component, NgZone} from '@angular/core';
+import {Component, Injectable, NgZone} from '@angular/core';
 import {IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import {FilterPage} from "../filter/filter";
@@ -9,7 +9,8 @@ import {LoginPage} from "../login/login";
 import {SearchFriendsPage} from "../search-friends/search-friends";
 import { ModalController } from 'ionic-angular';
 import { MatchPage } from '../match/match';
-import {FiltersService} from "../../services/FiltersService";
+import {ChooseAvatarPage} from "../choose-avatar/choose-avatar";
+
 
 
 
@@ -26,15 +27,12 @@ import {FiltersService} from "../../services/FiltersService";
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  didFilter: boolean;
   filters: any = {};
-  username: string = '';
   avatar: string;
   displayName: string;
-  myPhoto: any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController,
-              public modalCtrl: ModalController,public imghandler: ImghandlerProvider, private serviceFilter: FiltersService) {
+              public modalCtrl: ModalController,public imghandler: ImghandlerProvider) {
     // this.username = this.navParams.get('username');
 
   }
@@ -87,26 +85,27 @@ export class ProfilePage {
   }
 
   editimage() {
-    let statusalert = this.alertCtrl.create({
-      buttons: ['okay']
-    });
-    this.imghandler.uploadimage().then((url: any) => {
-      this.userservice.updateimage(url).then((res: any) => {
-        if (res.success) {
-
-          statusalert.setTitle('Updated');
-          statusalert.setSubTitle('Your profile pic has been changed successfully!!');
-          statusalert.present();
-          this.zone.run(() => {
-            this.avatar = url;
-          })
-        }
-      }).catch((err) => {
-        statusalert.setTitle('Failed');
-        statusalert.setSubTitle('Your profile pic was not changed');
-        statusalert.present();
-      })
-    })
+    this.navCtrl.push(ChooseAvatarPage);
+    // let statusalert = this.alertCtrl.create({
+    //   buttons: ['okay']
+    // });
+    // // // this.imghandler.uploadimage().then((url: any) => {
+    //   this.userservice.updateimage(this.aService.img).then((res: any) => {
+    //     if (res.success) {
+    //
+    //       statusalert.setTitle('Updated');
+    //       statusalert.setSubTitle('Your profile pic has been changed successfully!!');
+    //       statusalert.present();
+    //       this.zone.run(() => {
+    //         this.avatar = this.aService.img;
+    //       })
+    //     }
+    //   }).catch((err) => {
+    //     statusalert.setTitle('Failed');
+    //     statusalert.setSubTitle('Your profile pic was not changed');
+    //     statusalert.present();
+    //   })
+    // })
   }
 
   editname(){
@@ -162,3 +161,7 @@ export class ProfilePage {
     // );
   }
 }
+
+
+
+

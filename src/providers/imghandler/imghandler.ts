@@ -16,9 +16,6 @@ export class ImghandlerProvider {
   constructor(private camera: Camera, public loadingCtrl: LoadingController) {
   }
 
-
-
-
   uploadimage() {
     let loader = this.loadingCtrl.create({
       content: 'אנא המתן'

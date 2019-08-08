@@ -11,34 +11,40 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title >Profile</ion-title>
-
-
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <div class="profile-image" (click) ="editimage()" text-center>
-    <img src="{{avatar}}">
-  </div>
-  <h1>
-    לחץ על שם המשתמש או תמונה כדי לשנותה
-  </h1>
-  <!--<div text-center>-->
-  <!--<ion-avatar>-->
-  <!--</ion-avatar>-->
-  <!--</div>-->
-  <div>
-    <h2 (click)="editname()">{{displayName}}</h2>
+  <div class="fixed-content">
+    <div class="masters">
+      <div class="profile-image" (click) ="editimage()" text-center>
+  <!--      <button class="button5" ion-button round icon-start text-center>-->
+  <!--        <ion-icon name="ios-chatbubbles"></ion-icon>-->
+  <!--      </button>-->
+        <img src="{{avatar}}">
+      </div>
+  <!--  <p>-->
+  <!--    לחץ על שם המשתמש או תמונה כדי לשנותה-->
+  <!--  </p>-->
+    <!--<div text-center>-->
+    <!--<ion-avatar>-->
+    <!--</ion-avatar>-->
+    <!--</div>-->
+    <div>
+      <h2 (click)="editname()" >{{displayName}}</h2>
+    </div>
+
+    <!--<div class="spacer" style="height: 10px;"></div>-->
+    <div class = "button-nav">
+      <button class="button5" ion-button round color="levender" (click)="goToSettings()">הגדרות</button>
+      <button class="button5" ion-button round color="danger" (click)="goToFilterPage()">פילטר</button>
+      <button class="button5" ion-button round color="secondary" (click)="goToSearchFriends()">חפש חברים</button>
+  <!--    <button ion-button full (click)="presentModal()" style="border-radius:40px; background: linear-gradient(to right, #3A1C71 , #D76D77, #FFAF7B);">כשיש התאמה יקפוף חלון הבא</button>-->
+    </div>
   </div>
 
-  <!--<div class="spacer" style="height: 10px;"></div>-->
-  <div class = "button-nav">
-    <button ion-button color="secondary" (click)="goToSettings()">הגדרות</button>
-    <button ion-button color="danger" (click)="goToFilterPage()">סנן חברים לפי</button>
-    <button ion-button color="secondary" (click)="goToSearchFriends()">חפש חברים</button>
-    <button ion-button full (click)="presentModal()" style="border-radius:40px; background: linear-gradient(to right, #3A1C71 , #D76D77, #FFAF7B);">כשיש התאמה יקפוף חלון הבא</button>
-  </div>
-  <div>
-    <button ion-button round outline color="danger" (click)="logout()">התנתק</button>
+    <div>
+      <button ion-button round outline color="danger" (click)="logout()">התנתק</button>
+    </div>
   </div>
 </ion-content>
