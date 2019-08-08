@@ -80,12 +80,12 @@ export class ProfilePage {
 
   logout(){
     firebase.auth().signOut().then(() =>{
-      this.navCtrl.parent.parent.setRoot(LoginPage);
+      this.navCtrl.push(LoginPage);
     })
   }
 
   editimage() {
-    this.navCtrl.parent.parent.setRoot(ChooseAvatarPage);
+    this.navCtrl.push(ChooseAvatarPage);
     // let statusalert = this.alertCtrl.create({
     //   buttons: ['okay']
     // });

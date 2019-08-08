@@ -24,7 +24,10 @@ export class ChooseAvatarPage {
     console.log('ionViewDidLoad ChooseAvatarPage');
   }
   select(imgs) {
-    this.userhandler.updateimage(imgs);
-    this.navCtrl.push(ProfilePage);
+    this.userhandler.updateimage(imgs).then((res: any) => {
+      if (res.success) {
+        this.navCtrl.push(ProfilePage);
+      }
+    })
   }
 }
