@@ -24,7 +24,6 @@ export class SearchFriendsPage {
   newrrequest ={} as connreq;
   ready = false;
   attendants = [];
-  // alreadyLiked = [];
   cardDirection = "xy";
   cardOverlay: any = {
     like: {
@@ -49,29 +48,29 @@ export class SearchFriendsPage {
     this.userservice.getMySearchFriends().then((res: any)=>{
       this.searchedFriends = res;
       this.ready = true;
-      for (let i = 0; i < this.searchedFriends.length; i++) {
-        // var addToSearchFriends = true;
-        // for(let j = 0; j < this.alreadyLiked.length; j++){
-        //   if (this.searchedFriends[i].uid == this.alreadyLiked[j]){
-        //     addToSearchFriends = false;
-        //     break;
-        //   }
-        // }
-        // if (addToSearchFriends) {
-          this.attendants.push({
-            id: i + 1,
-            likeEvent: new EventEmitter(),
-            destroyEvent: new EventEmitter(),
-            asBg: this.sanitizer.bypassSecurityTrustStyle('url(' + this.searchedFriends[i].photoURL + ')'),
-            uid: this.searchedFriends[i].uid,
-            // displayName: this.users[i].displayName
-          });
-        // }
-      }
-      loader.dismissAll();
-
+      this.likesService.getMyLikedList().then((alreadyLiked: any)=>{
+        for (let i = 0; i < this.searchedFriends.length; i++) {
+          var addToSearchFriends = true;
+          for (let j = 0; j < alreadyLiked.length; j++) {
+            if (this.searchedFriends[i].uid == alreadyLiked[j]) {
+              addToSearchFriends = false;
+              break;
+            }
+          }
+          if (addToSearchFriends) {
+            this.attendants.push({
+              id: i + 1,
+              likeEvent: new EventEmitter(),
+              destroyEvent: new EventEmitter(),
+              asBg: this.sanitizer.bypassSecurityTrustStyle('url(' + this.searchedFriends[i].photoURL + ')'),
+              uid: this.searchedFriends[i].uid,
+              // displayName: this.users[i].displayName
+            });
+          }
+        }
+        loader.dismiss();
+      });
     });
-    loader.dismissAll();
   }
 
   ionViewWillEnter() {
@@ -94,7 +93,6 @@ export class SearchFriendsPage {
         }
         this.likesService.sendlike(this.newrrequest).then((res: any) => {
           if (res.success) {
-            // this.alreadyLiked.push(recipient.uid);
             // let sentuser = this.attendants.indexOf(recipient);
             // this.attendants.splice(sentuser, 1);
           }
