@@ -80,7 +80,7 @@ export class ProfilePage {
 
   logout(){
     firebase.auth().signOut().then(() =>{
-      this.navCtrl.push(LoginPage);
+      this.navCtrl.parent.parent.setRoot(LoginPage);
     })
   }
 
