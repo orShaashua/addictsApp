@@ -4,6 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+<body>
 <ion-header>
   <ion-navbar color="hcolor">
     <ion-title>SearchFriends</ion-title>
@@ -20,6 +21,14 @@
              (onLike)="onCardInteract($event, attendant)">
       <div class="user_img" [style.background-image]="attendant.asBg"></div>
       <!--<div class="user_displayname" [(ngModel)] = "attendant.displayName"></div>-->
+      <div class="name_and_age" style = "color:blue; font-size:20px;text-align: center; font-weight: bold">
+        <br>
+      <p>{{attendant.displayName}}</p>
+      <p>{{attendant.age}}</p>
+        </div>
+      <!--<ion-segment  [(ngModel)] = "attendant.displayName" ></ion-segment>-->
+      <!--<ion-segment  [(ngModel)] = "attendant.age" ></ion-segment>-->
     </sc-card>
   </div>
 </ion-content>
+</body>

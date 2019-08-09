@@ -41,6 +41,7 @@ export class SearchFriendsPage {
 
   constructor(private sanitizer: DomSanitizer,  public userservice: UserProvider,
               public navParams: NavParams, public loadingCtrl: LoadingController,  public likesService: LikesProvider) {
+    let currentYear = (new Date()).getFullYear();
     let loader = this.loadingCtrl.create({
       content: 'אנא המתן'
     });
@@ -64,7 +65,8 @@ export class SearchFriendsPage {
               destroyEvent: new EventEmitter(),
               asBg: this.sanitizer.bypassSecurityTrustStyle('url(' + this.searchedFriends[i].photoURL + ')'),
               uid: this.searchedFriends[i].uid,
-              // displayName: this.users[i].displayName
+              displayName: this.searchedFriends[i].displayName,
+              age: currentYear - this.searchedFriends[i].settings.bdayYear
             });
           }
         }
