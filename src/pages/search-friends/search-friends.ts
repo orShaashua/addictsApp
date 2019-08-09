@@ -1,10 +1,11 @@
 import { Component,EventEmitter } from '@angular/core';
-import {IonicPage, LoadingController, NavParams,} from 'ionic-angular';
+import {IonicPage, LoadingController, ModalController, NavParams,} from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import {UserProvider} from "../../providers/user/user";
 import {LikesProvider} from "../../providers/likes/likes";
 import firebase from "firebase";
 import {connreq} from "../../models/interfaces/request";
+import {MatchPage} from "../match/match";
 
 /**
  * Generated class for the SearchFriendsPage page.
@@ -40,7 +41,8 @@ export class SearchFriendsPage {
   // filtersFromUser = new Filters();
 
   constructor(private sanitizer: DomSanitizer,  public userservice: UserProvider,
-              public navParams: NavParams, public loadingCtrl: LoadingController,  public likesService: LikesProvider) {
+              public navParams: NavParams, public loadingCtrl: LoadingController,public modalCtrl: ModalController,
+              public likesService: LikesProvider) {
     let currentYear = (new Date()).getFullYear();
     let loader = this.loadingCtrl.create({
       content: 'אנא המתן'
@@ -80,17 +82,20 @@ export class SearchFriendsPage {
 
   onCardInteract(event, recipient) {
     if(event.like){
+      debugger;
       this.newrrequest.sender = firebase.auth().currentUser.uid;
       this.newrrequest.recipient = recipient.uid;
-      this.firedata.orderByChild(this.newrrequest.sender).once('value', (snapshot) => {
-        // resolve(snapshot.val());
-        let usersdata =snapshot.val();
-        for (var key in usersdata){
+      this.firedata.child(this.newrrequest.sender).once('value', (snapshot) => {
+        //for example: Dana: shira, maya it will give me shira and maya
+        let currentUsersLikes = snapshot.val();
+        for (var key in currentUsersLikes){
           //this means that both users liked each other
-          for (var user in usersdata[key]) {
-            if (recipient.uid == usersdata[key][user].sender) {
-              var jll = 0
-            }
+          if (recipient.uid == currentUsersLikes[key].sender) {
+            let modal = this.modalCtrl.create(MatchPage,{
+              sender: currentUsersLikes[key].sender,
+              recipient: recipient
+            });
+            modal.present();
           }
         }
         this.likesService.sendlike(this.newrrequest).then((res: any) => {

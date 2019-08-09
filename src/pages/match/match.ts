@@ -14,8 +14,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'match.html',
 })
 export class MatchPage {
-
+  recipient: any;
+  sender: any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.sender = navParams.get('sender');
+    this.recipient = navParams.get('recipient');
   }
 
   ionViewDidLoad() {
