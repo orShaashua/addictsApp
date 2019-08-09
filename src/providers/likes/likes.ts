@@ -30,11 +30,15 @@ export class LikesProvider {
   }
   getMyLikedList(){
     return new Promise((resolve,reject) => {
-      this.firereq.orderByChild(firebase.auth().currentUser.uid).once('value', (snapshot)=>{
+      this.firereq.orderByChild('sender: "'+ firebase.auth().currentUser.uid +'"').once('value', (snapshot)=>{
         let userdata =snapshot.val();
         let temparr =[];
         for (var key in userdata){
-            temparr.push(key);
+
+            // if (user.sender == firebase.auth().currentUser.uid) {
+              temparr.push(key);
+            // }
+
         }
         resolve(temparr);
       }).catch((err)=>{

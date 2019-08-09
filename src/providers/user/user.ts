@@ -309,7 +309,7 @@ export class UserProvider {
                     && (details.gender == gender || gender == "both")
                     && (currentYear - details.bdayYear >=  filtersFromUser.ageRangeLower
                       && currentYear - details.bdayYear <=  filtersFromUser.ageRangeUpper)){
-                    result.push(users[user])
+                      result.push(users[user])
                   }
                   // console.log(details.gender);
                   // result.push(details);
