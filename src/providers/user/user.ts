@@ -146,60 +146,60 @@ export class UserProvider {
     return promise;
   }
 
-  getFilterUsers(userDetails){
-    var query = firebase.database().ref("users/settings");
-    query.once("value")
-      .then(function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-          // key will be "ada" the first time and "alan" the second time
-          var key = childSnapshot.child("gender").key;
-          console.log("hi the key here is =" + key);
-          // childData will be the actual contents of the child
-          var childData = childSnapshot.child("gender").val();
-          console.log("hi the childData here is =" + childData);
-        });
-      });
-
-    const data1234 = this.firedata.child('settings');
-        console.log("hi the data1234 is = " + data1234.toString());
-        var promise = new Promise ((resolve, reject)=>{
-          this.firedata.orderByChild("settings").once('value', (snapshot)=>{
-            // console.log("flag1 = " + snapshot.val().addictsType);
-            let filteredusersdata = [];
-            //         // let temparr =[];
-            //         // for (var key in userdata){
-            //         //   temparr.push(userdata[key]);
-            //         // }
-            let gender = "";
-            let currentYear = (new Date()).getFullYear();
-            if(userDetails.femaleValue == true && userDetails.maleVale == true){
-              gender = "both"
-            } else if(userDetails.femaleValue == true){
-              gender = "female"
-            } else {
-              gender = "male"
-            }
-            snapshot.forEach(function(child) {
-              if(child.val().addictstype == userDetails.addictsType
-                && (child.val().gender == gender || gender == "both")
-                && (child.val().bdayYear - currentYear > userDetails.ageRange.lower
-                  && child.val().bdayYear - currentYear < userDetails.ageRange.upper)){
-                filteredusersdata.push(child)
-              }
-
-              var datas = snapshot.child("settings").child("addictsType").val();
-
-              var firstname = child.val().gender;
-              console.log("hi the val is = " + datas);
-              // var lastname=child.val().lastname;
-            });
-            resolve(filteredusersdata);
-          }).catch((err)=>{
-        reject(err);
-      })
-    });
-    return promise;
-  }
+  // getFilterUsers(userDetails){
+  //   var query = firebase.database().ref("users/settings");
+  //   query.once("value")
+  //     .then(function(snapshot) {
+  //       snapshot.forEach(function(childSnapshot) {
+  //         // key will be "ada" the first time and "alan" the second time
+  //         var key = childSnapshot.child("gender").key;
+  //         console.log("hi the key here is =" + key);
+  //         // childData will be the actual contents of the child
+  //         var childData = childSnapshot.child("gender").val();
+  //         console.log("hi the childData here is =" + childData);
+  //       });
+  //     });
+  //
+  //   const data1234 = this.firedata.child('settings');
+  //       console.log("hi the data1234 is = " + data1234.toString());
+  //       var promise = new Promise ((resolve, reject)=>{
+  //         this.firedata.orderByChild("settings").once('value', (snapshot)=>{
+  //           // console.log("flag1 = " + snapshot.val().addictsType);
+  //           let filteredusersdata = [];
+  //           //         // let temparr =[];
+  //           //         // for (var key in userdata){
+  //           //         //   temparr.push(userdata[key]);
+  //           //         // }
+  //           let gender = "";
+  //           let currentYear = (new Date()).getFullYear();
+  //           if(userDetails.femaleValue == true && userDetails.maleVale == true){
+  //             gender = "both"
+  //           } else if(userDetails.femaleValue == true){
+  //             gender = "female"
+  //           } else {
+  //             gender = "male"
+  //           }
+  //           snapshot.forEach(function(child) {
+  //             if(child.val().addictsType == userDetails.addictsType
+  //               && (child.val().gender == gender || gender == "both")
+  //               && (child.val().bdayYear - currentYear > userDetails.ageRange.lower
+  //                 && child.val().bdayYear - currentYear < userDetails.ageRange.upper)){
+  //               filteredusersdata.push(child)
+  //             }
+  //
+  //             var datas = snapshot.child("settings").child("addictsType").val();
+  //
+  //             var firstname = child.val().gender;
+  //             console.log("hi the val is = " + datas);
+  //             // var lastname=child.val().lastname;
+  //           });
+  //           resolve(filteredusersdata);
+  //         }).catch((err)=>{
+  //       reject(err);
+  //     })
+  //   });
+  //   return promise;
+  // }
 
   getusersdetails(node) {
     //accessing the particular user based on uid from the user collection and returning it back to the calling function
@@ -246,24 +246,26 @@ export class UserProvider {
           let currentYear = (new Date()).getFullYear();
           this.getUsersMatchedToMyFilter().then((users: any)=>{
             for (let user in users){
-              let details = users[user]["filters"];
-              if (!details){
-                result.push(users[user]);
-                continue;
-              }
-              if(details.female == true && details.male == true){
-                gender = "both"
-              } else if(details.female == true){
-                gender = "female"
-              } else {
-                gender = "male"
-              }
+              if (users[user].uid != firebase.auth().currentUser.uid) {
+                let details = users[user]["filters"];
+                if (!details) {
+                  result.push(users[user]);
+                  continue;
+                }
+                if (details.female == true && details.male == true) {
+                  gender = "both"
+                } else if (details.female == true) {
+                  gender = "female"
+                } else {
+                  gender = "male"
+                }
 
-              if(settingsFromUser.addictsType == details.addictsType
-                && (settingsFromUser.gender == gender || gender == "both")
-                && (currentYear - settingsFromUser.bdayYear >=  details.ageRangeLower
-                  && currentYear - settingsFromUser.bdayYear <=  details.ageRangeUpper)){
-                result.push(users[user]);
+                if (settingsFromUser.addictsType == details.addictsType
+                  && (settingsFromUser.gender == gender || gender == "both")
+                  && (currentYear - settingsFromUser.bdayYear >= details.ageRangeLower
+                    && currentYear - settingsFromUser.bdayYear <= details.ageRangeUpper)) {
+                  result.push(users[user]);
+                }
               }
             }
             resolve(result);
@@ -303,13 +305,15 @@ export class UserProvider {
             try {
               if (firebase.auth().currentUser.uid != null) {
                 for (let user in users) {
+                  if(users[user].uid != firebase.auth().currentUser.uid){
+                    let details = users[user]["settings"];
+                    if(details.addictsType == filtersFromUser.addictsType
+                      && (details.gender == gender || gender == "both")
+                      && (currentYear - details.bdayYear >=  filtersFromUser.ageRangeLower
+                        && currentYear - details.bdayYear <=  filtersFromUser.ageRangeUpper)) {
 
-                  let details = users[user]["settings"];
-                  if(details.addictsType == filtersFromUser.addictsType
-                    && (details.gender == gender || gender == "both")
-                    && (currentYear - details.bdayYear >=  filtersFromUser.ageRangeLower
-                      && currentYear - details.bdayYear <=  filtersFromUser.ageRangeUpper)){
                       result.push(users[user])
+                    }
                   }
                   // console.log(details.gender);
                   // result.push(details);

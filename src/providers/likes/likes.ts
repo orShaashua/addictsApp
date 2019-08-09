@@ -34,11 +34,7 @@ export class LikesProvider {
         let userdata =snapshot.val();
         let temparr =[];
         for (var key in userdata){
-
-            // if (user.sender == firebase.auth().currentUser.uid) {
               temparr.push(key);
-            // }
-
         }
         resolve(temparr);
       }).catch((err)=>{
