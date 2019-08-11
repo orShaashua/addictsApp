@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {MatchesPage} from "../matches/matches";
+import firebase from "firebase";
+import {RequestsProvider} from "../../providers/requests/requests";
+import {connreq} from "../../models/interfaces/request";
 
 /**
  * Generated class for the MatchPage page.
@@ -16,13 +20,38 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class MatchPage {
   recipient: any;
   sender: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  newrrequest ={} as connreq;
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public requestservice: RequestsProvider, public alertCtrl: AlertController) {
     this.sender = navParams.get('sender');
     this.recipient = navParams.get('recipient');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MatchPage');
+  }
+  keepSwiping() {
+    this.navCtrl.pop();
+  }
+  sendFriendsRequest(){
+    this.newrrequest.sender = firebase.auth().currentUser.uid;
+    this.newrrequest.recipient = this.recipient.uid;
+    // if(this.newrrequest.sender == this.newrrequest.recipient){
+    //   alert("You are friends always");
+    // }else {
+    let successalert = this.alertCtrl.create({
+      title: 'Request send',
+      subTitle: 'Your request was sent to ' + this.recipient.displayName,
+      buttons: ['ok']
+    });
+    this.requestservice.sendrequest(this.newrrequest).then((res: any) => {
+      if (res.success) {
+        successalert.present();
+      }
+    }).catch((err) => {
+      alert(err);
+    });
+    this.navCtrl.pop();
   }
 
 }

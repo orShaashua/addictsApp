@@ -12,7 +12,7 @@ page-profil {
   }
 
   .button-filter{
-    text-align:right;
+
   }
   h1 ,h2{
     color:white;
@@ -20,11 +20,6 @@ page-profil {
   }
 
   ion-img {
-    //margin-left: auto;
-    //margin-right: auto;
-    //align-items: center;
-    //width="180";
-    //height="180";
     height:100px;
     width: 100px;
   }
@@ -50,7 +45,6 @@ page-profil {
     margin: 10px;
     //text-align: center;
     //justify-content: center;
-    margin-right: 5px;
     border: 4px solid rgba(255,255,255,0.4);
   }
 
@@ -70,7 +64,15 @@ page-profil {
     width: 420px;
     height: 100px ;
     padding: 10px 24px;
+    //margin: 10px;
     display: block;
+    //flex-direction: row;
+    //justify-content: center;
+    text-align:center;
+    margin-left: auto;
+    margin-right: auto;
+    //flex-flow: row;
+    //align-content: center;
   }
   .masters {
     background: #5eb299;

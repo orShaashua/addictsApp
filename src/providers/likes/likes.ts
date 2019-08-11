@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {connreq} from "../../models/interfaces/request";
 import firebase from "firebase";
+import {MatchPage} from "../../pages/match/match";
+import {Events} from "ionic-angular";
 
 /*
   Generated class for the LikesProvider provider.
@@ -11,8 +13,7 @@ import firebase from "firebase";
 @Injectable()
 export class LikesProvider {
   firereq = firebase.database().ref('/likes');
-  alreadyLiked = [];
-  constructor() {
+  constructor(public events:Events) {
     console.log('Hello LikesProvider Provider');
   }
   sendlike(req: connreq){
@@ -29,19 +30,22 @@ export class LikesProvider {
     return promise;
   }
   getMyLikedList(){
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve) => {
+      var alreadyLiked =[];
       this.firereq.orderByChild('sender: "'+ firebase.auth().currentUser.uid +'"').once('value', (snapshot)=>{
         let userdata =snapshot.val();
-        let temparr =[];
         for (var key in userdata){
-              temparr.push(key);
+          alreadyLiked.push(key);
         }
-        resolve(temparr);
+        resolve(alreadyLiked);
       }).catch((err)=>{
-        reject(err);
+        resolve(alreadyLiked);
       })
     });
   }
 
+  addToMyMatchList(user){
+    this.events.publish('gotmatch', {user});
+  }
 
 }

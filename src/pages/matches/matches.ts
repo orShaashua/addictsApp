@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Events, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {UserProvider} from '../../providers/user/user'
+import {LikesProvider} from "../../providers/likes/likes";
 /**
  * Generated class for the MatchesPage page.
  *
@@ -14,18 +15,19 @@ import {UserProvider} from '../../providers/user/user'
   templateUrl: 'matches.html',
 })
 export class MatchesPage {
-  filteredusers = [];
+  mymatchList =[];
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public userservice: UserProvider) {
-  //for now all users matches!! need to handle this!!!
-    this.userservice.getallusers().then((res: any)=>{
-      this.filteredusers = res;
-
-    })
+              public likesservice: LikesProvider, public events:Events) {
+      //for now all users matches!! need to handle this!!!
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MatchesPage');
   }
+  ionViewWillEnter  (){
 
+    this.events.subscribe('gotmatch', (user)=>{
+      this.mymatchList.push(user);
+    });
+  }
 }

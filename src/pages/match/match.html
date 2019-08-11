@@ -11,17 +11,17 @@
   <h6 style="color:white" text-center>You and {{this.recipient.displayName}} liked each other </h6>
   <ion-row>
     <ion-col text-center>
-      <img src="{{this.recipient.asBg}}" style="border-radius:50%;width:100px;height:100px">
+      <img src="{{this.recipient.photoURL}}" style="border-radius:50%;width:100px;height:100px">
     </ion-col>
     <ion-col col-2 text-center>
       <button ion-button icon-only clear color="danger" style="margin-top:30px"><ion-icon name="md-heart"></ion-icon></button>
     </ion-col>
     <ion-col text-center>
-      <img src="{{this.sender.asBg}}" style="border-radius:50%;width:100px;height:100px; ">
+      <img src="{{this.sender.photoURL}}" style="border-radius:50%;width:100px;height:100px; ">
     </ion-col>
   </ion-row>
   <button ion-button full style="margin-top:20px;border-radius:40px; background: linear-gradient(to right, #3A1C71 , #D76D77, #FFAF7B);
-  ">Send Message</button>
+  " (click)="sendFriendsRequest()">Send Friends Request</button>
   <button ion-button full style="margin-top:20px; border-radius:40px; background: linear-gradient(to right, rgb(65, 64, 64) , grey, rgb(65, 64, 64));
-  ">Keep Swiping</button>
+  " (click)="keepSwiping()" >Keep Swiping</button>
 </ion-content>

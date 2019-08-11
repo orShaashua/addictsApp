@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Events, IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
+import {Events, IonicPage, NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
 import {BuddiesPage} from "../buddies/buddies";
 import {RequestsProvider} from "../../providers/requests/requests";
 import {ChatProvider} from "../../providers/chat/chat";
@@ -25,7 +25,8 @@ export class ChatsPage {
   _chatSubscription;
   messages: object[] = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public events:Events,
-              public requestservice: RequestsProvider, public alertCtrl:AlertController, public chatservice: ChatProvider) {
+              public requestservice: RequestsProvider, public loadingCtrl: LoadingController,
+              public alertCtrl:AlertController, public chatservice: ChatProvider) {
   }
 
   ionViewDidLoad() {
@@ -47,20 +48,7 @@ export class ChatsPage {
     });
   }
 
-  // ionViewDidLoad() {
-  //   //
-  //   // //   // this.db.list('/chat').push({
-  //   // //   //   specialMessage: true,
-  //   // //   //   message: `${this.username} has joined the room`
-  //   // //   // });
-  // }
-
   ionViewDidLeave (){
-    // this._chatSubscription.unsubscribe();
-    // this.db.list('/chat').push({
-    //   specialMessage: true,
-    //   message: `${this.username} has left the room`
-    // });
     this.events.unsubscribe('gotrequests');
     this.events.unsubscribe('friends');
   }
@@ -77,11 +65,16 @@ export class ChatsPage {
     })
   }
   ignore(item){
+    let loader = this.loadingCtrl.create({
+      content: 'אנא המתן'
+    });
+    loader.present();
     this.requestservice.deleterequest(item).then(()=>{
-      this.ionViewWillEnter();
+      this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      loader.dismiss();
     }).catch((err)=>{
-     // alert(err);
-      this.ionViewWillEnter();
+      this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      loader.dismiss();
     });
   }
 

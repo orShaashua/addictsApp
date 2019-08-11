@@ -35,8 +35,20 @@ export class RequestsProvider {
     return promise;
   }
 ;
-  getmywishfriendslist(){
-    return this.mywishfriendslist;
+  getMyWishFriendsList(){
+    return new Promise((resolve,reject) => {
+      var myWishFriendsList =[];
+      this.firereq.orderByChild('sender: "'+ firebase.auth().currentUser.uid +'"').once('value', (snapshot)=>{
+        let userdata =snapshot.val();
+
+        for (var key in userdata){
+          myWishFriendsList.push(key);
+        }
+        resolve(myWishFriendsList);
+      }).catch((err)=>{
+        resolve(myWishFriendsList);
+      })
+    });
   }
   getmyrequests(){
     let allmyrequests;

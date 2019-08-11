@@ -41,7 +41,7 @@ export class SearchFriendsPage {
   // filtersFromUser = new Filters();
 
   constructor(private sanitizer: DomSanitizer,  public userservice: UserProvider,
-              public navParams: NavParams, public loadingCtrl: LoadingController,public modalCtrl: ModalController,
+              public navParams: NavParams, public loadingCtrl: LoadingController, public modalCtrl: ModalController,
               public likesService: LikesProvider) {
     let currentYear = (new Date()).getFullYear();
     let loader = this.loadingCtrl.create({
@@ -68,7 +68,8 @@ export class SearchFriendsPage {
               asBg: this.sanitizer.bypassSecurityTrustStyle('url(' + this.searchedFriends[i].photoURL + ')'),
               uid: this.searchedFriends[i].uid,
               displayName: this.searchedFriends[i].displayName,
-              age: currentYear - this.searchedFriends[i].settings.bdayYear
+              age: currentYear - this.searchedFriends[i].settings.bdayYear,
+              photoURL: this.searchedFriends[i].photoURL
             });
           }
         }
@@ -82,7 +83,6 @@ export class SearchFriendsPage {
 
   onCardInteract(event, recipient) {
     if(event.like){
-      debugger;
       this.newrrequest.sender = firebase.auth().currentUser.uid;
       this.newrrequest.recipient = recipient.uid;
       this.firedata.child(this.newrrequest.sender).once('value', (snapshot) => {
@@ -91,8 +91,9 @@ export class SearchFriendsPage {
         for (var key in currentUsersLikes){
           //this means that both users liked each other
           if (recipient.uid == currentUsersLikes[key].sender) {
+            this.likesService.addToMyMatchList(recipient)
             let modal = this.modalCtrl.create(MatchPage,{
-              sender: currentUsersLikes[key].sender,
+              sender: firebase.auth().currentUser,
               recipient: recipient
             });
             modal.present();

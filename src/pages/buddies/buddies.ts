@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams , AlertController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, AlertController, Events} from 'ionic-angular';
 import {UserProvider} from "../../providers/user/user";
 import {RequestsProvider} from "../../providers/requests/requests";
 import {connreq} from '../../models/interfaces/request';
@@ -21,16 +21,19 @@ export class BuddiesPage {
   newrrequest ={} as connreq;
   filteredusers = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public userservice: UserProvider,public alertCtrl: AlertController, public requestservice: RequestsProvider) {
+              public userservice: UserProvider,public alertCtrl: AlertController,
+              public events:Events, public requestservice: RequestsProvider) {
     //for now all users matches!! need to handle this!!!
-    this.removeUsersThatIAlreadySendRequestFromFilter();
+   // this.removeUsersThatIAlreadySendRequestFromFilter();
     // let alluserssettings;
     // this.userservice.getallusersdetails("settings").then((res: any)=>{
 
     //   alluserssettings = res;
     // });
   }
-  ionViewDidLoad() {}
+  ionViewDidEnter(){
+    this.removeUsersThatIAlreadySendRequestFromFilter();
+  }
 
   searchuser(searchbar){
     this.filteredusers = this.temparr;
@@ -45,9 +48,6 @@ export class BuddiesPage {
   sendreq(recipient){
     this.newrrequest.sender = firebase.auth().currentUser.uid;
     this.newrrequest.recipient = recipient.uid;
-    if(this.newrrequest.sender == this.newrrequest.recipient){
-      alert("You are friends always");
-    }else {
       let successalert = this.alertCtrl.create({
         title: 'Request send',
         subTitle: 'Your request was sent to ' + recipient.displayName,
@@ -62,32 +62,54 @@ export class BuddiesPage {
       }).catch((err) => {
         alert(err);
       });
-    }
   }
   removeUsersThatIAlreadySendRequestFromFilter(){
-    let mywishFriendslist = this.requestservice.getmywishfriendslist();
-    var add = true;
-    var counter = 0;
-    this.userservice.getallusers().then((res: any)=>{
-      this.filteredusers = [];
-      this.temparr = [];
-
-      for (var key  in res) {
-        add = true;
-        for (var frienduid in mywishFriendslist) {
-          if (mywishFriendslist[frienduid] == res[key].uid) {
-            add = false;
-            counter ++;
-            break;
+    this.requestservice.getMyWishFriendsList().then((myishfriendslist)=>{
+      var add = true;
+      var counter = 0;
+      //get all the users I have with them a match
+      this.userservice.getallusers().then((res: any)=>{
+        this.filteredusers = [];
+        this.temparr = [];
+        for (var key  in res) {
+          //don't add the current user to the filteredusers
+          if (res[key].uid != firebase.auth().currentUser.uid) {
+            add = true;
+            //don't add to the filteredusers users that I already sent them a request
+            for (var myishfriend in myishfriendslist) {
+              if (myishfriendslist[myishfriend] == res[key].uid) {
+                  add = false;
+                  counter++;
+                  break;
+              }
+            }
+            //don't add to the filteredusers users that we are already friends
+            for (var friend in this.requestservice.myfriends) {
+              if (this.requestservice.myfriends[friend].uid == res[key].uid) {
+                add = false;
+                counter++;
+                break;
+              }
+            }
+            //don't add to the filteredusers users that sent me request already
+            for (var user in this.requestservice.userdetails) {
+              if (this.requestservice.userdetails[user].uid == res[key].uid) {
+                add = false;
+                counter++;
+                break;
+              }
+            }
+            //add to the filteredusers all the rest
+            if (add) {
+              this.filteredusers.push(res[counter]);//need to be all matches and not all users!
+              this.temparr.push(res[counter]);//need to be all matches and not all users!
+              counter++;
+            }
+          } else {
+            counter++;
           }
         }
-        if (add) {
-          this.filteredusers.push(res[counter]);//need to be all matches and not all users!
-          this.temparr.push(res[counter]);//need to be all matches and not all users!
-          counter++;
-        }
-      }
-
+      });
     });
   }
 }
