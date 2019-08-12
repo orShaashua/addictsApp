@@ -31,11 +31,19 @@ export class LikesProvider {
   }
   getMyLikedList(){
     return new Promise((resolve) => {
-      var alreadyLiked =[];
-      this.firereq.orderByChild('sender: "'+ firebase.auth().currentUser.uid +'"').once('value', (snapshot)=>{
+      let alreadyLiked =[];
+      this.firereq.orderByKey().once('value', (snapshot)=>{
         let userdata =snapshot.val();
-        for (var key in userdata){
-          alreadyLiked.push(key);
+        let uid = firebase.auth().currentUser.uid;
+        debugger;
+        for (let key in userdata){
+          for(let value in userdata[key]){
+              if(userdata[key][value].sender == uid){
+                alreadyLiked.push(key);
+                break;
+            }
+          }
+
         }
         resolve(alreadyLiked);
       }).catch((err)=>{
@@ -44,8 +52,21 @@ export class LikesProvider {
     });
   }
 
-  addToMyMatchList(user){
-    this.events.publish('gotmatch', {user});
+  getAllMyMatches(){
+    return new Promise((resolve) => {
+      var myMatches =[];
+      this.firereq.child(firebase.auth().currentUser.uid).once('value', (snapshot)=>{
+        let userdata =snapshot.val();
+        debugger;
+        for (var key in userdata){
+          myMatches.push(key);
+        }
+        resolve(myMatches);
+      }).catch((err)=>{
+        resolve(myMatches);
+      })
+    });
   }
+
 
 }
