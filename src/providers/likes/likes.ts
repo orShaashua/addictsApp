@@ -3,6 +3,7 @@ import {connreq} from "../../models/interfaces/request";
 import firebase from "firebase";
 import {MatchPage} from "../../pages/match/match";
 import {Events} from "ionic-angular";
+import {UserProvider} from "../user/user";
 
 /*
   Generated class for the LikesProvider provider.
@@ -13,7 +14,7 @@ import {Events} from "ionic-angular";
 @Injectable()
 export class LikesProvider {
   firereq = firebase.database().ref('/likes');
-  constructor(public events:Events) {
+  constructor(public events:Events, public userservice:UserProvider) {
     console.log('Hello LikesProvider Provider');
   }
   sendlike(req: connreq){
@@ -35,7 +36,6 @@ export class LikesProvider {
       this.firereq.orderByKey().once('value', (snapshot)=>{
         let userdata =snapshot.val();
         let uid = firebase.auth().currentUser.uid;
-        debugger;
         for (let key in userdata){
           for(let value in userdata[key]){
               if(userdata[key][value].sender == uid){
@@ -54,16 +54,32 @@ export class LikesProvider {
 
   getAllMyMatches(){
     return new Promise((resolve) => {
-      var myMatches =[];
+      let myMatchedList =[];
+      let myMatchedUsers = [];
       this.firereq.child(firebase.auth().currentUser.uid).once('value', (snapshot)=>{
-        let userdata =snapshot.val();
-        debugger;
-        for (var key in userdata){
-          myMatches.push(key);
-        }
-        resolve(myMatches);
+        let userdata = snapshot.val();
+        this.getMyLikedList().then((usersThatIliked)=>{
+          for (let key in userdata){
+            let userThatlikedMe = userdata[key].sender;
+            for (let userThatIliked in usersThatIliked){
+              if (usersThatIliked[userThatIliked] == userThatlikedMe) {
+                myMatchedList.push(userThatlikedMe);
+                break;
+              }
+            }
+          }
+          this.userservice.getallusers().then((users)=>{
+            for( var j in myMatchedList)
+              for (var key in users) {
+                if (myMatchedList[j] === users[key].uid) {
+                  myMatchedUsers.push(users[key]);
+                }
+              }
+            resolve(myMatchedUsers);
+          });
+        });
       }).catch((err)=>{
-        resolve(myMatches);
+        resolve(myMatchedUsers);
       })
     });
   }
