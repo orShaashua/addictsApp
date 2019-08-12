@@ -10,9 +10,11 @@ import {Events} from "ionic-angular";
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
+
 @Injectable()
 export class LikesProvider {
   firereq = firebase.database().ref('/likes');
+
   constructor(public events:Events) {
     console.log('Hello LikesProvider Provider');
   }
@@ -21,7 +23,6 @@ export class LikesProvider {
       this.firereq.child(req.recipient).push({
         sender: req.sender,
       }).then(()=>{
-        // this.mywishfriendslist.push(req.recipient);
         resolve({success:true});///send sms to req.recipient
       }).catch((err)=>{
         resolve(err);
@@ -31,18 +32,21 @@ export class LikesProvider {
   }
   getMyLikedList(){
     return new Promise((resolve) => {
-      var alreadyLiked =[];
-      this.firereq.orderByChild('sender: "'+ firebase.auth().currentUser.uid +'"').once('value', (snapshot)=>{
-        let userdata =snapshot.val();
-        for (var key in userdata){
-          alreadyLiked.push(key);
+      var alreadyLiked = [];
+      this.firereq.orderByKey().once('value', (keys)=> {
+        var userdata = keys.val();
+        for (var key in userdata) {
+          for (var value in userdata[key]){
+            if(userdata[key][value].sender == firebase.auth().currentUser.uid){
+              alreadyLiked.push(key);
+            }
+          }
         }
         resolve(alreadyLiked);
-      }).catch((err)=>{
-        resolve(alreadyLiked);
-      })
+      });
     });
   }
+
 
   addToMyMatchList(user){
     this.events.publish('gotmatch', {user});
