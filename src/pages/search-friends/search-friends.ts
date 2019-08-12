@@ -91,7 +91,7 @@ export class SearchFriendsPage {
         for (var key in currentUsersLikes){
           //this means that both users liked each other
           if (recipient.uid == currentUsersLikes[key].sender) {
-            this.likesService.addToMyMatchList(recipient)
+            // this.likesService.addToMyMatchList(recipient)
             let modal = this.modalCtrl.create(MatchPage,{
               sender: firebase.auth().currentUser,
               recipient: recipient
