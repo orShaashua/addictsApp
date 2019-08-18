@@ -37,6 +37,7 @@ import {FiltersService} from "../services/FiltersService";
 import { LikesProvider } from '../providers/likes/likes';
 import {ChooseAvatarPage} from "../pages/choose-avatar/choose-avatar";
 
+
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",
   authDomain: "addictsapp.firebaseapp.com",
@@ -89,7 +90,6 @@ var config = {
     PasswordresetPage,
     MatchPage,
     ChooseAvatarPage
-
   ],
   providers: [
     StatusBar,

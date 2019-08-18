@@ -4,6 +4,8 @@ import {MatchesPage} from "../matches/matches";
 import firebase from "firebase";
 import {RequestsProvider} from "../../providers/requests/requests";
 import {connreq} from "../../models/interfaces/request";
+import {TabsPage} from "../tabs/tabs";
+import {SearchFriendsPage} from "../search-friends/search-friends";
 
 /**
  * Generated class for the MatchPage page.

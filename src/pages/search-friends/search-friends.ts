@@ -1,5 +1,5 @@
 import { Component,EventEmitter } from '@angular/core';
-import {IonicPage, LoadingController, ModalController, NavParams,} from 'ionic-angular';
+import {Events, IonicPage, LoadingController, ModalController, NavParams,} from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import {UserProvider} from "../../providers/user/user";
 import {LikesProvider} from "../../providers/likes/likes";
@@ -35,14 +35,18 @@ export class SearchFriendsPage {
     }
   };
 
-  // public filteredUsers: Array<any> = [];
-  // public itemRef: firebase.database.Reference = firebase.database().ref('/users');
 
-  // filtersFromUser = new Filters();
 
   constructor(private sanitizer: DomSanitizer,  public userservice: UserProvider,
               public navParams: NavParams, public loadingCtrl: LoadingController, public modalCtrl: ModalController,
-              public likesService: LikesProvider) {
+              public likesService: LikesProvider,  public events:Events) {
+  }
+  ionViewDidLoad(){
+
+  }
+
+
+  ionViewWillEnter() {
     let currentYear = (new Date()).getFullYear();
     let loader = this.loadingCtrl.create({
       content: 'אנא המתן'
@@ -78,11 +82,10 @@ export class SearchFriendsPage {
     });
   }
 
-  ionViewWillEnter() {
-  }
 
   onCardInteract(event, recipient) {
     if(event.like){
+      var havaMatch = false;
       this.newrrequest.sender = firebase.auth().currentUser.uid;
       this.newrrequest.recipient = recipient.uid;
       this.firedata.child(this.newrrequest.sender).once('value', (snapshot) => {
@@ -97,12 +100,28 @@ export class SearchFriendsPage {
               recipient: recipient
             });
             modal.present();
+            havaMatch = true;
+            // this.likesService.setLatestMatch(recipient.uid);
           }
         }
         this.likesService.sendlike(this.newrrequest).then((res: any) => {
-          if (res.success) {
-            // let sentuser = this.attendants.indexOf(recipient);
-            // this.attendants.splice(sentuser, 1);
+          if (res.success && !havaMatch) {
+            this.likesService.listenForNewLike(recipient.uid).then(()=> {
+              // this.likesService.getLatestMatch().then((lastMatch)=>{
+              //   if (lastMatch != recipient.uid) {
+              firebase.database().ref('/users').child(recipient.uid).once('value', (snapshot) => {
+                let myMatchUser = snapshot.val();
+
+                let modal = this.modalCtrl.create(MatchPage, {
+                  sender: firebase.auth().currentUser,
+                  recipient: myMatchUser
+                });
+                modal.present();
+                // this.likesService.setLatestMatch(recipient.uid);
+              });
+              // }
+              // });
+            });
           }
         }).catch((err) => {
           alert(err);
@@ -110,9 +129,7 @@ export class SearchFriendsPage {
       }).catch((err) => {
         // reject(err);
       });
-
     }
-    console.log(event);
   }
 
 
