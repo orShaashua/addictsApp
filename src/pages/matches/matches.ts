@@ -33,6 +33,7 @@ export class MatchesPage {
   }
   ionViewDidEnter(){
     this.removeUsersThatIAlreadySendRequestFromFilter();
+
   }
 
   // searchuser(searchbar){
@@ -101,7 +102,7 @@ export class MatchesPage {
             }
             //add to the filteredusers all the rest
             if (add) {
-              this.filteredusers.push(res[counter]);//need to be all matches and not all users!
+              this.filteredusers.push(res[counter]);
               counter++;
             }
           } else {

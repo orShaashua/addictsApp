@@ -10,6 +10,7 @@ import {SearchFriendsPage} from "../search-friends/search-friends";
 import { ModalController } from 'ionic-angular';
 import { MatchPage } from '../match/match';
 import {ChooseAvatarPage} from "../choose-avatar/choose-avatar";
+import {LikesProvider} from "../../providers/likes/likes";
 
 
 
@@ -32,7 +33,7 @@ export class ProfilePage {
   displayName: string;
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController,
-              public modalCtrl: ModalController,public imghandler: ImghandlerProvider) {
+              public modalCtrl: ModalController) {
     // this.username = this.navParams.get('username');
 
   }
@@ -43,10 +44,6 @@ export class ProfilePage {
 
   }
 
-  ionViewWillEnter(){
-    // this.loaduserdetails();
-
-  }
 
   loaduserdetails(){
 
@@ -67,14 +64,6 @@ export class ProfilePage {
   }
 
   goToSearchFriends(){
-    // let filters: any = {};
-    // filters = this.serviceFilter.getFilters();
-
-    // if (filters == null) {
-    //   console.log("nothing here");
-    // } else {
-    //   console.log("the filters in profile.ts are: " + filters.addictsType);
-    // }
     this.navCtrl.push(SearchFriendsPage);
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {connreq} from "../../models/interfaces/request";
 import firebase from "firebase";
 import {MatchPage} from "../../pages/match/match";
-import {Events} from "ionic-angular";
+import {Events, ModalController} from "ionic-angular";
 import {UserProvider} from "../user/user";
 
 /*
@@ -13,7 +13,10 @@ import {UserProvider} from "../user/user";
 */
 @Injectable()
 export class LikesProvider {
-  firereq = firebase.database().ref('/likes');
+  firereq = firebase.database().ref('/likes')
+  latestMatch;
+
+
   constructor(public events:Events, public userservice:UserProvider) {
     console.log('Hello LikesProvider Provider');
   }
@@ -43,7 +46,6 @@ export class LikesProvider {
                 break;
             }
           }
-
         }
         resolve(alreadyLiked);
       }).catch((err)=>{
@@ -84,5 +86,32 @@ export class LikesProvider {
     });
   }
 
+  listenForNewLike(userUID) {
+    return new Promise(resolve => {
+      this.firereq.child(firebase.auth().currentUser.uid).orderByChild
+      ('sender').equalTo(userUID).on('child_added', function (snapshot) {
+        var myNewMatch = snapshot.val();
+        if (myNewMatch) {
+          resolve(userUID);
+        } else {
+          return;
+        }
+      });
+    });
+  }
 
+
+  getLatestMatch(){
+    return new Promise(resolve => {
+      this.firereq.child(firebase.auth().currentUser.uid).once('value', (snapshot) => {
+          resolve(snapshot.val().latestMatch);
+      });
+    });
+
+  }
+  setLatestMatch(latestMatch){
+      this.firereq.child(firebase.auth().currentUser.uid).update({
+        latestMatch: latestMatch
+      });
+  }
 }

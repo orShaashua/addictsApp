@@ -61,7 +61,7 @@ export class FilterPage {
       }
     });
     // this.serviceFilter.setFilters(this.filtersFromUser);
-    this.navCtrl.setRoot(TabsPage)
+    this.navCtrl.pop();
   }
 
 

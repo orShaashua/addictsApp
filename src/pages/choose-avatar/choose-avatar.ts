@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ProfilePage} from "../profile/profile";
 import {UserProvider} from "../../providers/user/user";
+import {TabsPage} from "../tabs/tabs";
 
 /**
  * Generated class for the ChooseAvatarPage page.
@@ -26,7 +27,7 @@ export class ChooseAvatarPage {
   select(imgs) {
     this.userhandler.updateimage(imgs).then((res: any) => {
       if (res.success) {
-        this.navCtrl.setRoot(ProfilePage);
+        this.navCtrl.push(TabsPage);
       }
     })
   }

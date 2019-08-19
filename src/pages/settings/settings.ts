@@ -71,7 +71,7 @@ export class SettingsPage {
 
         loader.dismiss();
         if(res.success){
-          this.navCtrl.setRoot(TabsPage);
+          this.navCtrl.pop();
         } else {
           loader.dismissAll();
           alert('error: ' + res);

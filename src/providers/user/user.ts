@@ -14,6 +14,7 @@ import {Settings} from "../../models/settings.model";
 export class UserProvider {
 
   firedata = firebase.database().ref('/users');
+  alreadyEnteredToSearchFriendsPage = false;
   // firedata1 = firebase.database().ref('/users/uid');
   constructor(public afirauth: AngularFireAuth) {
     console.log('Hello UserProvider Provider');
@@ -22,15 +23,9 @@ export class UserProvider {
   addsettingstouser(settings){
     return new Promise((resolve, reject) => {
       this.afirauth.auth.currentUser.updateProfile({
-        // displayName: this.afirauth.auth.currentUser.displayName,
-        // photoURL: this.afirauth.auth.currentUser.photoURL
-
       }).then(()=> {
         // this.firedata.child("settings")
         this.firedata.child(this.afirauth.auth.currentUser.uid).child("settings").set({
-          // displayName: this.afirauth.auth.currentUser.displayName,
-          // photoURL: this.afirauth.auth.currentUser.photoURL,
-          // uid: this.afirauth.auth.currentUser.uid,
           addictsType: settings.addictsType,
           gender: settings.gender,
           mentor: settings.mentor,
@@ -373,5 +368,11 @@ export class UserProvider {
         reject(err);
       })
     })
+  }
+  getUserStatus(){
+    return this.alreadyEnteredToSearchFriendsPage;
+  }
+  setUserStatus(status){
+    this.alreadyEnteredToSearchFriendsPage = status;
   }
 }
