@@ -26,7 +26,7 @@ export class ChooseAvatarPage {
   select(imgs) {
     this.userhandler.updateimage(imgs).then((res: any) => {
       if (res.success) {
-        this.navCtrl.push(ProfilePage);
+        this.navCtrl.setRoot(ProfilePage);
       }
     })
   }

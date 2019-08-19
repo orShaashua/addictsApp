@@ -64,13 +64,14 @@ export class MatchesPage {
     });
   }
   removeUsersThatIAlreadySendRequestFromFilter(){
+    //these are the users that i liked
     this.requestservice.getMyWishFriendsList().then((myishfriendslist)=>{
       var add = true;
       var counter = 0;
       //get all the users I have with them a match
       this.likeservice.getAllMyMatches().then((res: any)=>{
         this.filteredusers = [];
-        for (var key  in res) {
+        for (var key in res) {
           //don't add the current user to the filteredusers
           if (res[key].uid != firebase.auth().currentUser.uid) {
             add = true;
