@@ -11,6 +11,7 @@ import {ProfilePage} from "../pages/profile/profile";
 import {AngularFireAuth} from 'angularfire2/auth';
 import firebase from 'firebase'
 import {TabsPage} from "../pages/tabs/tabs";
+import {UserProvider} from "../providers/user/user";
 
 
   @Component({
@@ -33,6 +34,7 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public angularFireAuth: AngularFireAuth,
+    public userservice: UserProvider
   ) {
     this.initializeApp();
     // set our app's pages
@@ -57,6 +59,8 @@ export class MyApp {
           if(this.authFlag == false) {
             this.authFlag = true;
             if (user) {
+              //update location every time the user goes into the app
+              const res = this.userservice.updateLocation();
               this.nav.setRoot(TabsPage);
               this.rootPage = TabsPage;
             } else {

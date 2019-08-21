@@ -8,7 +8,7 @@ import { FilterPage } from '../pages/filter/filter';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
 import {RegisterPage} from '../pages/register/register';
-
+import { AgmCoreModule } from '@agm/core';
 import { StatusBar } from '@ionic-native/status-bar';
 import {File} from '@ionic-native/file/ngx';
 import {FilePath} from "@ionic-native/file-path/ngx";
@@ -67,6 +67,9 @@ var config = {
 
   ],
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyD7w7FtqB0QBI3nL75pZsuZqTYVl-Dd4ek"
+    }),
     BrowserModule,
     IonicModule.forRoot(MyApp, {tabsPlacement: 'top'}),
     AngularFireModule.initializeApp(config),

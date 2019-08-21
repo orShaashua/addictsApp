@@ -8,6 +8,8 @@ export class Settings {
   bdayMonth: number;
   bdayDay: number;
   about: string;
+  longLocation: string;
+  latLocation: string;
 }
 
   // constructor (gender: string, addictsType: string,

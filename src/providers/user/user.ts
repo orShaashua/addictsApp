@@ -3,6 +3,10 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import firebase from 'firebase';
 import {Filters} from "../../models/filters.model";
 import {Settings} from "../../models/settings.model";
+import {AlertController, LoadingController} from "ionic-angular";
+import {Mutex, MutexInterface} from 'async-mutex';
+import {errorHandler} from "@angular/platform-browser/src/browser";
+import {errorSymbol} from "@angular/compiler-cli/src/metadata/evaluator";
 
 /*
   Generated class for the UserProvider provider.
@@ -13,17 +17,18 @@ import {Settings} from "../../models/settings.model";
 @Injectable()
 export class UserProvider {
 
+
   firedata = firebase.database().ref('/users');
   alreadyEnteredToSearchFriendsPage = false;
+
   // firedata1 = firebase.database().ref('/users/uid');
-  constructor(public afirauth: AngularFireAuth) {
+  constructor(public afirauth: AngularFireAuth, public loadingCtrl: LoadingController) {
     console.log('Hello UserProvider Provider');
   }
 
-  addsettingstouser(settings){
+  addsettingstouser(settings) {
     return new Promise((resolve, reject) => {
-      this.afirauth.auth.currentUser.updateProfile({
-      }).then(()=> {
+      this.afirauth.auth.currentUser.updateProfile({}).then(() => {
         // this.firedata.child("settings")
         this.firedata.child(this.afirauth.auth.currentUser.uid).child("settings").set({
           addictsType: settings.addictsType,
@@ -32,27 +37,30 @@ export class UserProvider {
           bdayDay: settings.bdayDay,
           bdayMonth: settings.bdayMonth,
           bdayYear: settings.bdayYear,
-          description: settings.about
+          description: settings.about,
+          longLocation: settings.longLocation,
+          latLocation: settings.latLocation
+
         }).then(() => {
           resolve({success: true});
-        }).catch((err)=>{
+        }).catch((err) => {
           alert(err);
           // reject(err);
         })
-        }).catch((err)=>{
+      }).catch((err) => {
         alert(err);
         // reject(err);
       })
     });
   }
 
-  addFiltersToUser(filters){
+  addFiltersToUser(filters) {
     return new Promise((resolve, reject) => {
       this.afirauth.auth.currentUser.updateProfile({
         // displayName: this.afirauth.auth.currentUser.displayName,
         // photoURL: this.afirauth.auth.currentUser.photoURL
 
-      }).then(()=> {
+      }).then(() => {
         this.firedata.child(this.afirauth.auth.currentUser.uid).child("filters").set({
           // displayName: this.afirauth.auth.currentUser.displayName,
           // photoURL: this.afirauth.auth.currentUser.photoURL,
@@ -66,44 +74,44 @@ export class UserProvider {
           meetingType: filters.meetingType
         }).then(() => {
           resolve({success: true});
-        }).catch((err)=>{
+        }).catch((err) => {
           alert(err);
           // reject(err);
         })
-      }).catch((err)=>{
+      }).catch((err) => {
         alert(err);
         // reject(err);
       })
     });
   }
 
-  adduser(newuser,loader){
-   return new Promise((resolve, reject) => {
+  adduser(newuser, loader) {
+    return new Promise((resolve, reject) => {
       this.afirauth.auth.createUserWithEmailAndPassword(newuser.email, newuser.password).then(() => {
         this.afirauth.auth.currentUser.updateProfile({
           displayName: newuser.displayName,
-          photoURL:'https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e'
+          photoURL: 'https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e'
         }).then(() => {
           this.firedata.child(this.afirauth.auth.currentUser.uid).set({
             uid: this.afirauth.auth.currentUser.uid,
             displayName: newuser.displayName,
-            photoURL:'https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e',
-          }).then(()=>{
+            photoURL: 'https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e',
+          }).then(() => {
             resolve({success: true});
-          }).catch((err)=>{
+          }).catch((err) => {
             alert(err);
             setTimeout(() => {
             }, 0);
             // reject(err);
           })
-        }).catch((err)=>{
+        }).catch((err) => {
           alert(err);
           setTimeout(() => {
             loader.dismiss();
           }, 0);
           // reject(err);
         })
-      }).catch((err)=>{
+      }).catch((err) => {
         alert(err);
         setTimeout(() => {
           loader.dismiss();
@@ -125,82 +133,28 @@ export class UserProvider {
     })
   }
 
-  getallusers(){
-    var promise = new Promise ((resolve, reject)=>{
-      this.firedata.orderByChild('uid').once('value', (snapshot)=>{
-        let userdata =snapshot.val();
-        let temparr =[];
-        for (var key in userdata){
+  getallusers() {
+    var promise = new Promise((resolve, reject) => {
+      this.firedata.orderByChild('uid').once('value', (snapshot) => {
+        let userdata = snapshot.val();
+        let temparr = [];
+        for (var key in userdata) {
           temparr.push(userdata[key]);
         }
         resolve(temparr);
-      }).catch((err)=>{
+      }).catch((err) => {
         reject(err);
       })
     });
     return promise;
   }
 
-  // getFilterUsers(userDetails){
-  //   var query = firebase.database().ref("users/settings");
-  //   query.once("value")
-  //     .then(function(snapshot) {
-  //       snapshot.forEach(function(childSnapshot) {
-  //         // key will be "ada" the first time and "alan" the second time
-  //         var key = childSnapshot.child("gender").key;
-  //         console.log("hi the key here is =" + key);
-  //         // childData will be the actual contents of the child
-  //         var childData = childSnapshot.child("gender").val();
-  //         console.log("hi the childData here is =" + childData);
-  //       });
-  //     });
-  //
-  //   const data1234 = this.firedata.child('settings');
-  //       console.log("hi the data1234 is = " + data1234.toString());
-  //       var promise = new Promise ((resolve, reject)=>{
-  //         this.firedata.orderByChild("settings").once('value', (snapshot)=>{
-  //           // console.log("flag1 = " + snapshot.val().addictsType);
-  //           let filteredusersdata = [];
-  //           //         // let temparr =[];
-  //           //         // for (var key in userdata){
-  //           //         //   temparr.push(userdata[key]);
-  //           //         // }
-  //           let gender = "";
-  //           let currentYear = (new Date()).getFullYear();
-  //           if(userDetails.femaleValue == true && userDetails.maleVale == true){
-  //             gender = "both"
-  //           } else if(userDetails.femaleValue == true){
-  //             gender = "female"
-  //           } else {
-  //             gender = "male"
-  //           }
-  //           snapshot.forEach(function(child) {
-  //             if(child.val().addictsType == userDetails.addictsType
-  //               && (child.val().gender == gender || gender == "both")
-  //               && (child.val().bdayYear - currentYear > userDetails.ageRange.lower
-  //                 && child.val().bdayYear - currentYear < userDetails.ageRange.upper)){
-  //               filteredusersdata.push(child)
-  //             }
-  //
-  //             var datas = snapshot.child("settings").child("addictsType").val();
-  //
-  //             var firstname = child.val().gender;
-  //             console.log("hi the val is = " + datas);
-  //             // var lastname=child.val().lastname;
-  //           });
-  //           resolve(filteredusersdata);
-  //         }).catch((err)=>{
-  //       reject(err);
-  //     })
-  //   });
-  //   return promise;
-  // }
 
   getusersdetails(node) {
     //accessing the particular user based on uid from the user collection and returning it back to the calling function
     // this.afirauth.auth.currentUser
-    if(node == null){
-      return new Promise((resolve, reject) =>{
+    if (node == null) {
+      return new Promise((resolve, reject) => {
         try {
           if (firebase.auth().currentUser.uid != null) {
             this.firedata.child(firebase.auth().currentUser.uid).once('value', (snapshot) => {
@@ -209,7 +163,7 @@ export class UserProvider {
               reject(err);
             });
           }
-        }catch(e){
+        } catch (e) {
           console.log("d");
         }
       })
@@ -230,105 +184,174 @@ export class UserProvider {
     }
   }
 
-  getMySearchFriends(){
-    return new Promise((resolve, reject) => {
-      let settingsFromUser = new Settings();
-      let result =[];
-      this.getusersdetails("settings").then((res: any)=>{
-        if (res) {
-          settingsFromUser = res;
-          let gender = "";
-          let currentYear = (new Date()).getFullYear();
-          this.getUsersMatchedToMyFilter().then((users: any)=>{
-            for (let user in users){
-              if (users[user].uid != firebase.auth().currentUser.uid) {
-                let details = users[user]["filters"];
-                if (!details) {
-                  result.push(users[user]);
-                  continue;
-                }
-                if (details.female == true && details.male == true) {
-                  gender = "both"
-                } else if (details.female == true) {
-                  gender = "female"
-                } else {
-                  gender = "male"
-                }
+  createGender(details) {
+    //check what happens when theyre both false
+    if (details.female && details.male) {
+      return "both"
+    }
+    if (details.female) {
+      return "female"
+    }
+    return "male"
+  }
 
-                if (settingsFromUser.addictsType == details.addictsType
-                  && (settingsFromUser.gender == gender || gender == "both")
-                  && (currentYear - settingsFromUser.bdayYear >= details.ageRangeLower
-                    && currentYear - settingsFromUser.bdayYear <= details.ageRangeUpper)) {
-                  result.push(users[user]);
-                }
-              }
-            }
-            resolve(result);
-          });
+  async getMySearchFriends() {
+    let settingsFromUser = new Settings();
+    let result = [];
+    try {
+      const resSettingsOfUser = await this.getusersdetails("settings");
+      if (!resSettingsOfUser) {
+        //error
+        return;
+      }
+      // @ts-ignore
+      settingsFromUser = resSettingsOfUser;
+      const users = await this.getUsersMatchedToMyFilter();
+      for (let user in users) {
+        if (users[user].uid === firebase.auth().currentUser.uid) {
+          //don't add myself
+          continue;
         }
-      });
-    });
+        let details = users[user]["filters"];
+        if (!details) {
+          result.push(users[user]);
+          continue;
+        }
+        const gender = this.createGender(details);
+        let currentYear = (new Date()).getFullYear();
+        if (settingsFromUser.addictsType == details.addictsType
+          && (settingsFromUser.gender == gender || gender == "both")
+          && (currentYear - settingsFromUser.bdayYear >= details.ageRangeLower
+            && currentYear - settingsFromUser.bdayYear <= details.ageRangeUpper)) {
+          result.push(users[user]);
+        }
+      }
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+//taken from https://www.html5rocks.com/en/tutorials/geolocation/trip_meter/
+  async checkDistance(otherLatLocation, otherLongLocation, maxDist) {
+    // return new Promise((resolve, reject) => {
+    let settingsFromUser = new Settings();
+    try {
+      const resSettingOfUser = await this.getusersdetails("settings");
+      if (!resSettingOfUser) {
+        return;
+      }
+      // @ts-ignore
+      settingsFromUser = resSettingOfUser;
+      let myLat = +settingsFromUser.latLocation;
+      let myLng = +settingsFromUser.longLocation;
+      if ((myLat == otherLatLocation) && (myLng == otherLongLocation)) {
+        console.log("same place currently");
+        return true;
+      }
+      var R = 6371; // km
+      var dLat = (otherLatLocation - myLat) * (Math.PI / 180);
+      var dLon = (otherLongLocation - myLng) * (Math.PI / 180);
+      var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(myLat * (Math.PI / 180)) * Math.cos(otherLatLocation * (Math.PI / 180)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      var distance = R * c;
+      console.log("the distance is " + distance);
+      return distance <= maxDist;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  createFilters(resUserDetails) {
+    const {addictsType, maxDist, female, male, ageRangeLower, ageRangeUpper, meetingType} = resUserDetails;
+    let filtersFromUser = new Filters();
+    filtersFromUser.addictsType = addictsType;
+    filtersFromUser.maxDist = maxDist;
+    filtersFromUser.female = female;
+    filtersFromUser.male = male;
+    filtersFromUser.ageRangeLower = ageRangeLower;
+    filtersFromUser.ageRangeUpper = ageRangeUpper;
+    filtersFromUser.meetingType = meetingType;
+    return filtersFromUser;
   }
 
 
-
-  //return the users who match my filter
-  getUsersMatchedToMyFilter(){
-    return new Promise((resolve, reject) => {
-      let filtersFromUser = new Filters();
-      //this is suppose to work, for shula it doesnt and for Or it does. so in the mean time im doing a demo filter
-      this.getusersdetails("filters").then((res: any)=>{
-        if (res) {
-          filtersFromUser.addictsType = res.addictsType;
-          filtersFromUser.maxDist = res.maxDist;
-          filtersFromUser.female =res.female;
-          filtersFromUser.male = res.male ;
-          filtersFromUser.ageRangeLower =res.ageRangeLower;
-          filtersFromUser.ageRangeUpper = res.ageRangeUpper;
-          filtersFromUser.meetingType = res.meetingType;
-          let gender = "";
-          let currentYear = (new Date()).getFullYear();
-          if(filtersFromUser.female == true && filtersFromUser.male == true){
-            gender = "both"
-          } else if(filtersFromUser.female == true){
-            gender = "female"
-          } else {
-            gender = "male"
-          }
-          let result =[];
-          this.getallusers().then((users: any)=>{
-            try {
-              if (firebase.auth().currentUser.uid != null) {
-                for (let user in users) {
-                  if(users[user].uid != firebase.auth().currentUser.uid){
-                    let details = users[user]["settings"];
-                    if(details.addictsType == filtersFromUser.addictsType
-                      && (details.gender == gender || gender == "both")
-                      && (currentYear - details.bdayYear >=  filtersFromUser.ageRangeLower
-                        && currentYear - details.bdayYear <=  filtersFromUser.ageRangeUpper)) {
-
-                      result.push(users[user])
-                    }
-                  }
-                  // console.log(details.gender);
-                  // result.push(details);
-                }
-              }
-            }catch (err) {
-              reject(err);
-            }
-            resolve(result);
-          });
-        }else {
-            this.getallusers().then((users: any)=>{
-              resolve(users);
-            });
+//return the users who match my filter
+  async getUsersMatchedToMyFilter() {
+    try {
+      const resUserDetails = await this.getusersdetails("filters");
+      const users = await this.getallusers();
+      console.log("the users are = " + users);
+      if (!resUserDetails) {
+        return users;
+      }
+      if (!firebase.auth().currentUser.uid) {
+        return;
+      }
+      // @ts-ignore
+      return users.filter(async (user) => {
+        if (user.uid === firebase.auth().currentUser.uid) {
+          return false;
+        }
+        let details = user.settings;
+        const filtersFromUser = this.createFilters(resUserDetails);
+        const resDistance = await this.checkDistance(+details.latLocation, +details.longLocation, +filtersFromUser.maxDist);
+        if (!resDistance) {
+          return false;
+        }
+        console.log("the answer is flag = " + resDistance.toString());
+        const currentYear = (new Date()).getFullYear();
+        const gender = this.createGender(filtersFromUser);
+        if (details.addictsType == filtersFromUser.addictsType
+          && (details.gender == gender || gender == "both")
+          && (currentYear - details.bdayYear >= filtersFromUser.ageRangeLower)
+          && (currentYear - details.bdayYear <= filtersFromUser.ageRangeUpper)) {
+          return true;
         }
       });
-    });
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  updatedisplayname(newname){
+  getPosition(): Promise<any>
+  {
+    return new Promise((resolve, reject) => {
+
+      navigator.geolocation.getCurrentPosition(resp => {
+
+          resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
+        },
+        err => {
+          reject(err);
+        });
+    });
+
+  }
+  //update location every time the user goes into the app
+  async updateLocation() {
+    try {
+      const coord = await this.getPosition();
+      console.log(coord.lat + " hi and " + coord.lng);
+      alert(coord.lat + " hi and " + coord.lng);
+      await this.afirauth.auth.currentUser.updateProfile({});
+      this.firedata.child(firebase.auth().currentUser.uid).child('settings').update({
+        latLocation: coord.lat,
+        longLocation: coord.lng,
+      }).then(() => {
+        return true;
+      }).catch((err) => {
+        alert(err);
+      })
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+
+  updatedisplayname(newname) {
     return new Promise((resolve, reject) => {
       this.afirauth.auth.currentUser.updateProfile({
         displayName: newname,
@@ -339,22 +362,22 @@ export class UserProvider {
           photoURL: this.afirauth.auth.currentUser.photoURL,
           uid: this.afirauth.auth.currentUser.uid
         }).then(() => {
-          resolve ({ success : true});
-        }).catch((err)=>{
+          resolve({success: true});
+        }).catch((err) => {
           reject(err);
         })
-      }).catch((err)=>{
+      }).catch((err) => {
         reject(err);
       })
     })
   }
 
-  updateimage(imageurl){
-    return new Promise((resolve, reject)=>{
+  updateimage(imageurl) {
+    return new Promise((resolve, reject) => {
       this.afirauth.auth.currentUser.updateProfile({
         displayName: this.afirauth.auth.currentUser.displayName,
         photoURL: imageurl
-      }).then(()=>{
+      }).then(() => {
         firebase.database().ref('/users/' + firebase.auth().currentUser.uid).update({
           displayName: this.afirauth.auth.currentUser.displayName,
           photoURL: imageurl,
@@ -369,10 +392,12 @@ export class UserProvider {
       })
     })
   }
-  getUserStatus(){
+
+  getUserStatus() {
     return this.alreadyEnteredToSearchFriendsPage;
   }
-  setUserStatus(status){
+
+  setUserStatus(status) {
     this.alreadyEnteredToSearchFriendsPage = status;
   }
 }

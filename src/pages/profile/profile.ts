@@ -1,5 +1,5 @@
 import {Component, Injectable, NgZone} from '@angular/core';
-import {IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import {FilterPage} from "../filter/filter";
 import {ImghandlerProvider} from '../../providers/imghandler/imghandler';
@@ -33,14 +33,42 @@ export class ProfilePage {
   displayName: string;
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController,
-              public modalCtrl: ModalController) {
-    // this.username = this.navParams.get('username');
+              public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
+    // this.username = this.navParams.get('username');pos.lat, pos.lng
 
   }
 
   ionViewDidEnter() {
-    console.log('ionViewDidLoad ProfilePage');
-    this.loaduserdetails();
+
+
+    // this.getPosition().then(pos=>
+    // {
+      // debugger;
+      //  let loader = this.loadingCtrl.create({
+      //   content: 'אנא המתן'
+      // });
+      // loader.present();
+      // this.userservice.updatelocation(pos.lat, pos.lng);
+      // loader.dismiss();
+      console.log('ionViewDidLoad ProfilePage');
+      this.loaduserdetails();
+    // });
+
+
+  }
+
+  getPosition(): Promise<any>
+  {
+    return new Promise((resolve, reject) => {
+
+      navigator.geolocation.getCurrentPosition(resp => {
+
+          resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
+        },
+        err => {
+          reject(err);
+        });
+    });
 
   }
 

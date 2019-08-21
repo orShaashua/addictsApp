@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {connreq} from "../../models/interfaces/request";
 import firebase from "firebase";
 import {MatchPage} from "../../pages/match/match";
@@ -13,65 +13,67 @@ import {UserProvider} from "../user/user";
 */
 @Injectable()
 export class LikesProvider {
-  firereq = firebase.database().ref('/likes')
+  firereq = firebase.database().ref('/likes');
   latestMatch;
 
 
-  constructor(public events:Events, public userservice:UserProvider) {
+  constructor(public events: Events, public userservice: UserProvider) {
     console.log('Hello LikesProvider Provider');
   }
-  sendlike(req: connreq){
-    var promise = new Promise((resolve,reject) => {
+
+  sendlike(req: connreq) {
+    var promise = new Promise((resolve, reject) => {
       this.firereq.child(req.recipient).push({
         sender: req.sender,
-      }).then(()=>{
+      }).then(() => {
         // this.mywishfriendslist.push(req.recipient);
-        resolve({success:true});///send sms to req.recipient
-      }).catch((err)=>{
+        resolve({success: true});///send sms to req.recipient
+      }).catch((err) => {
         resolve(err);
       })
     });
     return promise;
   }
-  getMyLikedList(){
+
+  getMyLikedList() {
     return new Promise((resolve) => {
-      let alreadyLiked =[];
-      this.firereq.orderByKey().once('value', (snapshot)=>{
-        let userdata =snapshot.val();
+      let alreadyLiked = [];
+      this.firereq.orderByKey().once('value', (snapshot) => {
+        let userdata = snapshot.val();
         let uid = firebase.auth().currentUser.uid;
-        for (let key in userdata){
-          for(let value in userdata[key]){
-              if(userdata[key][value].sender == uid){
-                alreadyLiked.push(key);
-                break;
+        for (let key in userdata) {
+          for (let value in userdata[key]) {
+            if (userdata[key][value].sender == uid) {
+              alreadyLiked.push(key);
+              break;
             }
           }
         }
         resolve(alreadyLiked);
-      }).catch((err)=>{
+      }).catch((err) => {
         resolve(alreadyLiked);
       })
     });
   }
 
-  getAllMyMatches(){
+  getAllMyMatches() {
     return new Promise((resolve) => {
-      let myMatchedList =[];
+      let myMatchedList = [];
       let myMatchedUsers = [];
-      this.firereq.child(firebase.auth().currentUser.uid).once('value', (snapshot)=>{
+      this.firereq.child(firebase.auth().currentUser.uid).once('value', (snapshot) => {
         let userdata = snapshot.val();
-        this.getMyLikedList().then((usersThatIliked)=>{
-          for (let key in userdata){
+        this.getMyLikedList().then((usersThatIliked) => {
+          for (let key in userdata) {
             let userThatlikedMe = userdata[key].sender;
-            for (let userThatIliked in usersThatIliked){
+            for (let userThatIliked in usersThatIliked) {
               if (usersThatIliked[userThatIliked] == userThatlikedMe) {
                 myMatchedList.push(userThatlikedMe);
                 break;
               }
             }
           }
-          this.userservice.getallusers().then((users)=>{
-            for( var j in myMatchedList)
+          this.userservice.getallusers().then((users) => {
+            for (var j in myMatchedList)
               for (var key in users) {
                 if (myMatchedList[j] === users[key].uid) {
                   myMatchedUsers.push(users[key]);
@@ -80,7 +82,7 @@ export class LikesProvider {
             resolve(myMatchedUsers);
           });
         });
-      }).catch((err)=>{
+      }).catch((err) => {
         resolve(myMatchedUsers);
       })
     });
@@ -101,17 +103,18 @@ export class LikesProvider {
   }
 
 
-  getLatestMatch(){
+  getLatestMatch() {
     return new Promise(resolve => {
       this.firereq.child(firebase.auth().currentUser.uid).once('value', (snapshot) => {
-          resolve(snapshot.val().latestMatch);
+        resolve(snapshot.val().latestMatch);
       });
     });
 
   }
-  setLatestMatch(latestMatch){
-      this.firereq.child(firebase.auth().currentUser.uid).update({
-        latestMatch: latestMatch
-      });
+
+  setLatestMatch(latestMatch) {
+    this.firereq.child(firebase.auth().currentUser.uid).update({
+      latestMatch: latestMatch
+    });
   }
 }

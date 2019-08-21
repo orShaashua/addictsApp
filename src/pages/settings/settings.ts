@@ -50,24 +50,52 @@ export class SettingsPage {
       ]
     });
   }
+  lat: number;
+  lng: number;
 
+  getPosition(): Promise<any>
+  {
+    return new Promise((resolve, reject) => {
+
+      navigator.geolocation.getCurrentPosition(resp => {
+
+          resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
+        },
+        err => {
+          reject(err);
+        });
+    });
+
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
   }
 
   doneSettings(){
-    this.settingsFromUser.gender = this.gender.value;
-    this.settingsFromUser.addictsType = this.addictsType.value;
-    this.settingsFromUser.mentor = this.mentor.value;
-    this.settingsFromUser.bdayYear = this.BirthDate.value.year;
-    this.settingsFromUser.bdayMonth = this.BirthDate.value.month;
-    this.settingsFromUser.bdayDay = this.BirthDate.value.day;
-    this.settingsFromUser.about = this.about.value;
-    let loader = this.loadingCtrl.create({
-      content: 'אנא המתן'
-    });
-    loader.present();
-    this.userservice.addsettingstouser(this.settingsFromUser).then((res: any) => {
+    debugger;
+    let lng = '';
+    let lat = '';
+
+    this.getPosition().then(pos=>
+    {
+      lng = pos.lng;
+      lat = pos.lat;
+
+      this.settingsFromUser.gender = this.gender.value;
+      this.settingsFromUser.addictsType = this.addictsType.value;
+      this.settingsFromUser.mentor = this.mentor.value;
+      this.settingsFromUser.bdayYear = this.BirthDate.value.year;
+      this.settingsFromUser.bdayMonth = this.BirthDate.value.month;
+      this.settingsFromUser.bdayDay = this.BirthDate.value.day;
+      this.settingsFromUser.about = this.about.value;
+      this.settingsFromUser.longLocation = lng;
+      this.settingsFromUser.latLocation = lat;
+
+      let loader = this.loadingCtrl.create({
+        content: 'אנא המתן'
+      });
+      loader.present();
+      this.userservice.addsettingstouser(this.settingsFromUser).then((res: any) => {
 
         loader.dismiss();
         if(res.success){
@@ -76,7 +104,11 @@ export class SettingsPage {
           loader.dismissAll();
           alert('error: ' + res);
         }
+      });
+
+      console.log(`Positon: ${pos.lng} ${pos.lat}`);
     });
+
   }
 
 

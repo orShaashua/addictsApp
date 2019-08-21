@@ -21,7 +21,7 @@ export class MatchesPage {
   newrrequest ={} as connreq;
   filteredusers = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,
-              public userservice: UserProvider,public alertCtrl: AlertController,
+              public userservice: UserProvider, public alertCtrl: AlertController,
               public events:Events, public requestservice: RequestsProvider, public likeservice: LikesProvider) {
     //for now all users matches!! need to handle this!!!
     // this.removeUsersThatIAlreadySendRequestFromFilter();
