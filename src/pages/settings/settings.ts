@@ -72,7 +72,6 @@ export class SettingsPage {
   }
 
   doneSettings(){
-    debugger;
     let lng = '';
     let lat = '';
 

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "618720101294",
+    "firebase_url": "https://addictsapp.firebaseio.com",
+    "project_id": "addictsapp",
+    "storage_bucket": "addictsapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618720101294:android:f5187db13a84db52",
+        "android_client_info": {
+          "package_name": "com.addictsApp.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "618720101294-2lpogvdtv0f30rksitsa9too5830i81r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw8gVrQ5RxQeL9uA3Aq5MlIj-7KHQRPUI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "618720101294-2lpogvdtv0f30rksitsa9too5830i81r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "618720101294-15f5agoodjutgsmsr7gi1klpvpm0bsek.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.addictsApp.android"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
