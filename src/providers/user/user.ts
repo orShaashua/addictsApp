@@ -5,8 +5,6 @@ import {Filters} from "../../models/filters.model";
 import {Settings} from "../../models/settings.model";
 import {AlertController, LoadingController} from "ionic-angular";
 import {Mutex, MutexInterface} from 'async-mutex';
-import {errorHandler} from "@angular/platform-browser/src/browser";
-import {errorSymbol} from "@angular/compiler-cli/src/metadata/evaluator";
 
 /*
   Generated class for the UserProvider provider.
@@ -335,7 +333,7 @@ export class UserProvider {
     try {
       const coord = await this.getPosition();
       console.log(coord.lat + " hi and " + coord.lng);
-      alert(coord.lat + " hi and " + coord.lng);
+      //alert(coord.lat + " hi and " + coord.lng);
       await this.afirauth.auth.currentUser.updateProfile({});
       this.firedata.child(firebase.auth().currentUser.uid).child('settings').update({
         latLocation: coord.lat,

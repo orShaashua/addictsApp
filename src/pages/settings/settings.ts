@@ -72,7 +72,6 @@ export class SettingsPage {
   }
 
   doneSettings(){
-    debugger;
     let lng = '';
     let lat = '';
 
@@ -99,7 +98,7 @@ export class SettingsPage {
 
         loader.dismiss();
         if(res.success){
-          this.navCtrl.pop();
+          this.navCtrl.push(TabsPage);
         } else {
           loader.dismissAll();
           alert('error: ' + res);

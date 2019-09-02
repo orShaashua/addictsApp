@@ -25,7 +25,6 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import { AuthProvider } from '../providers/auth/auth';
 import { UserProvider } from '../providers/user/user';
 import {TabsPage} from "../pages/tabs/tabs";
-import {BuddiesPage} from "../pages/buddies/buddies";
 import { ImghandlerProvider } from '../providers/imghandler/imghandler';
 
 import { RequestsProvider } from '../providers/requests/requests';
@@ -36,6 +35,12 @@ import {MatchPage} from "../pages/match/match";
 import {FiltersService} from "../services/FiltersService";
 import { LikesProvider } from '../providers/likes/likes';
 import {ChooseAvatarPage} from "../pages/choose-avatar/choose-avatar";
+import {FirstAidPage} from "../pages/first-aid/first-aid";
+import {PhoneNumbersPage} from "../pages/phone-numbers/phone-numbers";
+import {MeditationGuidePage} from "../pages/meditation-guide/meditation-guide";
+import {DistressButtonePage} from "../pages/distress-buttone/distress-buttone";
+import { ContentProvider } from '../providers/content/content';
+import {HelpInformationPage} from "../pages/help-information/help-information";
 
 
 var config = {
@@ -61,10 +66,13 @@ var config = {
     PasswordresetPage,
     TabsPage,
     SearchFriendsPage,
-    BuddiesPage,
     MatchPage,
-    ChooseAvatarPage
-
+    HelpInformationPage,
+    ChooseAvatarPage,
+    FirstAidPage,
+    PhoneNumbersPage,
+    MeditationGuidePage,
+    DistressButtonePage
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -88,11 +96,15 @@ var config = {
     RegisterPage,
     ChatPage,
     TabsPage,
-    BuddiesPage,
     SearchFriendsPage,
     PasswordresetPage,
     MatchPage,
-    ChooseAvatarPage
+    HelpInformationPage,
+    ChooseAvatarPage,
+    FirstAidPage,
+    PhoneNumbersPage,
+    MeditationGuidePage,
+    DistressButtonePage
   ],
   providers: [
     StatusBar,
@@ -110,6 +122,7 @@ var config = {
     ChatProvider,
     FiltersService,
     LikesProvider,
+    ContentProvider,
   ]
 })
 export class AppModule {}

@@ -12,6 +12,10 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import firebase from 'firebase'
 import {TabsPage} from "../pages/tabs/tabs";
 import {UserProvider} from "../providers/user/user";
+import {FirstAidPage} from "../pages/first-aid/first-aid";
+import {PhoneNumbersPage} from "../pages/phone-numbers/phone-numbers";
+import {DistressButtonePage} from "../pages/distress-buttone/distress-buttone";
+import {MeditationGuidePage} from "../pages/meditation-guide/meditation-guide";
 
 
   @Component({
@@ -39,11 +43,12 @@ export class MyApp {
     this.initializeApp();
     // set our app's pages
     this.pages = [
-      { title: 'Login', component: LoginPage },
-     // { title: 'My First List', component: ListPage }
-      { title: 'Filter', component: FilterPage },
-      { title: 'Settings', component: SettingsPage },
-      { title: 'Profile Page', component: ProfilePage }
+      { title: 'פרופיל', component: TabsPage },
+      { title: 'מדריך עזרה ראשונה', component: FirstAidPage },
+      { title: 'טלפונים רלוונטים', component: PhoneNumbersPage },
+      { title: 'מדריך מדיטציה', component: MeditationGuidePage },
+      { title: 'כפתור מצוקה', component: DistressButtonePage },
+      { title: 'התנתק', component: LoginPage },
     ];
   }
 

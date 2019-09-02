@@ -105,7 +105,6 @@ export class SearchFriendsPage {
             });
             modal.present();
             havaMatch = true;
-            // this.likesService.setLatestMatch(recipient.uid);
           }
         }
         this.likesService.sendlike(this.newrrequest).then((res: any) => {
@@ -120,18 +119,13 @@ export class SearchFriendsPage {
                   recipient: myMatchUser
                 });
                 modal.present();
-                // this.likesService.setLatestMatch(recipient.uid);
               });
-              // }
-              // });
             });
           }
         }).catch((err) => {
           alert(err);
         });
-      }).catch((err) => {
-        // reject(err);
-      });
+      })
     }
   }
 

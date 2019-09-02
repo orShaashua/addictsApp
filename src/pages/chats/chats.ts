@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {Events, IonicPage, NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
-import {BuddiesPage} from "../buddies/buddies";
 import {RequestsProvider} from "../../providers/requests/requests";
 import {ChatProvider} from "../../providers/chat/chat";
 import {ChatPage} from "../chat/chat";
@@ -32,9 +31,7 @@ export class ChatsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatsPage');
   }
-  addbuddy(){
-    this.navCtrl.push(BuddiesPage);
-  }
+
   ionViewWillEnter  (){
     this.requestservice.getmyrequests();
     this.requestservice.getmyfriends();
