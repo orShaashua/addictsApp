@@ -326,7 +326,6 @@ export class UserProvider {
           reject(err);
         });
     });
-
   }
   //update location every time the user goes into the app
   async updateLocation() {

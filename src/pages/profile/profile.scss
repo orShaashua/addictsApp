@@ -42,9 +42,9 @@ page-profil {
     height: 70px;
     width: 70px;
     padding: 10px 24px;
-    margin: 10px;
     //text-align: center;
     //justify-content: center;
+
     border: 4px solid rgba(255,255,255,0.4);
   }
 
@@ -69,10 +69,11 @@ page-profil {
     //flex-direction: row;
     //justify-content: center;
     text-align:center;
-    margin-left: auto;
-    margin-right: auto;
     //flex-flow: row;
     //align-content: center;
+    margin: auto;
+    //margin-left: 10px;
+    //margin-right:5px;
   }
   .masters {
     background: #5eb299;
