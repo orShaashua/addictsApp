@@ -41,7 +41,13 @@ import {MeditationGuidePage} from "../pages/meditation-guide/meditation-guide";
 import {DistressButtonePage} from "../pages/distress-buttone/distress-buttone";
 import { ContentProvider } from '../providers/content/content';
 import {HelpInformationPage} from "../pages/help-information/help-information";
+import { Geolocation } from '@ionic-native/geolocation'
 
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
 
 var config = {
   apiKey: "AIzaSyCHyiRzPEQKu03pF9bny8CZ-p6B1CdsJ5o",

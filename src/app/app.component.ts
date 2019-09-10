@@ -16,6 +16,7 @@ import {FirstAidPage} from "../pages/first-aid/first-aid";
 import {PhoneNumbersPage} from "../pages/phone-numbers/phone-numbers";
 import {DistressButtonePage} from "../pages/distress-buttone/distress-buttone";
 import {MeditationGuidePage} from "../pages/meditation-guide/meditation-guide";
+import { Geolocation } from '@ionic-native/geolocation'
 
 
   @Component({

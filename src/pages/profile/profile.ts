@@ -39,39 +39,9 @@ export class ProfilePage {
   }
 
   ionViewDidEnter() {
-
-
-    // this.getPosition().then(pos=>
-    // {
-      // debugger;
-      //  let loader = this.loadingCtrl.create({
-      //   content: 'אנא המתן'
-      // });
-      // loader.present();
-      // this.userservice.updatelocation(pos.lat, pos.lng);
-      // loader.dismiss();
       console.log('ionViewDidLoad ProfilePage');
       this.loaduserdetails();
-    // });
-
-
   }
-
-  getPosition(): Promise<any>
-  {
-    return new Promise((resolve, reject) => {
-
-      navigator.geolocation.getCurrentPosition(resp => {
-
-          resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
-        },
-        err => {
-          reject(err);
-        });
-    });
-
-  }
-
 
   loaduserdetails(){
 

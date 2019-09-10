@@ -57,13 +57,12 @@ export class SettingsPage {
   {
     return new Promise((resolve, reject) => {
 
-      navigator.geolocation.getCurrentPosition(resp => {
-
+      navigator.geolocation.getCurrentPosition( resp => {
           resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
         },
         err => {
-          reject(err);
-        });
+          console.log("the error in getPosition is " + JSON.stringify(err));
+        }, { timeout: 10000 });
     });
 
   }
@@ -71,14 +70,15 @@ export class SettingsPage {
     console.log('ionViewDidLoad SettingsPage');
   }
 
-  doneSettings(){
+  async doneSettings(){
     let lng = '';
     let lat = '';
-
-    this.getPosition().then(pos=>
-    {
+    console.log('hi done 1');
+    try {
+      const pos = await this.getPosition();
       lng = pos.lng;
       lat = pos.lat;
+      console.log('hi' + " " + lng + " and " + lat);
 
       this.settingsFromUser.gender = this.gender.value;
       this.settingsFromUser.addictsType = this.addictsType.value;
@@ -97,7 +97,7 @@ export class SettingsPage {
       this.userservice.addsettingstouser(this.settingsFromUser).then((res: any) => {
 
         loader.dismiss();
-        if(res.success){
+        if (res.success) {
           this.navCtrl.push(TabsPage);
         } else {
           loader.dismissAll();
@@ -106,7 +106,11 @@ export class SettingsPage {
       });
 
       console.log(`Positon: ${pos.lng} ${pos.lat}`);
-    });
+      // });
+    } catch(err){
+      console.log("the error is " + err);
+
+    }
 
   }
 
