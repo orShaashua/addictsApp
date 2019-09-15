@@ -42,7 +42,6 @@ import {DistressButtonePage} from "../pages/distress-buttone/distress-buttone";
 import { ContentProvider } from '../providers/content/content';
 import {HelpInformationPage} from "../pages/help-information/help-information";
 import { FCM } from '@ionic-native/fcm';
-import { NotificationsProvider } from '../providers/notifications/notifications';
 
 
 var config = {
@@ -126,7 +125,6 @@ var config = {
     FiltersService,
     LikesProvider,
     ContentProvider,
-    NotificationsProvider,
   ]
 })
 export class AppModule {}
