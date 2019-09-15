@@ -101,20 +101,4 @@ export class LikesProvider {
       });
     });
   }
-
-
-  getLatestMatch() {
-    return new Promise(resolve => {
-      this.firereq.child(firebase.auth().currentUser.uid).once('value', (snapshot) => {
-        resolve(snapshot.val().latestMatch);
-      });
-    });
-
-  }
-
-  setLatestMatch(latestMatch) {
-    this.firereq.child(firebase.auth().currentUser.uid).update({
-      latestMatch: latestMatch
-    });
-  }
 }

@@ -1,17 +1,14 @@
-import {Component, Injectable, NgZone} from '@angular/core';
-import {IonicPage, NavController, NavParams, AlertController, LoadingController} from 'ionic-angular';
+import {Component, NgZone} from '@angular/core';
+import {IonicPage, NavController, NavParams, AlertController, LoadingController, Platform} from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import {FilterPage} from "../filter/filter";
-import {ImghandlerProvider} from '../../providers/imghandler/imghandler';
 import {UserProvider} from "../../providers/user/user";
 import firebase from 'firebase';
 import {LoginPage} from "../login/login";
 import {SearchFriendsPage} from "../search-friends/search-friends";
 import { ModalController } from 'ionic-angular';
-import { MatchPage } from '../match/match';
 import {ChooseAvatarPage} from "../choose-avatar/choose-avatar";
-import {LikesProvider} from "../../providers/likes/likes";
-
+import { FCM } from '@ionic-native/fcm';
 
 
 
@@ -33,28 +30,59 @@ export class ProfilePage {
   displayName: string;
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController,
-              public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
+              public modalCtrl: ModalController, public loadingCtrl: LoadingController,
+              private fcm: FCM, public plt: Platform) {
     // this.username = this.navParams.get('username');pos.lat, pos.lng
+    this.plt.ready()
+      .then(() => {
+        if (this.plt.is('cordova')) {
+          this.subscribeToTopic();
+          this.fcm.getToken().then(token => {
+            this.saveToken(token);
+          }).catch((err) => {
+            alert(err);
+          });
+          this.fcm.onNotification().subscribe(data => {
+            if (data.wasTapped) {
+              console.log("Received in background");
 
+            } else {
+              console.log("Received in foreground");
+            }
+            let alert = this.alertCtrl.create({
+              title: data.title,
+              subTitle: data.body,
+              buttons: ['ok']
+            });
+            alert.present();
+          });
+          this.fcm.onTokenRefresh().subscribe(token => {
+            this.saveToken(token);
+          });
+          this.unsubscribeFromTopic();
+        }
+      })
+  }
+
+  subscribeToTopic() {
+    this.fcm.subscribeToTopic('enappd');
+  }
+  saveToken(token) {
+      this.userservice.addUserFCMToken(token).then((res: any)=>{
+        if(!res.success) {
+          alert("failed to add user token to firebase");
+        }
+      });
+  }
+
+  unsubscribeFromTopic() {
+    this.fcm.unsubscribeFromTopic('enappd');
   }
 
   ionViewDidEnter() {
 
-
-    // this.getPosition().then(pos=>
-    // {
-      // debugger;
-      //  let loader = this.loadingCtrl.create({
-      //   content: 'אנא המתן'
-      // });
-      // loader.present();
-      // this.userservice.updatelocation(pos.lat, pos.lng);
-      // loader.dismiss();
       console.log('ionViewDidLoad ProfilePage');
       this.loaduserdetails();
-    // });
-
-
   }
 
   getPosition(): Promise<any>
@@ -69,9 +97,7 @@ export class ProfilePage {
           reject(err);
         });
     });
-
   }
-
 
   loaduserdetails(){
 
@@ -146,16 +172,6 @@ export class ProfilePage {
       }]
     });
     alert.present();
-
-  }
-
-  presentModal() {
-    let modal = this.modalCtrl.create(MatchPage);
-    modal.present();
-    // this.sim.getSimInfo().then(
-    //   (info) => alert( info),
-    //   (err) => alert( err)
-    // );
   }
 }
 

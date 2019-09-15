@@ -134,11 +134,11 @@ export class UserProvider {
   getallusers() {
     var promise = new Promise((resolve, reject) => {
       this.firedata.orderByChild('uid').once('value', (snapshot) => {
-        let userdata = snapshot.val();
-        let temparr = [];
-        for (var key in userdata) {
-          temparr.push(userdata[key]);
-        }
+          let userdata = snapshot.val();
+          let temparr = [];
+          for (var key in userdata) {
+            temparr.push(userdata[key]);
+          }
         resolve(temparr);
       }).catch((err) => {
         reject(err);
@@ -332,13 +332,14 @@ export class UserProvider {
     try {
       const coord = await this.getPosition();
       console.log(coord.lat + " hi and " + coord.lng);
-      //alert(coord.lat + " hi and " + coord.lng);
+      alert(coord.lat + " hi and " + coord.lng);
       await this.afirauth.auth.currentUser.updateProfile({});
       this.firedata.child(firebase.auth().currentUser.uid).child('settings').update({
         latLocation: coord.lat,
         longLocation: coord.lng,
       }).then(() => {
         return true;
+
       }).catch((err) => {
         alert(err);
       })
@@ -389,12 +390,29 @@ export class UserProvider {
       })
     })
   }
-
-  getUserStatus() {
-    return this.alreadyEnteredToSearchFriendsPage;
+  addUserFCMToken(token){
+    return new Promise((resolve) => {
+      this.afirauth.auth.currentUser.updateProfile({
+        // displayName: this.afirauth.auth.currentUser.displayName,
+        // photoURL: this.afirauth.auth.currentUser.photoURL
+      }).then(() => {
+        this.firedata.child(this.afirauth.auth.currentUser.uid).update({
+          fcmToken: token,
+        }).then(() => {
+          resolve({success: true});
+        }).catch((err) => {
+          alert(err);
+        })
+      }).catch((err) => {
+        alert(err);
+      })
+    });
   }
+  // getAllFCMtokens(){
+  //
+  // }
+  // getFCMToken(uid){
+  //
+  // }
 
-  setUserStatus(status) {
-    this.alreadyEnteredToSearchFriendsPage = status;
-  }
 }
