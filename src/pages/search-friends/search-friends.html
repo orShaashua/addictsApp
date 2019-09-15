@@ -21,18 +21,8 @@
              (onLike)="onCardInteract($event, attendant)">
       <div class="user_img" [style.background-image]="attendant.asBg"></div>
       <ion-card-header>
-<!--        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>-->
         <ion-card-title class="name_and_age">{{attendant.displayName}}, {{attendant.age}}</ion-card-title>
       </ion-card-header>
-
-      <!--<div class="user_displayname" [(ngModel)] = "attendant.displayName"></div>-->
-<!--      <div class="name_and_age" >-->
-<!--        <br>-->
-<!--      <p>{{attendant.displayName}}</p>-->
-<!--      <p>{{attendant.age}}</p>-->
-<!--        </div>-->
-      <!--<ion-segment  [(ngModel)] = "attendant.displayName" ></ion-segment>-->
-      <!--<ion-segment  [(ngModel)] = "attendant.age" ></ion-segment>-->
     </sc-card>
   </div>
 </ion-content>
