@@ -41,7 +41,8 @@ import {MeditationGuidePage} from "../pages/meditation-guide/meditation-guide";
 import {DistressButtonePage} from "../pages/distress-buttone/distress-buttone";
 import { ContentProvider } from '../providers/content/content';
 import {HelpInformationPage} from "../pages/help-information/help-information";
-import { Geolocation } from '@ionic-native/geolocation'
+// import { Geolocation } from '@ionic-native/geolocation';
+import { FCM } from '@ionic-native/fcm';
 
 var options = {
   enableHighAccuracy: true,
@@ -123,6 +124,7 @@ var config = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     UserProvider,
+    FCM,
     RequestsProvider,
     ImghandlerProvider,
     ChatProvider,
