@@ -338,7 +338,7 @@ export class UserProvider {
       console.log(coord.lat + " hi and " + coord.lng);
       // alert(coord.lat + " hi and " + coord.lng);
       await this.afirauth.auth.currentUser.updateProfile({});
-      this.firedata.child(firebase.auth().currentUser.uid).child('settings').update({
+      this.firedata.child(this.afirauth.auth.currentUser.uid).child('settings').update({
         latLocation: coord.lat,
         longLocation: coord.lng,
       }).then(() => {
