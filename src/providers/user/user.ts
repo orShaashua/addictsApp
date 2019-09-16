@@ -215,6 +215,10 @@ export class UserProvider {
           result.push(users[user]);
           continue;
         }
+        const resDistance = await this.checkDistance(+settingsFromUser.latLocation, +settingsFromUser.longLocation, +details.maxDist);
+        if (!resDistance) {
+          return false;
+        }
         const gender = this.createGender(details);
         let currentYear = (new Date()).getFullYear();
         if (settingsFromUser.addictsType == details.addictsType
@@ -332,7 +336,7 @@ export class UserProvider {
     try {
       const coord = await this.getPosition();
       console.log(coord.lat + " hi and " + coord.lng);
-      alert(coord.lat + " hi and " + coord.lng);
+      // alert(coord.lat + " hi and " + coord.lng);
       await this.afirauth.auth.currentUser.updateProfile({});
       this.firedata.child(firebase.auth().currentUser.uid).child('settings').update({
         latLocation: coord.lat,
