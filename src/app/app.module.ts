@@ -44,6 +44,12 @@ import {HelpInformationPage} from "../pages/help-information/help-information";
 // import { Geolocation } from '@ionic-native/geolocation';
 import { FCM } from '@ionic-native/fcm';
 
+// import { AndroidPermissions } from '@ionic-native/android-permission/ngx';
+import {AndroidPermissions} from "@ionic-native/android-permissions";
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { GpsProvider } from '../providers/gps/gps';
+
 var options = {
   enableHighAccuracy: true,
   timeout: 5000,
@@ -131,6 +137,11 @@ var config = {
     FiltersService,
     LikesProvider,
     ContentProvider,
+
+    Geolocation,
+    LocationAccuracy,
+    // AndroidPermissions,
+    GpsProvider,
   ]
 })
 export class AppModule {}

@@ -53,19 +53,19 @@ export class SettingsPage {
   lat: number;
   lng: number;
 
-  getPosition(): Promise<any>
-  {
-    return new Promise((resolve, reject) => {
-
-      navigator.geolocation.getCurrentPosition( resp => {
-          resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
-        },
-        err => {
-          console.log("the error in getPosition is " + JSON.stringify(err));
-        }, { timeout: 10000 });
-    });
-
-  }
+  // getPosition(): Promise<any>
+  // {
+  //   return new Promise((resolve, reject) => {
+  //
+  //     navigator.geolocation.getCurrentPosition( resp => {
+  //         resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
+  //       },
+  //       err => {
+  //         console.log("the error in getPosition is " + err.message);
+  //       }, { timeout: 10000 });
+  //   });
+  //
+  // }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
   }
@@ -73,9 +73,14 @@ export class SettingsPage {
   async doneSettings(){
     let lng = '';
     let lat = '';
+    // let pos: any = {
+    //   latitude: "",
+    //   longitude: "",
+    // };
     console.log('hi done 1');
     try {
-      const pos = await this.getPosition();
+      const pos = await this.userservice.getPosition();
+      // debugger;
       lng = pos.lng;
       lat = pos.lat;
       console.log('hi' + " " + lng + " and " + lat);
@@ -108,7 +113,7 @@ export class SettingsPage {
       console.log(`Positon: ${pos.lng} ${pos.lat}`);
       // });
     } catch(err){
-      console.log("the error is " + err);
+      console.log("the error is " + err.toString());
 
     }
 
