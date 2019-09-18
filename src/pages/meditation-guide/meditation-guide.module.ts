@@ -4,7 +4,7 @@ import { MeditationGuidePage } from './meditation-guide';
 
 @NgModule({
   declarations: [
-    MeditationGuidePage,
+    // MeditationGuidePage,
   ],
   imports: [
     IonicPageModule.forChild(MeditationGuidePage),

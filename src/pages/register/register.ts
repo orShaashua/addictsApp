@@ -61,7 +61,7 @@ export class RegisterPage {
   }
   refreshPage(){
     if (this.opt ==='signin'){
-      this.navCtrl.push(LoginPage);
+      this.navCtrl.pop();
     }else if (this.opt ==='signup'){
       this.navCtrl.push(RegisterPage);
     }

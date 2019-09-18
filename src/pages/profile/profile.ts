@@ -1,5 +1,5 @@
 import {Component, NgZone} from '@angular/core';
-import {IonicPage, NavController, NavParams, AlertController, LoadingController, Platform} from 'ionic-angular';
+import {AlertController, IonicPage, LoadingController, NavController, NavParams, Platform} from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import {FilterPage} from "../filter/filter";
 import {UserProvider} from "../../providers/user/user";
@@ -28,16 +28,20 @@ export class ProfilePage {
   filters: any = {};
   avatar: string;
   displayName: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public plt: Platform, public navCtrl: NavController, public navParams: NavParams,
               public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController,
-              public modalCtrl: ModalController, public loadingCtrl: LoadingController,
-              private fcm: FCM, public plt: Platform) {
-    // this.username = this.navParams.get('username');pos.lat, pos.lng
+              public fcm:FCM, public loadingCtrl: LoadingController) {
+
+
+    console.log('constructor ProfilePage');
     this.plt.ready()
       .then(() => {
+        console.log('plt.ready ProfilePage');
         if (this.plt.is('cordova')) {
+          console.log('plt.is ProfilePage');
           this.subscribeToTopic();
           this.fcm.getToken().then(token => {
+            console.log('fcm.getToken ProfilePage');
             this.saveToken(token);
           }).catch((err) => {
             alert(err);
@@ -80,7 +84,6 @@ export class ProfilePage {
   }
 
   ionViewDidEnter() {
-
       console.log('ionViewDidLoad ProfilePage');
       this.loaduserdetails();
   }
@@ -100,10 +103,12 @@ export class ProfilePage {
   }
 
   loaduserdetails(){
-
+    console.log('loaduserdetails ProfilePage');
     this.userservice.getusersdetails(null).then((res: any)=>{
+      console.log('getusersdetails ProfilePage');
       this.displayName = res.displayName;
       this.zone.run(()=>{
+        console.log('zone ProfilePage');
         this.avatar = res.photoURL;
       })
     })

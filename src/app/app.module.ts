@@ -41,8 +41,9 @@ import {MeditationGuidePage} from "../pages/meditation-guide/meditation-guide";
 import {DistressButtonePage} from "../pages/distress-buttone/distress-buttone";
 import { ContentProvider } from '../providers/content/content';
 import {HelpInformationPage} from "../pages/help-information/help-information";
-// import { Geolocation } from '@ionic-native/geolocation';
+
 import { FCM } from '@ionic-native/fcm';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
 
 var options = {
   enableHighAccuracy: true,
@@ -79,7 +80,7 @@ var config = {
     FirstAidPage,
     PhoneNumbersPage,
     MeditationGuidePage,
-    DistressButtonePage
+    DistressButtonePage,
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -89,6 +90,7 @@ var config = {
     IonicModule.forRoot(MyApp, {tabsPlacement: 'top'}),
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
+    AngularFireFunctionsModule,
     SwipeCardsModule,
     AngularFirestoreModule
   ],

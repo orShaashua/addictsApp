@@ -37,6 +37,7 @@ exports.sendNotification = functions.database.ref('/likes').onWrite((event:any) 
 });
 
 exports.sendHelpMessage = functions.https.onCall((data:any, context:any) => {
+  console.log("start");
   // Message text passed from the client.
   var pos = data.text;
   // var user = context.auth.displayName;
