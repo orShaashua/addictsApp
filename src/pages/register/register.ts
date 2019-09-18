@@ -47,12 +47,12 @@ export class RegisterPage {
       this.loader.present();
       this.userservice.adduser(this.newuser,this.loader).then((res: any) => {
         this.loader.dismissAll();
-      if(res.success){
-        this.navCtrl.push(SettingsPage);
-      } else {
-        this.loader.dismissAll();
-        alert('error1: ' + res);
-      }
+        if(res.success){
+          this.navCtrl.push(SettingsPage);
+        } else {
+          this.loader.dismissAll();
+          alert('error1: ' + res);
+        }
     })
     }
   }

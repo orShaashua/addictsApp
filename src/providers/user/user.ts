@@ -415,8 +415,15 @@ export class UserProvider {
   // getAllFCMtokens(){
   //
   // }
-  // getFCMToken(uid){
-  //
-  // }
+  getMyFCMToken(){
+    return new Promise((resolve, reject)  => {
+      this.firedata.child(firebase.auth().currentUser.uid).child("fcmToken").once('value', (snapshot) => {
+        resolve(snapshot.val());
+      }).catch((err) => {
+        reject(err);
+      });
+    });
+
+  }
 
 }

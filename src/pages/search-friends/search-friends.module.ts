@@ -4,7 +4,7 @@ import { SearchFriendsPage } from './search-friends';
 
 @NgModule({
   declarations: [
-    SearchFriendsPage,
+    // SearchFriendsPage,
   ],
   imports: [
     IonicPageModule.forChild(SearchFriendsPage),

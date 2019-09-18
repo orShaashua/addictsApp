@@ -17,8 +17,9 @@ import {ChatPage} from "../chat/chat";
   templateUrl: 'chats.html',
 })
 export class ChatsPage {
-  myrequests;
-  myfriends;
+  myrequests =[];
+  myfriends = [];
+  public loader;
   username: string = '';
   message: string = '';
   _chatSubscription;
@@ -26,6 +27,7 @@ export class ChatsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public events:Events,
               public requestservice: RequestsProvider, public loadingCtrl: LoadingController,
               public alertCtrl:AlertController, public chatservice: ChatProvider) {
+
   }
 
   ionViewDidLoad() {
@@ -33,21 +35,31 @@ export class ChatsPage {
   }
 
   ionViewWillEnter  (){
-    this.requestservice.getmyrequests();
-    this.requestservice.getmyfriends();
-    this.events.subscribe('gotrequests', ()=>{
-      this.myrequests =[];
-      this.myrequests = this.requestservice.userdetails;
+    this.loader = this.loadingCtrl.create({
+      content: 'אנא המתן'
     });
-    this.events.subscribe('friends', ()=>{
-      this.myfriends =[];
-      this.myfriends = this.requestservice.myfriends;
+    this.loader.present();
+    this.requestservice.getmyrequests().then((res:any)=>{
+      this.myrequests = res;
+      this.requestservice.getmyfriends().then((res:any)=>{
+        this.myfriends = res;
+        this.loader.dismiss();
+      });
     });
+
+    // this.events.subscribe('gotrequests', ()=>{
+    //   this.myrequests =[];
+    //   this.myrequests = this.requestservice.userdetails;
+    // });
+    // this.events.subscribe('friends', ()=>{
+    //   this.myfriends =[];
+    //   this.myfriends = this.requestservice.myfriends;
+    // });
   }
 
   ionViewDidLeave (){
-    this.events.unsubscribe('gotrequests');
-    this.events.unsubscribe('friends');
+    // this.events.unsubscribe('gotrequests');
+    // this.events.unsubscribe('friends');
   }
 
   accept(item){
