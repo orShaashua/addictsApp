@@ -41,7 +41,7 @@ export class ChatPage {
         this.allmessages = this.chatservice.buddymessages;
         for(var key in this.allmessages){
           var date = new Date(this.allmessages[key].timestamp);
-          this.allmessagestimestamp.push(date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear() + " "
+          this.allmessagestimestamp.push(date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear() + " "
             + date.getHours() + ":" + date.getMinutes());
           if (this.allmessages[key].message.substring(0,4)=='http'){
             this.imageornot.push(true);
