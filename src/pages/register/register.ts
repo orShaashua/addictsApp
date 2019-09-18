@@ -47,12 +47,12 @@ export class RegisterPage {
       this.loader.present();
       this.userservice.adduser(this.newuser,this.loader).then((res: any) => {
         this.loader.dismissAll();
-      if(res.success){
-        this.navCtrl.push(SettingsPage);
-      } else {
-        this.loader.dismissAll();
-        alert('error1: ' + res);
-      }
+        if(res.success){
+          this.navCtrl.push(SettingsPage);
+        } else {
+          this.loader.dismissAll();
+          alert('error1: ' + res);
+        }
     })
     }
   }
@@ -61,7 +61,7 @@ export class RegisterPage {
   }
   refreshPage(){
     if (this.opt ==='signin'){
-      this.navCtrl.push(LoginPage);
+      this.navCtrl.pop();
     }else if (this.opt ==='signup'){
       this.navCtrl.push(RegisterPage);
     }

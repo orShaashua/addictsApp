@@ -4,6 +4,7 @@ import firebase from "firebase";
 import {MatchPage} from "../../pages/match/match";
 import {Events, ModalController} from "ionic-angular";
 import {UserProvider} from "../user/user";
+import {AngularFireFunctions} from "@angular/fire/functions";
 
 /*
   Generated class for the LikesProvider provider.
@@ -17,7 +18,7 @@ export class LikesProvider {
   latestMatch;
 
 
-  constructor(public events: Events, public userservice: UserProvider) {
+  constructor(public events: Events, public userservice: UserProvider, private fns: AngularFireFunctions) {
     console.log('Hello LikesProvider Provider');
   }
 

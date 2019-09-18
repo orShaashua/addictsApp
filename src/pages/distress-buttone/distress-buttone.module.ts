@@ -4,7 +4,7 @@ import { DistressButtonePage } from './distress-buttone';
 
 @NgModule({
   declarations: [
-    DistressButtonePage,
+    // DistressButtonePage,
   ],
   imports: [
     IonicPageModule.forChild(DistressButtonePage),

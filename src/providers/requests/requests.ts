@@ -23,18 +23,26 @@ export class RequestsProvider {
   }
   sendrequest(req: connreq){
     var promise = new Promise((resolve,reject) => {
-      this.firereq.child(req.recipient).push({
-        sender: req.sender
-      }).then(()=>{
-        this.mywishfriendslist.push(req.recipient);
-        resolve({success:true});///send sms to req.recipient
-      }).catch((err)=>{
-        resolve(err);
-      })
+      //allow to send request only if the other not already send request
+      this.firereq.child(req.sender).orderByChild
+      ('sender').equalTo(req.recipient).once('value', (snapshot)=>{
+        let req_already_exist = snapshot.val();
+      //if not exist push to firebase
+        if (!req_already_exist){
+          this.firereq.child(req.recipient).push({
+            sender: req.sender
+          }).then(()=>{
+            this.mywishfriendslist.push(req.recipient);
+            resolve({success:true});///send sms to req.recipient
+          }).catch((err)=>{
+            resolve(err);
+          })
+        }
+      });
     });
     return promise;
   }
-;
+
   getMyWishFriendsList(){
     return new Promise((resolve,reject) => {
       let myWishFriendsList =[];
@@ -57,27 +65,31 @@ export class RequestsProvider {
     });
   }
   getmyrequests(){
-    let allmyrequests;
-    var myrequests =[];
+    return new Promise(resolve => {
+      let allmyrequests;
+      var myrequests =[];
 
-    this.firereq.child(firebase.auth().currentUser.uid).once('value', (snapshot)=>{
-      allmyrequests = snapshot.val();
-      myrequests =[];
-      for (var i  in allmyrequests){
-        myrequests.push(allmyrequests[i].sender);
-      }
-      this.userservice.getallusers().then((res)=>{
-        var allusers = res;
-        this.userdetails = [];
-        for (var j in myrequests)
-          for (var key in allusers){
-            if (myrequests[j] === allusers[key].uid){
-              this.userdetails.push(allusers[key]);
+      this.firereq.child(firebase.auth().currentUser.uid).once('value', (snapshot)=>{
+        allmyrequests = snapshot.val();
+        myrequests =[];
+        for (var i  in allmyrequests){
+          myrequests.push(allmyrequests[i].sender);
+        }
+        this.userservice.getallusers().then((res)=>{
+          var allusers = res;
+          this.userdetails = [];
+          for (var j in myrequests) {
+            for (var key in allusers) {
+              if (myrequests[j] === allusers[key].uid) {
+                this.userdetails.push(allusers[key]);
+              }
             }
           }
-        this.events.publish('gotrequests');
+          resolve(this.userdetails);
+          // this.events.publish('gotrequests');
+        })
       })
-    })
+    });
   }
 
   acceptrequest(buddy){
@@ -122,25 +134,29 @@ export class RequestsProvider {
   }
 
   getmyfriends(){
-    let friendsuid = [];
-    this.firefriends.child(firebase.auth().currentUser.uid).once('value', (snapshot)=>{
-      let allfriends = snapshot.val();
-      for (var i in allfriends){
-        friendsuid.push(allfriends[i].uid);
-      }
-    }).then(()=>{
-      this.userservice.getallusers().then((users)=>{
-        this.myfriends=[];
-        for( var j in friendsuid)
-          for (var key in users) {
-            if (friendsuid[j] === users[key].uid) {
-              this.myfriends.push(users[key]);
+    return new Promise(resolve => {
+      let friendsuid = [];
+      this.firefriends.child(firebase.auth().currentUser.uid).once('value', (snapshot)=>{
+        let allfriends = snapshot.val();
+        for (var i in allfriends){
+          friendsuid.push(allfriends[i].uid);
+        }
+      }).then(()=>{
+        this.userservice.getallusers().then((users)=>{
+          this.myfriends=[];
+          for( var j in friendsuid) {
+            for (var key in users) {
+              if (friendsuid[j] === users[key].uid) {
+                this.myfriends.push(users[key]);
+              }
             }
           }
-        this.events.publish('friends');
-      })
-    }).catch((err)=>{
+          resolve(this.myfriends);
+          // this.events.publish('friends');
+        })
+      }).catch((err)=>{
         alert(err);
-    })
+      });
+    });
   }
 }

@@ -6,7 +6,6 @@ import {AuthProvider} from "../../providers/auth/auth";
 import {TabsPage} from "../tabs/tabs";
 
 import {PasswordresetPage} from "../passwordreset/passwordreset";
-import {SettingsPage} from "../settings/settings";
 import {UserProvider} from "../../providers/user/user";
 
 /**
@@ -35,6 +34,7 @@ export class LoginPage {
               public userservice: UserProvider, public loadingCtrl: LoadingController) {
     this.credentials.email = "";
     this.credentials.password = "";
+    console.log('constructor LoginPage');
   }
 
   ionViewDidLoad() {
@@ -62,6 +62,7 @@ export class LoginPage {
 
   //
   signIn() {
+    console.log('signIn LoginPage');
     if ((this.credentials.email.length == 0)) {
       alert("לא הוזן איימל")
     }

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import {IonicPage, ModalController} from 'ionic-angular';
-import firebase from "firebase";
-import {MatchPage} from "../match/match";
-import {LikesProvider} from "../../providers/likes/likes";
+import {IonicPage} from 'ionic-angular';
+
+
 
 /**
  * Generated class for the TabsPage page.
@@ -20,8 +19,8 @@ export class TabsPage {
   tab1:string = "ProfilePage";
   tab2:string = "ChatsPage";
   tab3:string = "MatchesPage";
-  constructor(public modalCtrl: ModalController,
-              public likesService: LikesProvider) {
+  constructor() {
+    console.log('constructor TabsPage');
   }
 
 

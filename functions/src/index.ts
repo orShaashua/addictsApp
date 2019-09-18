@@ -9,6 +9,8 @@
 // The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
 // import firebase from "firebase";
 
+// import firebase from "firebase";
+
 const functions = require('firebase-functions');
 
 // The Firebase Admin SDK to access the Firebase Realtime Database.
@@ -16,27 +18,42 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 
-exports.sendNotification = functions.database.ref('/likes').onWrite((event:any) => {
-  var myNewLike = event;
-  console.log('event', myNewLike);
-  // console.log('event params', event.data.sender);
-  // const uuid = event.params.uid;
-  // console.log('User to send notification', uuid);
-
-  // var ref = admin.database().ref(`users/${uuid}`);
-  // // console.log('ref', ref);
-  // return ref.once("value", (snapshot: any) => {
-  //   const payload = {
-  //     notification: {
-  //       title: 'new like',
-  //       body: 'new like! '
-  //     }
-  //   };
-  //   admin.messaging().sendToDevice(snapshot.val(), payload)
-  // });
-});
+// exports.sendMatchNotification = functions.https.onCall((data:any, context:any) => {
+//   admin.database().ref('/likes').child(context.auth.uid).orderByChild
+//   ('sender').equalTo(data.userUID).on('child_added', function (snapshot:any) {
+//     var myNewMatch = snapshot.val();
+//     if (myNewMatch) {
+//       const payload = {
+//         notification: {
+//           title:"MATCH",
+//           body: "יש לך התאמה חדשה",
+//           click_action:"FCM_PLUGIN_ACTIVITY",
+//           // icon: "fcm_push_icon",
+//           // sound:"default"
+//         },
+//         data:{
+//           //Any data to be retrieved in the notification callback
+//           title:"MATCH",
+//           body: "יש לך התאמה חדשה",
+//         },
+//       };
+//       // Send a message to devices subscribed to the provided topic.
+//       admin.messaging().sendToDevice(data.mytoken, payload)
+//         .then((response: any) => {
+//           // Response is a message ID string.
+//           console.log('Successfully sent message:', response);
+//         })
+//         .catch((error: any) => {
+//           console.log('Error sending message:', error);
+//         });
+//     } else {
+//       return;
+//     }
+//   });
+// });
 
 exports.sendHelpMessage = functions.https.onCall((data:any, context:any) => {
+  console.log("start");
   // Message text passed from the client.
   var pos = data.text;
   // var user = context.auth.displayName;

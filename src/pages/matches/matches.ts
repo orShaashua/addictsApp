@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, AlertController, Events} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, AlertController, Events, LoadingController} from 'ionic-angular';
 import {UserProvider} from "../../providers/user/user";
 import {RequestsProvider} from "../../providers/requests/requests";
 import {connreq} from '../../models/interfaces/request';
@@ -19,33 +19,18 @@ import {LikesProvider} from "../../providers/likes/likes";
 })
 export class MatchesPage {
   newrrequest ={} as connreq;
+  public loader;
   filteredusers = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams , public loadingCtrl: LoadingController,
               public userservice: UserProvider, public alertCtrl: AlertController,
               public events:Events, public requestservice: RequestsProvider, public likeservice: LikesProvider) {
-    //for now all users matches!! need to handle this!!!
-    // this.removeUsersThatIAlreadySendRequestFromFilter();
-    // let alluserssettings;
-    // this.userservice.getallusersdetails("settings").then((res: any)=>{
-
-    //   alluserssettings = res;
-    // });
   }
   ionViewDidEnter(){
     this.removeUsersThatIAlreadySendRequestFromFilter();
 
   }
 
-  // searchuser(searchbar){
-  //   this.filteredusers = this.temparr;
-  //   var q = searchbar.target.value;
-  //   if(q.trim() == ''){
-  //     return;
-  //   }
-  //   this.filteredusers = this.filteredusers.filter((v)=>{
-  //     return v.displayName.toLowerCase().indexOf(q.toLowerCase()) > -1;
-  //   })
-  // }
+
   sendreq(recipient){
     this.newrrequest.sender = firebase.auth().currentUser.uid;
     this.newrrequest.recipient = recipient.uid;
@@ -65,6 +50,10 @@ export class MatchesPage {
     });
   }
   removeUsersThatIAlreadySendRequestFromFilter(){
+    this.loader = this.loadingCtrl.create({
+      content: 'אנא המתן'
+    });
+    this.loader.present();
     //these are the users that i liked
     this.requestservice.getMyWishFriendsList().then((myishfriendslist)=>{
       var add = true;
@@ -109,6 +98,7 @@ export class MatchesPage {
             counter++;
           }
         }
+        this.loader.dismissAll();
       });
     });
   }
