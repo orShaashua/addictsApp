@@ -5,6 +5,8 @@ import {Filters} from "../../models/filters.model";
 import {Settings} from "../../models/settings.model";
 import {AlertController, LoadingController} from "ionic-angular";
 import {Mutex, MutexInterface} from 'async-mutex';
+import {GpsProvider} from "../gps/gps";
+// import {GpsProvider} from "../gps/gps";
 
 /*
   Generated class for the UserProvider provider.
@@ -20,9 +22,15 @@ export class UserProvider {
   alreadyEnteredToSearchFriendsPage = false;
 
   // firedata1 = firebase.database().ref('/users/uid');
-  constructor(public afirauth: AngularFireAuth, public loadingCtrl: LoadingController) {
+  constructor(public afirauth: AngularFireAuth, public loadingCtrl: LoadingController, public gpsProvider: GpsProvider) {
     console.log('Hello UserProvider Provider');
+
   }
+  // public coords: any = {
+  //   latitude: "",
+  //   longitude: ""
+  // };
+
 
   addsettingstouser(settings) {
     return new Promise((resolve, reject) => {
@@ -134,11 +142,11 @@ export class UserProvider {
   getallusers() {
     var promise = new Promise((resolve, reject) => {
       this.firedata.orderByChild('uid').once('value', (snapshot) => {
-          let userdata = snapshot.val();
-          let temparr = [];
-          for (var key in userdata) {
-            temparr.push(userdata[key]);
-          }
+        let userdata = snapshot.val();
+        let temparr = [];
+        for (var key in userdata) {
+          temparr.push(userdata[key]);
+        }
         resolve(temparr);
       }).catch((err) => {
         reject(err);
@@ -241,13 +249,13 @@ export class UserProvider {
     try {
       const resSettingOfUser = await this.getusersdetails("settings");
       if (!resSettingOfUser) {
-        return;
+        return false;
       }
       // @ts-ignore
       settingsFromUser = resSettingOfUser;
       let myLat = +settingsFromUser.latLocation;
       let myLng = +settingsFromUser.longLocation;
-      if ((myLat == otherLatLocation) && (myLng == otherLongLocation)) {
+      if ((myLat === otherLatLocation) && (myLng === otherLongLocation)) {
         console.log("same place currently");
         return true;
       }
@@ -318,36 +326,52 @@ export class UserProvider {
     }
   }
 
+  // async getPosition() {
+  //     console.log("shula 1");
+  //     // const coords = await this.gpsProvider.checkGPSPermission();
+  //     // debugger;
+  //     // return coords;
+  //     return new Promise((resolve, reject) => {
+  //
+  //       navigator.geolocation.getCurrentPosition( resp => {
+  //           resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
+  //         },
+  //         err => {
+  //           console.log("the error in getPosition is " + err.message);
+  //         }, { timeout: 10000 });
+  //     });
+  // }
   getPosition(): Promise<any>
   {
     return new Promise((resolve, reject) => {
 
-      navigator.geolocation.getCurrentPosition(resp => {
-
+      navigator.geolocation.getCurrentPosition( resp => {
           resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
         },
         err => {
-          reject(err);
-        });
+          console.log("the error in getPosition is " + JSON.stringify(err));
+        }, { timeout: 10000 });
     });
+
   }
   //update location every time the user goes into the app
   async updateLocation() {
     try {
-      const coord = await this.getPosition();
-      console.log(coord.lat + " hi and " + coord.lng);
-      // alert(coord.lat + " hi and " + coord.lng);
+      // this.coords = await this.getPosition();
+      const coords = await this.getPosition();
+      console.log("update loctaion = " + coords.lat + " hi and " + coords.lng);
+      // alert(coords.lat + " hi and " + coords.lng);
       await this.afirauth.auth.currentUser.updateProfile({});
       this.firedata.child(this.afirauth.auth.currentUser.uid).child('settings').update({
-        latLocation: coord.lat,
-        longLocation: coord.lng,
+        latLocation: coords.lat,
+        longLocation: coords.lng,
       }).then(() => {
         return true;
 
       }).catch((err) => {
         alert(err);
       })
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
   }
@@ -394,7 +418,8 @@ export class UserProvider {
       })
     })
   }
-  addUserFCMToken(token){
+
+  addUserFCMToken(token) {
     return new Promise((resolve) => {
       this.afirauth.auth.currentUser.updateProfile({
         // displayName: this.afirauth.auth.currentUser.displayName,
@@ -412,6 +437,7 @@ export class UserProvider {
       })
     });
   }
+
   // getAllFCMtokens(){
   //
   // }

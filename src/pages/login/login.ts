@@ -74,6 +74,7 @@ export class LoginPage {
     if (this.credentials.password.length > 0 && this.credentials.email.length > 0) {
       this.authservice.login(this.credentials).then((res: any) => {
         if(!res.code){
+          const res = this.userservice.updateLocation();
           this.navCtrl.push(TabsPage);
         } else {
           alert(res);
