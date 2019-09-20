@@ -78,42 +78,44 @@ export class SettingsPage {
     //   longitude: "",
     // };
     console.log('hi done 1');
-      this.userservice.getPosition().then((pos:any)=>{
-        // debugger;
-        lng = pos.lng;
-        lat = pos.lat;
-        console.log('hi' + " " + lng + " and " + lat);
-
-        this.settingsFromUser.gender = this.gender.value;
-        this.settingsFromUser.addictsType = this.addictsType.value;
-        this.settingsFromUser.mentor = this.mentor.value;
-        this.settingsFromUser.bdayYear = this.BirthDate.value.year;
-        this.settingsFromUser.bdayMonth = this.BirthDate.value.month;
-        this.settingsFromUser.bdayDay = this.BirthDate.value.day;
-        this.settingsFromUser.about = this.about.value;
-        this.settingsFromUser.longLocation = lng;
-        this.settingsFromUser.latLocation = lat;
-
-        let loader = this.loadingCtrl.create({
-          content: 'אנא המתן'
-        });
-        loader.present();
-        this.userservice.addsettingstouser(this.settingsFromUser).then((res: any) => {
-
-          loader.dismiss();
-          if (res.success) {
-            this.navCtrl.push(TabsPage);
-          } else {
-            loader.dismissAll();
-            alert('error: ' + res);
-          }
-        });
-
-        console.log(`Positon: ${pos.lng} ${pos.lat}`);
-        // });
-      }).catch(err=>{
-        console.log("the error is " + err.toString());
+    try {
+      let loader = this.loadingCtrl.create({
+        content: 'אנא המתן'
       });
+      loader.present();
+      const pos = await this.userservice.getPosition();
+      // debugger;
+      lng = pos.lng;
+      lat = pos.lat;
+      console.log('hi' + " " + lng + " and " + lat);
+
+      this.settingsFromUser.gender = this.gender.value;
+      this.settingsFromUser.addictsType = this.addictsType.value;
+      this.settingsFromUser.mentor = this.mentor.value;
+      this.settingsFromUser.bdayYear = this.BirthDate.value.year;
+      this.settingsFromUser.bdayMonth = this.BirthDate.value.month;
+      this.settingsFromUser.bdayDay = this.BirthDate.value.day;
+      this.settingsFromUser.about = this.about.value;
+      this.settingsFromUser.longLocation = lng;
+      this.settingsFromUser.latLocation = lat;
+      this.userservice.addsettingstouser(this.settingsFromUser).then((res: any) => {
+
+        loader.dismiss();
+        if (res.success) {
+          this.navCtrl.push(TabsPage);
+        } else {
+          loader.dismissAll();
+          alert('error: ' + res);
+        }
+      });
+
+      console.log(`Positon: ${pos.lng} ${pos.lat}`);
+      // });
+    } catch(err){
+      console.log("the error is " + err.toString());
+
+    }
+
   }
 
 

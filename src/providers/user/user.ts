@@ -335,6 +335,7 @@ export class UserProvider {
   getPosition(): Promise<any>
   {
     return new Promise((resolve, reject) => {
+
       navigator.geolocation.getCurrentPosition( resp => {
           resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
         },
@@ -355,7 +356,7 @@ export class UserProvider {
           }
           console.log("the error in getPosition is " + err);
           resolve({lng: 0, lat: 0});
-        }, { timeout: 10000 });
+        }, { maximumAge:60000, timeout:5000, enableHighAccuracy:true});
     });
 
   }
