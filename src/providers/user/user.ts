@@ -356,14 +356,13 @@ export class UserProvider {
           }
           console.log("the error in getPosition is " + err);
           resolve({lng: 0, lat: 0});
-        }, { maximumAge:60000, timeout:5000, enableHighAccuracy:true});
+        }, { maximumAge:60000, timeout:10000, enableHighAccuracy:true});
     });
 
   }
   //update location every time the user goes into the app
   async updateLocation() {
     try {
-      // this.coords = await this.getPosition();
       const coords = await this.getPosition();
       console.log("update loctaion = " + coords.lat + " hi and " + coords.lng);
       // alert(coords.lat + " hi and " + coords.lng);
