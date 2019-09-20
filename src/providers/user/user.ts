@@ -4,9 +4,10 @@ import firebase from 'firebase';
 import {Filters} from "../../models/filters.model";
 import {Settings} from "../../models/settings.model";
 import {AlertController, LoadingController} from "ionic-angular";
-import {Mutex, MutexInterface} from 'async-mutex';
-import {GpsProvider} from "../gps/gps";
+// import {Mutex, MutexInterface} from 'async-mutex';
 // import {GpsProvider} from "../gps/gps";
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 
 /*
   Generated class for the UserProvider provider.
@@ -22,7 +23,8 @@ export class UserProvider {
   alreadyEnteredToSearchFriendsPage = false;
 
   // firedata1 = firebase.database().ref('/users/uid');
-  constructor(public afirauth: AngularFireAuth, public loadingCtrl: LoadingController, public gpsProvider: GpsProvider) {
+  constructor(public afirauth: AngularFireAuth,
+              public loadingCtrl: LoadingController, private geolocation: Geolocation) {
     console.log('Hello UserProvider Provider');
 
   }
@@ -208,7 +210,7 @@ export class UserProvider {
       const resSettingsOfUser = await this.getusersdetails("settings");
       if (!resSettingsOfUser) {
         //error
-        return;
+        return result;
       }
       // @ts-ignore
       settingsFromUser = resSettingsOfUser;
@@ -225,7 +227,7 @@ export class UserProvider {
         }
         const resDistance = await this.checkDistance(+settingsFromUser.latLocation, +settingsFromUser.longLocation, +details.maxDist);
         if (!resDistance) {
-          return false;
+          continue;
         }
         const gender = this.createGender(details);
         let currentYear = (new Date()).getFullYear();
@@ -297,15 +299,18 @@ export class UserProvider {
       if (!resUserDetails) {
         return users;
       }
-      if (!firebase.auth().currentUser.uid) {
-        return;
-      }
+      // if (!firebase.auth().currentUser.uid) {
+      //   return;
+      // }
       // @ts-ignore
       return users.filter(async (user) => {
         if (user.uid === firebase.auth().currentUser.uid) {
           return false;
         }
         let details = user.settings;
+        if (!details){//user don't have settings
+          return false;//error
+        }
         const filtersFromUser = this.createFilters(resUserDetails);
         const resDistance = await this.checkDistance(+details.latLocation, +details.longLocation, +filtersFromUser.maxDist);
         if (!resDistance) {
@@ -326,30 +331,30 @@ export class UserProvider {
     }
   }
 
-  // async getPosition() {
-  //     console.log("shula 1");
-  //     // const coords = await this.gpsProvider.checkGPSPermission();
-  //     // debugger;
-  //     // return coords;
-  //     return new Promise((resolve, reject) => {
-  //
-  //       navigator.geolocation.getCurrentPosition( resp => {
-  //           resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
-  //         },
-  //         err => {
-  //           console.log("the error in getPosition is " + err.message);
-  //         }, { timeout: 10000 });
-  //     });
-  // }
+
   getPosition(): Promise<any>
   {
     return new Promise((resolve, reject) => {
-
       navigator.geolocation.getCurrentPosition( resp => {
           resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
         },
         err => {
-          console.log("the error in getPosition is " + JSON.stringify(err));
+          switch(err.code)
+          {
+            case err.POSITION_UNAVAILABLE:
+              console.log("Location information is not available.");
+              break;
+            case err.PERMISSION_DENIED:
+              console.log("Permission to share location information has been denied!");
+              break;
+            case err.TIMEOUT:
+              console.log("The request to get user location has aborted as it has taken too long.");
+              break;
+            default:
+              console.log("An unknown error occurred.");
+          }
+          console.log("the error in getPosition is " + err);
+          resolve({lng: 0, lat: 0});
         }, { timeout: 10000 });
     });
 
@@ -367,7 +372,6 @@ export class UserProvider {
         longLocation: coords.lng,
       }).then(() => {
         return true;
-
       }).catch((err) => {
         alert(err);
       })
@@ -441,15 +445,15 @@ export class UserProvider {
   // getAllFCMtokens(){
   //
   // }
-  getMyFCMToken(){
-    return new Promise((resolve, reject)  => {
-      this.firedata.child(firebase.auth().currentUser.uid).child("fcmToken").once('value', (snapshot) => {
-        resolve(snapshot.val());
-      }).catch((err) => {
-        reject(err);
-      });
-    });
-
-  }
+  // getMyFCMToken(){
+  //   return new Promise((resolve, reject)  => {
+  //     this.firedata.child(firebase.auth().currentUser.uid).child("fcmToken").once('value', (snapshot) => {
+  //       resolve(snapshot.val());
+  //     }).catch((err) => {
+  //       reject(err);
+  //     });
+  //   });
+  //
+  // }
 
 }

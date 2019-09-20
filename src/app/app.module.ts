@@ -46,10 +46,10 @@ import { FCM } from '@ionic-native/fcm';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 
 // import { AndroidPermissions } from '@ionic-native/android-permission/ngx';
-import {AndroidPermissions} from "@ionic-native/android-permissions";
+// import {AndroidPermissions} from "@ionic-native/android-permissions";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
-import { GpsProvider } from '../providers/gps/gps';
+// import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+// import { GpsProvider } from '../providers/gps/gps';
 
 var options = {
   enableHighAccuracy: true,
@@ -140,10 +140,10 @@ var config = {
     LikesProvider,
     ContentProvider,
 
-    Geolocation,
-    LocationAccuracy,
+   Geolocation,
+    //LocationAccuracy,
     // AndroidPermissions,
-    GpsProvider,
+    // GpsProvider,
   ]
 })
 export class AppModule {}

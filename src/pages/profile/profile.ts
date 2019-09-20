@@ -32,16 +32,11 @@ export class ProfilePage {
               public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController,
               public fcm:FCM, public loadingCtrl: LoadingController) {
 
-
-    console.log('constructor ProfilePage');
     this.plt.ready()
       .then(() => {
-        console.log('plt.ready ProfilePage');
         if (this.plt.is('cordova')) {
-          console.log('plt.is ProfilePage');
           this.subscribeToTopic();
           this.fcm.getToken().then(token => {
-            console.log('fcm.getToken ProfilePage');
             this.saveToken(token);
           }).catch((err) => {
             alert(err);
@@ -49,7 +44,6 @@ export class ProfilePage {
           this.fcm.onNotification().subscribe(data => {
             if (data.wasTapped) {
               console.log("Received in background");
-
             } else {
               console.log("Received in foreground");
             }
@@ -88,27 +82,24 @@ export class ProfilePage {
       this.loaduserdetails();
   }
 
-  getPosition(): Promise<any>
-  {
-    return new Promise((resolve, reject) => {
-
-      navigator.geolocation.getCurrentPosition(resp => {
-
-          resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
-        },
-        err => {
-          reject(err);
-        });
-    });
-  }
+  // getPosition(): Promise<any>
+  // {
+  //   return new Promise((resolve, reject) => {
+  //
+  //     navigator.geolocation.getCurrentPosition(resp => {
+  //
+  //         resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
+  //       },
+  //       err => {
+  //         reject(err);
+  //       });
+  //   });
+  // }
 
   loaduserdetails(){
-    console.log('loaduserdetails ProfilePage');
     this.userservice.getusersdetails(null).then((res: any)=>{
-      console.log('getusersdetails ProfilePage');
       this.displayName = res.displayName;
       this.zone.run(()=>{
-        console.log('zone ProfilePage');
         this.avatar = res.photoURL;
       })
     })
