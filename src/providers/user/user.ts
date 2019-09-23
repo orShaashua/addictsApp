@@ -22,10 +22,11 @@ export class UserProvider {
   alreadyEnteredToSearchFriendsPage = false;
 
   // firedata1 = firebase.database().ref('/users/uid');
-  constructor(public afirauth: AngularFireAuth, public loadingCtrl: LoadingController, public gpsProvider: GpsProvider) {
+  constructor(public afirauth: AngularFireAuth, public loadingCtrl: LoadingController) {
     console.log('Hello UserProvider Provider');
 
   }
+
   // public coords: any = {
   //   latitude: "",
   //   longitude: ""
@@ -208,7 +209,7 @@ export class UserProvider {
       const resSettingsOfUser = await this.getusersdetails("settings");
       if (!resSettingsOfUser) {
         //error
-        return;
+        return result;
       }
       // @ts-ignore
       settingsFromUser = resSettingsOfUser;
@@ -225,7 +226,7 @@ export class UserProvider {
         }
         const resDistance = await this.checkDistance(+settingsFromUser.latLocation, +settingsFromUser.longLocation, +details.maxDist);
         if (!resDistance) {
-          return false;
+          continue;
         }
         const gender = this.createGender(details);
         let currentYear = (new Date()).getFullYear();
@@ -300,60 +301,74 @@ export class UserProvider {
       if (!firebase.auth().currentUser.uid) {
         return;
       }
-      // @ts-ignore
-      return users.filter(async (user) => {
-        if (user.uid === firebase.auth().currentUser.uid) {
-          return false;
-        }
-        let details = user.settings;
-        const filtersFromUser = this.createFilters(resUserDetails);
-        const resDistance = await this.checkDistance(+details.latLocation, +details.longLocation, +filtersFromUser.maxDist);
-        if (!resDistance) {
-          return false;
-        }
-        console.log("the answer is flag = " + resDistance.toString());
-        const currentYear = (new Date()).getFullYear();
-        const gender = this.createGender(filtersFromUser);
-        if (details.addictsType == filtersFromUser.addictsType
-          && (details.gender == gender || gender == "both")
-          && (currentYear - details.bdayYear >= filtersFromUser.ageRangeLower)
-          && (currentYear - details.bdayYear <= filtersFromUser.ageRangeUpper)) {
-          return true;
-        }
-      });
+      //the result
+      let result: any;
+      result = await this.findUsersMatchedToMyFilter(users, resUserDetails);
+      debugger;
+      return result;
     } catch (err) {
       console.log(err)
     }
   }
 
-  // async getPosition() {
-  //     console.log("shula 1");
-  //     // const coords = await this.gpsProvider.checkGPSPermission();
-  //     // debugger;
-  //     // return coords;
-  //     return new Promise((resolve, reject) => {
-  //
-  //       navigator.geolocation.getCurrentPosition( resp => {
-  //           resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
-  //         },
-  //         err => {
-  //           console.log("the error in getPosition is " + err.message);
-  //         }, { timeout: 10000 });
-  //     });
-  // }
-  getPosition(): Promise<any>
-  {
+  async findUsersMatchedToMyFilter(users, resUserDetails) {
+    let result = [];
+    for (let user in users) {
+      if (users[user].uid === firebase.auth().currentUser.uid) {
+        //don't add myself
+        continue;
+      }
+      let settingsOfOther = users[user]["settings"];
+      if (!settingsOfOther) {
+        continue;
+      }
+      const myFilter = this.createFilters(resUserDetails);
+      const resDistance = await this.checkDistance(+settingsOfOther.latLocation, +settingsOfOther.longLocation, +myFilter.maxDist);
+      if (!resDistance) {
+        continue;
+      }
+      console.log("the answer is flag = " + resDistance.toString());
+      const currentYear = (new Date()).getFullYear();
+      const gender = this.createGender(myFilter);
+      if (settingsOfOther.addictsType == myFilter.addictsType
+        && (settingsOfOther.gender == gender || gender == "both")
+        && (currentYear - settingsOfOther.bdayYear >= myFilter.ageRangeLower)
+        && (currentYear - settingsOfOther.bdayYear <= myFilter.ageRangeUpper)) {
+        result.push(users[user]);
+      }
+    }
+    return result;
+  }
+
+
+  getPosition(): Promise<any> {
     return new Promise((resolve, reject) => {
 
-      navigator.geolocation.getCurrentPosition( resp => {
+      navigator.geolocation.getCurrentPosition(resp => {
           resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
         },
         err => {
-          console.log("the error in getPosition is " + JSON.stringify(err));
-        }, { timeout: 10000 });
+          switch (err.code) {
+            case err.POSITION_UNAVAILABLE:
+              console.log("Location information is not available.");
+              break;
+            case err.PERMISSION_DENIED:
+              console.log("Permission to share location information has been denied!");
+              break;
+            case err.TIMEOUT:
+              console.log("The request to get user location has aborted as it has taken too long.");
+              break;
+            default:
+              console.log("An unknown error occurred.");
+          }
+          console.log("the error in getPosition is " + err);
+          resolve({lng: 0, lat: 0});
+        }, {maximumAge: 60000, timeout: 10000, enableHighAccuracy: true});
     });
 
+
   }
+
   //update location every time the user goes into the app
   async updateLocation() {
     try {
@@ -438,18 +453,5 @@ export class UserProvider {
     });
   }
 
-  // getAllFCMtokens(){
-  //
-  // }
-  getMyFCMToken(){
-    return new Promise((resolve, reject)  => {
-      this.firedata.child(firebase.auth().currentUser.uid).child("fcmToken").once('value', (snapshot) => {
-        resolve(snapshot.val());
-      }).catch((err) => {
-        reject(err);
-      });
-    });
-
-  }
 
 }
