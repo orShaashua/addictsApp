@@ -79,6 +79,10 @@ export class SettingsPage {
     // };
     console.log('hi done 1');
     try {
+      let loader = this.loadingCtrl.create({
+        content: 'אנא המתן'
+      });
+      loader.present();
       const pos = await this.userservice.getPosition();
       // debugger;
       lng = pos.lng;
@@ -94,11 +98,6 @@ export class SettingsPage {
       this.settingsFromUser.about = this.about.value;
       this.settingsFromUser.longLocation = lng;
       this.settingsFromUser.latLocation = lat;
-
-      let loader = this.loadingCtrl.create({
-        content: 'אנא המתן'
-      });
-      loader.present();
       this.userservice.addsettingstouser(this.settingsFromUser).then((res: any) => {
 
         loader.dismiss();
