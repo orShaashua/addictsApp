@@ -214,6 +214,7 @@ export class UserProvider {
       // @ts-ignore
       settingsFromUser = resSettingsOfUser;
       const users = await this.getUsersMatchedToMyFilter();
+
       for (let user in users) {
         if (users[user].uid === firebase.auth().currentUser.uid) {
           //don't add myself
@@ -246,6 +247,7 @@ export class UserProvider {
 //taken from https://www.html5rocks.com/en/tutorials/geolocation/trip_meter/
   async checkDistance(otherLatLocation, otherLongLocation, maxDist) {
     // return new Promise((resolve, reject) => {
+    // debugger;
     let settingsFromUser = new Settings();
     try {
       const resSettingOfUser = await this.getusersdetails("settings");
@@ -269,6 +271,7 @@ export class UserProvider {
       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       var distance = R * c;
       console.log("the distance is " + distance);
+      // debugger;
       return distance <= maxDist;
     } catch (err) {
       console.log(err);
@@ -304,7 +307,6 @@ export class UserProvider {
       //the result
       let result: any;
       result = await this.findUsersMatchedToMyFilter(users, resUserDetails);
-      debugger;
       return result;
     } catch (err) {
       console.log(err)
@@ -314,6 +316,7 @@ export class UserProvider {
   async findUsersMatchedToMyFilter(users, resUserDetails) {
     let result = [];
     for (let user in users) {
+      console.log("now the user is = " + users[user].displayName);
       if (users[user].uid === firebase.auth().currentUser.uid) {
         //don't add myself
         continue;
