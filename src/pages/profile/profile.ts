@@ -35,7 +35,7 @@ export class ProfilePage {
     this.plt.ready()
       .then(() => {
         if (this.plt.is('cordova')) {
-          this.subscribeToTopic();
+          // this.subscribeToTopic();
           this.fcm.getToken().then(token => {
             this.saveToken(token);
           }).catch((err) => {
@@ -57,7 +57,7 @@ export class ProfilePage {
           this.fcm.onTokenRefresh().subscribe(token => {
             this.saveToken(token);
           });
-          this.unsubscribeFromTopic();
+          // this.unsubscribeFromTopic();
         }
       })
   }
