@@ -4,7 +4,7 @@ import { MatchPage } from './match';
 
 @NgModule({
   declarations: [
-    MatchPage,
+    // MatchPage,
   ],
   imports: [
     IonicPageModule.forChild(MatchPage),

@@ -1,3 +1,4 @@
+// import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {usercreds} from "../../models/interfaces/usercreds";
@@ -14,7 +15,7 @@ export class AuthProvider {
       this.afireauth.auth.signInWithEmailAndPassword(credentials.email, credentials.password).then(() => {
         resolve(true);
       }).catch((err) => {
-        alert(err);
+        // reject(err);
         console.log('error is ', err);
       })
     });
