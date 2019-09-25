@@ -6,17 +6,10 @@ import {Events, ModalController} from "ionic-angular";
 import {UserProvider} from "../user/user";
 import {AngularFireFunctions} from "@angular/fire/functions";
 
-/*
-  Generated class for the LikesProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class LikesProvider {
   firereq = firebase.database().ref('/likes');
-  latestMatch;
-
 
   constructor(public events: Events, public userservice: UserProvider, private fns: AngularFireFunctions) {
     console.log('Hello LikesProvider Provider');
@@ -27,7 +20,6 @@ export class LikesProvider {
       this.firereq.child(req.recipient).push({
         sender: req.sender,
       }).then(() => {
-        // this.mywishfriendslist.push(req.recipient);
         resolve({success: true});///send sms to req.recipient
       }).catch((err) => {
         resolve(err);

@@ -8,12 +8,6 @@ import {createViewChild} from "@angular/compiler/src/core";
 import {Filters} from "../../models/filters.model";
 import {Settings} from "../../models/settings.model";
 
-/**
- * Generated class for the FilterPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -32,8 +26,7 @@ export class FilterPage {
     lower:25
   };
 
-  // filters: any = {
-  // };
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public userservice: UserProvider) {
   }
@@ -50,17 +43,12 @@ export class FilterPage {
     this.filtersFromUser.ageRangeLower = this.ageRange.lower;
     this.filtersFromUser.ageRangeUpper = this.ageRange.upper;
     this.filtersFromUser.meetingType = this.meetingType.value;
-    // localStorage.setItem('filters', JSON.stringify(this.filtersFromUser));
     this.userservice.addFiltersToUser(this.filtersFromUser).then((res: any) => {
-      // loader.dismiss();
       if(res.success){
-        // this.navCtrl.setRoot(TabsPage);
       } else {
-        // loader.dismissAll();
         alert('error : ' + res);
       }
     });
-    // this.serviceFilter.setFilters(this.filtersFromUser);
     this.navCtrl.pop();
   }
 

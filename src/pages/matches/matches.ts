@@ -5,12 +5,7 @@ import {RequestsProvider} from "../../providers/requests/requests";
 import {connreq} from '../../models/interfaces/request';
 import firebase from 'firebase';
 import {LikesProvider} from "../../providers/likes/likes";
-/**
- * Generated class for the MatchesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 @IonicPage()
 @Component({

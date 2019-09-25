@@ -1,14 +1,7 @@
 page-profil {
 
   .button-settings{
-    //display:flex;
-    //flex-direction: row-reverse;
-    //background-color: darkslateblue;
-    //justify-content: flex-end;
     text-align:right;
-
-    //flex-flow: column;
-    //align-content: flex-end;
   }
 
   .button-filter{
@@ -44,9 +37,6 @@ page-profil {
     height: 80px;
     width: 90px;
     padding: 10px 24px;
-    //text-align: center;
-    //justify-content: center;
-
     border: 4px solid rgba(255,255,255,0.4);
   }
 
@@ -60,22 +50,13 @@ page-profil {
   }
 
 
-
-
   .button-nav{
     width: 420px;
     height: 100px ;
     padding: 10px 24px;
-    //margin: 10px;
     display: block;
-    //flex-direction: row;
-    //justify-content: center;
     text-align:center;
-    //flex-flow: row;
-    //align-content: center;
     margin: auto;
-    //margin-left: 10px;
-    //margin-right:5px;
   }
   .masters {
     background: #5eb299;

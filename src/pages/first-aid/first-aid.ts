@@ -4,12 +4,6 @@ import {MatchPage} from "../match/match";
 import firebase from "firebase";
 import {HelpInformationPage} from "../help-information/help-information";
 
-/**
- * Generated class for the FirstAidPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({

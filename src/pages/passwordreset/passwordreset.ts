@@ -3,12 +3,6 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import {UserProvider} from "../../providers/user/user";
 import {LoginPage} from "../login/login";
 
-/**
- * Generated class for the PasswordresetPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({

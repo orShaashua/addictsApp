@@ -3,12 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {UserProvider} from "../../providers/user/user";
 import { AngularFireFunctions } from '@angular/fire/functions'
 
-/**
- * Generated class for the DistressButtonePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -21,15 +15,11 @@ export class DistressButtonePage {
   constructor(private fns: AngularFireFunctions,
               public navCtrl: NavController, public navParams: NavParams, private userservice : UserProvider ) {
   }
-  // let options: NativeGeocoderOptions = {
-  //   useLocale: true,
-  //   maxResults: 5
-  // };
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad DistressButtonePage');
   }
   sendHelpMessage(){
-
     var address = "אוניברסיטת בר אילן, רמת גן";
     var addMessage = this.fns.httpsCallable('sendHelpMessage');
     addMessage({text: address}).toPromise()

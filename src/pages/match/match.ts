@@ -38,11 +38,8 @@ export class MatchPage {
   sendFriendsRequest(){
     this.newrrequest.sender = firebase.auth().currentUser.uid;
     this.newrrequest.recipient = this.recipient.uid;
-    // if(this.newrrequest.sender == this.newrrequest.recipient){
-    //   alert("You are friends always");
-    // }else {
     let successalert = this.alertCtrl.create({
-      title: 'Request send',
+      title: 'Request sent',
       subTitle: 'Your request was sent to ' + this.recipient.displayName,
       buttons: ['ok']
     });

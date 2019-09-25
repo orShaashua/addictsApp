@@ -12,13 +12,6 @@ import { FCM } from '@ionic-native/fcm';
 
 
 
-/**
- * Generated class for the ProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-profil',
@@ -82,19 +75,6 @@ export class ProfilePage {
       this.loaduserdetails();
   }
 
-  // getPosition(): Promise<any>
-  // {
-  //   return new Promise((resolve, reject) => {
-  //
-  //     navigator.geolocation.getCurrentPosition(resp => {
-  //
-  //         resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
-  //       },
-  //       err => {
-  //         reject(err);
-  //       });
-  //   });
-  // }
 
   loaduserdetails(){
     this.userservice.getusersdetails(null).then((res: any)=>{
