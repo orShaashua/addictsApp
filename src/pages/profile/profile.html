@@ -13,9 +13,9 @@
     <ion-title >Profile</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content>
+<ion-content class="masters">
   <div class="fixed-content">
-    <div class="masters">
+    <div >
       <div class="profile-image" (click) ="editimage()" text-center>
         <img src="{{avatar}}">
       </div>
@@ -29,12 +29,7 @@
           <button class="button5" ion-button round color="secondary" (click)="goToSearchFriends()">חפש חברים</button>
         </div>
       </div>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+
   </div>
     <ion-footer>
       <button ion-button round outline color="danger" (click)="logout()">התנתק</button>

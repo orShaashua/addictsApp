@@ -214,27 +214,31 @@ export class UserProvider {
       // @ts-ignore
       settingsFromUser = resSettingsOfUser;
       const users = await this.getUsersMatchedToMyFilter();
-
       for (let user in users) {
+        // console.log("now the user is = " + users[user].displayName);
+
         if (users[user].uid === firebase.auth().currentUser.uid) {
           //don't add myself
           continue;
         }
-        let details = users[user]["filters"];
-        if (!details) {
+
+        let otherFilter = users[user]["filters"];
+        if (!otherFilter) {
           result.push(users[user]);
           continue;
         }
-        const resDistance = await this.checkDistance(+settingsFromUser.latLocation, +settingsFromUser.longLocation, +details.maxDist);
+        let otherSettings = users[user]["settings"];
+
+        const resDistance = await this.checkDistance(+otherSettings.latLocation, +otherSettings.longLocation, +otherFilter.maxDist);
         if (!resDistance) {
           continue;
         }
-        const gender = this.createGender(details);
+        const gender = this.createGender(otherFilter);
         let currentYear = (new Date()).getFullYear();
-        if (settingsFromUser.addictsType == details.addictsType
+        if (settingsFromUser.addictsType == otherFilter.addictsType
           && (settingsFromUser.gender == gender || gender == "both")
-          && (currentYear - settingsFromUser.bdayYear >= details.ageRangeLower
-            && currentYear - settingsFromUser.bdayYear <= details.ageRangeUpper)) {
+          && (currentYear - settingsFromUser.bdayYear >= otherFilter.ageRangeLower
+            && currentYear - settingsFromUser.bdayYear <= otherFilter.ageRangeUpper)) {
           result.push(users[user]);
         }
       }
@@ -271,7 +275,7 @@ export class UserProvider {
       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       var distance = R * c;
       console.log("the distance is " + distance);
-      // debugger;
+      debugger;
       return distance <= maxDist;
     } catch (err) {
       console.log(err);
@@ -297,7 +301,6 @@ export class UserProvider {
     try {
       const resUserDetails = await this.getusersdetails("filters");
       const users = await this.getallusers();
-      console.log("the users are = " + users);
       if (!resUserDetails) {
         return users;
       }
@@ -316,7 +319,7 @@ export class UserProvider {
   async findUsersMatchedToMyFilter(users, resUserDetails) {
     let result = [];
     for (let user in users) {
-      console.log("now the user is = " + users[user].displayName);
+      // console.log("now the user is = " + users[user].displayName);
       if (users[user].uid === firebase.auth().currentUser.uid) {
         //don't add myself
         continue;
