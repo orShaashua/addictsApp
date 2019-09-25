@@ -4,12 +4,6 @@ import { ProfilePage} from "../profile/profile";
 import {UserProvider} from "../../providers/user/user";
 import {TabsPage} from "../tabs/tabs";
 
-/**
- * Generated class for the ChooseAvatarPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @Component({
   selector: 'page-choose-avatar',

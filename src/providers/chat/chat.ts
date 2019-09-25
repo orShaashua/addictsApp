@@ -2,12 +2,7 @@ import { Injectable } from '@angular/core';
 import firebase from 'firebase';
 import {Events} from "ionic-angular";
 
-/*
-  Generated class for the ChatProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class ChatProvider {
   firebuddychats = firebase.database().ref('buddychats')
@@ -44,7 +39,6 @@ export class ChatProvider {
 
 
   getbuddymessages(){
-
     let temp;
     this.firebuddychats.child(firebase.auth().currentUser.uid).child(this.buddy.uid).on('value', (snapshot)=>{
       this.buddymessages = [];
@@ -55,6 +49,5 @@ export class ChatProvider {
       this.events.publish('newmessage');
     })
   }
-
 
 }

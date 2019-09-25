@@ -8,12 +8,6 @@ import {TabsPage} from "../tabs/tabs";
 import {PasswordresetPage} from "../passwordreset/passwordreset";
 import {UserProvider} from "../../providers/user/user";
 
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -26,8 +20,6 @@ export class LoginPage {
   showPassword = false; //show red alerts and text for password box
   credentials = {} as usercreds;
 
-  // showUserName = false; //show red alerts and text for username box
-  // showPassword = false; //show red alerts and text for password box
   private opt: string = 'signin';
   constructor(public navCtrl: NavController, public alertCtrl: AlertController,
               public authservice: AuthProvider,
@@ -41,16 +33,6 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  // input1func() {
-  //   this.showUserName = false;
-  //   this.showPassword = false;
-  // }
-  //
-  // input2func() {
-  //   this.showPassword = false;
-  //   this.showUserName = false;
-  // }
-
 
   alert(message: string) {
     this.alertCtrl.create({
@@ -60,7 +42,6 @@ export class LoginPage {
     }).present();
   }
 
-  //
   signIn() {
     console.log('signIn LoginPage');
     if ((this.credentials.email.length == 0)) {

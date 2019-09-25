@@ -4,12 +4,6 @@ import {RequestsProvider} from "../../providers/requests/requests";
 import {ChatProvider} from "../../providers/chat/chat";
 import {ChatPage} from "../chat/chat";
 
-/**
- * Generated class for the ChatsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({

@@ -1,9 +1,4 @@
-<!--
-  Generated template for the LoginPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar color="hcolor">
     <ion-title>Login</ion-title>
@@ -24,15 +19,8 @@
       </ion-segment-button>
     </ion-segment>
   </div>
-
-    <!--<ion-item [ngClass]="{'red-border':showUserName, 'black-border':!showUserName}">-->
     <ion-input type="email" [(ngModel)] = "credentials.email" placeholder="אימייל" ></ion-input>
-    <!--</ion-item>-->
-
-    <!--<ion-item [ngClass]="{'red-border':showPassword, 'black-border':!showPassword}">-->
-
     <ion-input type="password"  [(ngModel)] = "credentials.password" placeholder="סיסמא"></ion-input>
-    <!--</ion-item>-->
     <div class = "wrapper" >
       <a (click)="passwordreset()"><ion-label>?שכחת סיסמא</ion-label></a>
       <br>
@@ -40,42 +28,4 @@
       <button ion-button round color="light" (click) = "signIn()" icon-right>התחבר<ion-icon name="log-in"></ion-icon>
       </button>
     </div>
-
-
-  <!--<ion-card>-->
-    <!--<ion-card-header>-->
-          <!--התחברות-->
-      <!--</ion-card-header>-->
-    <!--<ion-card-content>-->
-  <!--<ion-list no-lines>-->
-    <!--<ion-item [ngClass]="{'red-border':showUserName, 'black-border':!showUserName}">-->
-      <!--<ion-input type="email" (click) = "input1func()" [(ngModel)] = "credentials.email" placeholder="אימייל" ></ion-input>-->
-    <!--</ion-item>-->
-
-    <!--<ion-item [ngClass]="{'red-border':showPassword, 'black-border':!showPassword}">-->
-
-      <!--<ion-input type="password" (click) = "input2func()" [(ngModel)] = "credentials.password" placeholder="סיסמא"></ion-input>-->
-    <!--</ion-item>-->
-    <!--<div class = "spacer" style="height: 10px;"></div>-->
-    <!--<a (click)="passwordreset()">?שכחת סיסמא</a>-->
-    <!--<br>-->
-
-    <!--<button ion-button full color="primary" (click) = "signIn()">התחבר</button>-->
-    <!--<button ion-button full (click) = "register()">הירשם</button>-->
-
-  <!--</ion-list>-->
-      <!--</ion-card-content>-->
-  <!--</ion-card>-->
-
-
-
-
-  <!--<div *ngIf="showUserName == true || showPassword == true">-->
-
-    <!--<div>-->
-      <!--<ion-icon name="alert" color="danger"></ion-icon>-->
-      <!--<b>לא הזנת את כל הפרטים</b>-->
-    <!--</div>-->
-
-  <!--</div>-->
 </ion-content>

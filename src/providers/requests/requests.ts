@@ -5,12 +5,6 @@ import firebase from 'firebase';
 import {UserProvider} from '../user/user';
 
 
-/*
-  Generated class for the RequestsProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class RequestsProvider {
   firereq = firebase.database().ref('/requests');
@@ -152,7 +146,6 @@ export class RequestsProvider {
             }
           }
           resolve(this.myfriends);
-          // this.events.publish('friends');
         })
       }).catch((err)=>{
         alert(err);

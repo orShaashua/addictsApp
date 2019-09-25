@@ -7,12 +7,6 @@ import firebase from "firebase";
 import {connreq} from "../../models/interfaces/request";
 import {MatchPage} from "../match/match";
 
-/**
- * Generated class for the SearchFriendsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -35,16 +29,13 @@ export class SearchFriendsPage {
     }
   };
 
-
   constructor(private sanitizer: DomSanitizer, public userservice: UserProvider,
               public navParams: NavParams, public loadingCtrl: LoadingController, public modalCtrl: ModalController,
               public likesService: LikesProvider, public events: Events) {
   }
 
   ionViewDidLoad() {
-
   }
-
 
   ionViewWillEnter() {
     let currentYear = (new Date()).getFullYear();

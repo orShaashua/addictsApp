@@ -4,38 +4,21 @@ import firebase from 'firebase';
 import {Filters} from "../../models/filters.model";
 import {Settings} from "../../models/settings.model";
 import {AlertController, LoadingController} from "ionic-angular";
-import {Mutex, MutexInterface} from 'async-mutex';
-// import {GpsProvider} from "../gps/gps";
 
-/*
-  Generated class for the UserProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class UserProvider {
 
 
   firedata = firebase.database().ref('/users');
-  alreadyEnteredToSearchFriendsPage = false;
-
-  // firedata1 = firebase.database().ref('/users/uid');
   constructor(public afirauth: AngularFireAuth, public loadingCtrl: LoadingController) {
     console.log('Hello UserProvider Provider');
 
   }
 
-  // public coords: any = {
-  //   latitude: "",
-  //   longitude: ""
-  // };
-
-
   addsettingstouser(settings) {
     return new Promise((resolve, reject) => {
       this.afirauth.auth.currentUser.updateProfile({}).then(() => {
-        // this.firedata.child("settings")
         this.firedata.child(this.afirauth.auth.currentUser.uid).child("settings").set({
           addictsType: settings.addictsType,
           gender: settings.gender,
@@ -51,11 +34,9 @@ export class UserProvider {
           resolve({success: true});
         }).catch((err) => {
           alert(err);
-          // reject(err);
         })
       }).catch((err) => {
         alert(err);
-        // reject(err);
       })
     });
   }
@@ -63,14 +44,8 @@ export class UserProvider {
   addFiltersToUser(filters) {
     return new Promise((resolve, reject) => {
       this.afirauth.auth.currentUser.updateProfile({
-        // displayName: this.afirauth.auth.currentUser.displayName,
-        // photoURL: this.afirauth.auth.currentUser.photoURL
-
       }).then(() => {
         this.firedata.child(this.afirauth.auth.currentUser.uid).child("filters").set({
-          // displayName: this.afirauth.auth.currentUser.displayName,
-          // photoURL: this.afirauth.auth.currentUser.photoURL,
-          // uid: this.afirauth.auth.currentUser.uid,
           addictsType: filters.addictsType,
           maxDist: filters.maxDist,
           female: filters.female,
@@ -82,11 +57,9 @@ export class UserProvider {
           resolve({success: true});
         }).catch((err) => {
           alert(err);
-          // reject(err);
         })
       }).catch((err) => {
         alert(err);
-        // reject(err);
       })
     });
   }
@@ -108,24 +81,20 @@ export class UserProvider {
             alert(err);
             setTimeout(() => {
             }, 0);
-            // reject(err);
           })
         }).catch((err) => {
           alert(err);
           setTimeout(() => {
             loader.dismiss();
           }, 0);
-          // reject(err);
         })
       }).catch((err) => {
         alert(err);
         setTimeout(() => {
           loader.dismiss();
         }, 0);
-        // reject(err);
       })
     });
-    // return promise;
   }
 
   passwordreset(email) {
@@ -134,7 +103,6 @@ export class UserProvider {
         resolve({success: true});
       }).catch((err) => {
         alert(err);
-        // reject(err);
       })
     })
   }
@@ -158,7 +126,6 @@ export class UserProvider {
 
   getusersdetails(node) {
     //accessing the particular user based on uid from the user collection and returning it back to the calling function
-    // this.afirauth.auth.currentUser
     if (node == null) {
       return new Promise((resolve, reject) => {
         try {
@@ -184,7 +151,6 @@ export class UserProvider {
             });
           }
         } catch (err) {
-          // reject(err);
         }
       })
     }
@@ -212,27 +178,30 @@ export class UserProvider {
       }
       settingsFromUser = resSettingsOfUser;
       const users = await this.getUsersMatchedToMyFilter();
-
       for (let user in users) {
+
         if (users[user].uid === firebase.auth().currentUser.uid) {
           //don't add myself
           continue;
         }
-        let details = users[user]["filters"];
-        if (!details) {
+
+        let otherFilter = users[user]["filters"];
+        if (!otherFilter) {
           result.push(users[user]);
           continue;
         }
-        const resDistance = await this.checkDistance(+settingsFromUser.latLocation, +settingsFromUser.longLocation, +details.maxDist);
+        let otherSettings = users[user]["settings"];
+
+        const resDistance = await this.checkDistance(+otherSettings.latLocation, +otherSettings.longLocation, +otherFilter.maxDist);
         if (!resDistance) {
           continue;
         }
-        const gender = this.createGender(details);
+        const gender = this.createGender(otherFilter);
         let currentYear = (new Date()).getFullYear();
-        if (settingsFromUser.addictsType == details.addictsType
+        if (settingsFromUser.addictsType == otherFilter.addictsType
           && (settingsFromUser.gender == gender || gender == "both")
-          && (currentYear - settingsFromUser.bdayYear >= details.ageRangeLower
-            && currentYear - settingsFromUser.bdayYear <= details.ageRangeUpper)) {
+          && (currentYear - settingsFromUser.bdayYear >= otherFilter.ageRangeLower
+            && currentYear - settingsFromUser.bdayYear <= otherFilter.ageRangeUpper)) {
           result.push(users[user]);
         }
       }
@@ -244,8 +213,6 @@ export class UserProvider {
 
 //taken from https://www.html5rocks.com/en/tutorials/geolocation/trip_meter/
   async checkDistance(otherLatLocation, otherLongLocation, maxDist) {
-    // return new Promise((resolve, reject) => {
-    // debugger;
     let settingsFromUser = new Settings();
     try {
       const resSettingOfUser = await this.getusersdetails("settings");
@@ -269,7 +236,7 @@ export class UserProvider {
       var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       var distance = R * c;
       console.log("the distance is " + distance);
-      // debugger;
+      debugger;
       return distance <= maxDist;
     } catch (err) {
       console.log(err);
@@ -295,7 +262,6 @@ export class UserProvider {
     try {
       const resUserDetails = await this.getusersdetails("filters");
       const users = await this.getallusers();
-      console.log("the users are = " + users);
       if (!resUserDetails) {
         return users;
       }
@@ -314,7 +280,6 @@ export class UserProvider {
   async findUsersMatchedToMyFilter(users, resUserDetails) {
     let result = [];
     for (let user in users) {
-      console.log("now the user is = " + users[user].displayName);
       if (users[user].uid === firebase.auth().currentUser.uid) {
         //don't add myself
         continue;
@@ -344,7 +309,6 @@ export class UserProvider {
 
   getPosition(): Promise<any> {
     return new Promise((resolve, reject) => {
-
       navigator.geolocation.getCurrentPosition(resp => {
           resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
         },
@@ -366,16 +330,13 @@ export class UserProvider {
         }, {maximumAge: 60000, timeout: 10000, enableHighAccuracy: true});
     });
 
-
   }
 
   //update location every time the user goes into the app
   async updateLocation() {
     try {
-      // this.coords = await this.getPosition();
       const coords = await this.getPosition();
       console.log("update loctaion = " + coords.lat + " hi and " + coords.lng);
-      // alert(coords.lat + " hi and " + coords.lng);
       await this.afirauth.auth.currentUser.updateProfile({});
       this.firedata.child(this.afirauth.auth.currentUser.uid).child('settings').update({
         latLocation: coords.lat,
@@ -437,8 +398,6 @@ export class UserProvider {
   addUserFCMToken(token) {
     return new Promise((resolve) => {
       this.afirauth.auth.currentUser.updateProfile({
-        // displayName: this.afirauth.auth.currentUser.displayName,
-        // photoURL: this.afirauth.auth.currentUser.photoURL
       }).then(() => {
         this.firedata.child(this.afirauth.auth.currentUser.uid).update({
           fcmToken: token,

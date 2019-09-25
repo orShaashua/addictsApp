@@ -2,12 +2,7 @@ import { Injectable } from '@angular/core';
 import firebase from 'firebase';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import {LoadingController} from "ionic-angular";
-/*
-  Generated class for the ImghandlerProvider provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class ImghandlerProvider {
   nativepath: any;

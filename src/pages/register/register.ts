@@ -4,12 +4,6 @@ import {UserProvider} from "../../providers/user/user";
 import {SettingsPage} from "../settings/settings";
 import {LoginPage} from "../login/login";
 
-/**
- * Generated class for the RegisterPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -18,9 +12,6 @@ import {LoginPage} from "../login/login";
 })
 export class RegisterPage {
   public loader;
-  showUserName = false; //show red alerts and text for username box
-  showPassword = false; //show red alerts and text for password box
-  showDisplayName = false;
   newuser = {
     email:'',
     password:'',
@@ -32,12 +23,7 @@ export class RegisterPage {
               public loadingCtrl: LoadingController) {
   }
 
-  // input1func() {
-  //     this.showDisplayName = false;
-  // }
-
   signUp() {
-
     if(this.newuser.displayName == '' || this.newuser.password == '' || this.newuser.email == ''){
       alert("לא כל הפרטים הוזנו")
     } else {
@@ -56,6 +42,7 @@ export class RegisterPage {
     })
     }
   }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
   }
