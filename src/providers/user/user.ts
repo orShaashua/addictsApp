@@ -362,7 +362,6 @@ export class UserProvider {
             default:
               console.log("An unknown error occurred.");
           }
-          console.log("the error in getPosition is " + err);
           resolve({lng: 0, lat: 0});
         }, {maximumAge: 60000, timeout: 10000, enableHighAccuracy: true});
     });

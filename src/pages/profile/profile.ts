@@ -32,53 +32,55 @@ export class ProfilePage {
               public zone: NgZone, public userservice: UserProvider, public alertCtrl: AlertController,
               public fcm:FCM, public loadingCtrl: LoadingController) {
 
+  }
+
+  ionViewDidLoad() {
+    console.log("ionViewDidLoad");
     this.plt.ready()
       .then(() => {
         if (this.plt.is('cordova')) {
           // this.subscribeToTopic();
           this.fcm.getToken().then(token => {
             this.saveToken(token);
-          }).catch((err) => {
-            alert(err);
-          });
-          this.fcm.onNotification().subscribe(data => {
-            if (data.wasTapped) {
-              console.log("Received in background");
-            } else {
-              console.log("Received in foreground");
-            }
-            let alert = this.alertCtrl.create({
-              title: data.title,
-              subTitle: data.body,
-              buttons: ['ok']
+            this.fcm.onNotification().subscribe(data => {
+              if (data.wasTapped) {
+                console.log("Received in background");
+              } else {
+                console.log("Received in foreground");
+              }
+              let alert = this.alertCtrl.create({
+                title: data.title,
+                subTitle: data.body,
+                buttons: ['ok']
+              });
+              alert.present();
             });
-            alert.present();
+            this.fcm.onTokenRefresh().subscribe(token => {
+              this.saveToken(token);
+            });
+          }).catch((err) => {
           });
-          this.fcm.onTokenRefresh().subscribe(token => {
-            this.saveToken(token);
-          });
+
           // this.unsubscribeFromTopic();
         }
       })
   }
-
   subscribeToTopic() {
     this.fcm.subscribeToTopic('enappd');
   }
   saveToken(token) {
       this.userservice.addUserFCMToken(token).then((res: any)=>{
         if(!res.success) {
-          alert("failed to add user token to firebase");
+          console.log("failed to add user token to firebase");
         }
       });
   }
-
   unsubscribeFromTopic() {
     this.fcm.unsubscribeFromTopic('enappd');
   }
 
   ionViewDidEnter() {
-      console.log('ionViewDidLoad ProfilePage');
+      console.log('ionViewDidEnter ProfilePage');
       this.loaduserdetails();
   }
 

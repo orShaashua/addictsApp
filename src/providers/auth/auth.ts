@@ -21,7 +21,6 @@ export class AuthProvider {
         resolve(true);
       }).catch((err) => {
         // reject(err);
-        alert(err);
         console.log('error is ', err);
       })
     });
