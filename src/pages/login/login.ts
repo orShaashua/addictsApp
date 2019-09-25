@@ -90,10 +90,11 @@ export class LoginPage {
   }
 
   refreshPage(){
-    if (this.opt ==='signin'){
-      this.navCtrl.push(LoginPage);
-    }else if (this.opt ==='signup'){
-      this.navCtrl.push(RegisterPage);
+    // if (this.opt ==='signin'){
+    //   this.navCtrl.push(LoginPage);
+    // }else
+    if (this.opt ==='signup'){
+      this.navCtrl.setRoot(RegisterPage);
     }
 
   }

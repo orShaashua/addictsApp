@@ -61,10 +61,11 @@ export class RegisterPage {
   }
   refreshPage(){
     if (this.opt ==='signin'){
-      this.navCtrl.pop();
-    }else if (this.opt ==='signup'){
-      this.navCtrl.push(RegisterPage);
+      this.navCtrl.setRoot(LoginPage);
     }
+    // else if (this.opt ==='signup'){
+    //   this.navCtrl.push(RegisterPage);
+    // }
 
   }
 
