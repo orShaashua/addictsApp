@@ -30,17 +30,15 @@ export class DistressButtonePage {
   }
   sendHelpMessage(){
 
-    // this.userservice.getPosition().then((pos)=> {
-      var address = "תל אביב, רחוב אבן גבירול, 27";
-        var addMessage = this.fns.httpsCallable('sendHelpMessage');
-        addMessage({text: address}).toPromise()
-          .then(() => {
-            alert("מיקומך נשלח לכל המשתמשים");
-            console.log("send help notification");
-          })
-          .catch(err => {
-            console.error({ err });
-          });
-    // });
+    var address = "אוניברסיטת בר אילן, רמת גן";
+    var addMessage = this.fns.httpsCallable('sendHelpMessage');
+    addMessage({text: address}).toPromise()
+      .then(() => {
+        alert("מיקומך נשלח לכל המשתמשים");
+        console.log("send help notification");
+      })
+      .catch(err => {
+        console.error({ err });
+      });
   }
 }

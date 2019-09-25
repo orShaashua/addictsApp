@@ -5,7 +5,6 @@ import {Filters} from "../../models/filters.model";
 import {Settings} from "../../models/settings.model";
 import {AlertController, LoadingController} from "ionic-angular";
 import {Mutex, MutexInterface} from 'async-mutex';
-import {GpsProvider} from "../gps/gps";
 // import {GpsProvider} from "../gps/gps";
 
 /*
@@ -203,7 +202,7 @@ export class UserProvider {
   }
 
   async getMySearchFriends() {
-    let settingsFromUser = new Settings();
+    let settingsFromUser:any = new Settings();
     let result = [];
     try {
       const resSettingsOfUser = await this.getusersdetails("settings");
@@ -211,7 +210,6 @@ export class UserProvider {
         //error
         return result;
       }
-      // @ts-ignore
       settingsFromUser = resSettingsOfUser;
       const users = await this.getUsersMatchedToMyFilter();
 
